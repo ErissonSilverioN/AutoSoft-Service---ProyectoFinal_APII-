@@ -12,7 +12,7 @@ namespace AutosoftService.Model
 
         public int ArticuloId { get; set; }
 
-        [Required(ErrorMessage ="Debe elegir una categoria")]
+        [Required(ErrorMessage = "Debe elegir una categoria")]
         public string Categoria { get; set; }
         public decimal Existencia { get; set; }
         public decimal Precio { get; set; }

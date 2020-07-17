@@ -25,7 +25,7 @@ namespace AutosoftService.DAL
         {
 
 
-            optionsBuilder.UseSqlServer(@"Server= .\SQLEXPRESS; Database = AutosoftServiceDB; trusted_connection = true");
+            optionsBuilder.UseSqlServer(@"Server= .\SQLEXPRESS; Database = AutosoftServiceDB1; trusted_connection = true");
             base.OnConfiguring(optionsBuilder);
         }
     }

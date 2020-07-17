@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace AutosoftService.Model
 {
     public class Vehiculos
     {
-        [key]
+        [Key]
 
         public int VehiculoId { get; set; }
         public int ClienteId { get; set; }
