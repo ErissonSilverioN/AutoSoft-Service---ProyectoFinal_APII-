@@ -25,8 +25,25 @@ namespace AutosoftService.DAL
         {
 
 
-            optionsBuilder.UseSqlServer(@"Server= .\SQLEXPRESS; Database = AutosoftServiceDB1; trusted_connection = true");
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlite(@"Data Source = C:\Users\PANDA\source\repos\AutosoftService-ProyectoFinal2\AutosoftService\Data\AutoSoftServiceDB.db ");
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Usuarios>().HasData(new Usuarios
+        //    {
+        //        UsuarioId = 1,
+        //        Nombre = "Emerson",
+        //        Apellidos = "Del Orbe",
+        //        Email = "Emerson@gmail.com",
+        //        Usuario = "Administrador",
+        //        NivelUsuario = "Administrador",
+        //        Contrasena = "Admin",
+        //        ConfirmarContrasena = "Admin",
+        //        FechaIngreso = DateTime.Now
+
+
+        //    }) ;
+        //}
     }
 }

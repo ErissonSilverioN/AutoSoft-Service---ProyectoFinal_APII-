@@ -170,5 +170,28 @@ namespace AutosoftService.BLL
         }
 
 
+
+        public static bool InicioSesion(string user, string pass)
+        {
+            bool paso = false;
+            Contexto db = new Contexto();
+
+            try
+            {
+
+                paso = db.usuarios.Any(A => A.Usuario.Equals(user) && A.Contrasena.Equals(pass));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return paso;
+
+        }
+
+
+
     }
 }

@@ -1,0 +1,26 @@
+﻿@page "/Login_Control"
+
+
+
+
+@using System.Web;
+
+<AuthorizeView>
+
+    <Authorized>
+        <a class="ml-md-auto btn btn-primary"
+           href="/logout?returnUrl=/"
+           target="_top">Cerrar Sesion</a>
+    </Authorized>
+
+
+    <NotAuthorized>
+        <center>
+            <a class="ml-md-auto btn btn-primary"
+               href="/"
+               target="_top">Inicie Secion</a>
+        </center>
+
+    </NotAuthorized>
+</AuthorizeView>
+

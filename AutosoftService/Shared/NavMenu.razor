@@ -1,5 +1,11 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">AutosoftService</a>
+﻿
+
+<div class="top-row pl-4 navbar bg-dark navbar-dark" style="height:125px;">
+    <AuthorizeView>
+        
+        <a class="navbar-brand bg-dark " href="">Hola, @context.User.Identity.Name!</a>
+    </AuthorizeView>
+
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
