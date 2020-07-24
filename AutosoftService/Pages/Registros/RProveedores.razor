@@ -1,0 +1,189 @@
+﻿@page "/Proveedor"
+@page "/Proveedor/{ProveedorId:int}"
+
+@using Model
+@using BLL
+
+@inject IJSRuntime js
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IToastService toast
+
+
+<EditForm Model="proveedores" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card w-100">
+        <div class="card-header">
+            <h1>Registro de Proveedores</h1>
+        </div>
+
+        @*ClientesID y boton al lado*@
+    <div class="card-body">
+        <form />
+        <div class="form-row align-items-center">
+            <div class="col">
+                <div class="form-group">
+                    <label>ID</label>
+                    <div class="input-group">
+                        <InputNumber @bind-Value="proveedores.ProveedorId" class="form-control col-4" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Nombres*@
+        <div class="form-group">
+            <label>Nombre</label>
+            <InputText @bind-Value="proveedores.Nombre" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.Nombre)" />
+        </div>
+
+        @*Telefono*@
+        <div class="form-group">
+            <label>Telefono</label>
+            <InputText @bind-Value="proveedores.Telefono" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.Telefono)" />
+        </div>
+
+        @*Email*@
+        <div class="form-group">
+            <label>Email </label>
+            <InputText @bind-Value="proveedores.Email" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.Email)" />
+        </div>
+
+        @*Direccion*@
+        <div class="form-group">
+            <label>Direccion </label>
+            <InputText @bind-Value="proveedores.Direccion" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.Direccion)" />
+        </div>
+
+        @*Rnc*@
+        <div class="form-group">
+            <label>RNC</label>
+            <InputText @bind-Value="proveedores.RNC" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.RNC)" />
+        </div>
+
+        @*Cantidad*@
+        <div class="form-group">
+            <label>Cantidad De pedidos</label>
+            <InputNumber @bind-Value="proveedores.CantidadPedidos" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.CantidadPedidos)" />
+        </div>
+        @*Fecha*@
+        <div class="form-group">
+            <label>Fecha</label>
+            <InputDate @bind-Value="proveedores.Fecha" class="form-control" />
+            <ValidationMessage For="@(() => proveedores.Fecha)" />
+        </div>
+
+    </div>
+
+        @*Botones*@
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="fa fa-plus"></i> Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
+            </div>
+        </div>
+
+    </div>
+</EditForm>
+
+
+
+
+@code{
+
+    [Parameter]
+    public int ProveedorId{ get; set; }
+
+    Proveedores proveedores = new Proveedores();
+
+    private Usuarios Usuario = new Usuarios();
+
+    public bool paso { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        if (ProveedorId > 0)
+        {
+            var Auxproveedores = ProveedorBLL.Buscar(ProveedorId);
+            if (Auxproveedores != null)
+                this.proveedores = Auxproveedores;
+            else
+                toast.ShowWarning("No encontrado.");
+        }
+
+
+    }
+
+    private void Nuevo()
+    {
+        this.proveedores = new Proveedores();
+
+    }
+
+    private void Buscar()
+    {
+        if (proveedores.ProveedorId > 0)
+        {
+            var encontrado = ProveedorBLL.Buscar(proveedores.ProveedorId);
+
+            if (encontrado != null)
+            {
+                this.proveedores = encontrado;
+            }
+            else
+            {
+                toast.ShowWarning("No encontrado");
+
+
+            }
+        }
+    }
+
+    private void Guardar()
+    {
+        bool guardo = ProveedorBLL.Guardar(proveedores);
+
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("Guardado correctamente");
+
+        }
+        else
+        {
+            toast.ShowError("No fue posible guardar");
+
+        }
+    }
+
+    private void Eliminar()
+    {
+        bool elimino;
+
+        elimino = ProveedorBLL.Eliminar(proveedores.ProveedorId);
+
+        if (elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("Eliminado correctamente");
+
+        }
+        else
+        {
+            toast.ShowError("No fue posible eliminar");
+
+        }
+    }
+
+
+}
