@@ -275,3 +275,5 @@ C:\Users\Emerson\Source\Repos\AutosoftService-ProyectoFinal\AutosoftService\obj\
 C:\Users\Emerson\Source\Repos\AutosoftService-ProyectoFinal\AutosoftService\obj\Debug\netcoreapp3.1\Razor\Pages\Registros\RCliente.razor.g.cs
 C:\Users\Emerson\Source\Repos\AutosoftService-ProyectoFinal\AutosoftService\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Registros\RProveedores.razor.g.cs
 C:\Users\Emerson\Source\Repos\AutosoftService-ProyectoFinal\AutosoftService\obj\Debug\netcoreapp3.1\Razor\Pages\Registros\RProveedores.razor.g.cs
+C:\Users\Emerson\Source\Repos\AutosoftService-ProyectoFinal\AutosoftService\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Consultas\CCliente.razor.g.cs
+C:\Users\Emerson\Source\Repos\AutosoftService-ProyectoFinal\AutosoftService\obj\Debug\netcoreapp3.1\Razor\Pages\Consultas\CCliente.razor.g.cs

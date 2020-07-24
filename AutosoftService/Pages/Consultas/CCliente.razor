@@ -1,4 +1,4 @@
-﻿@page "/CUsuario"
+﻿@page "/Ccliente"
 
 @using BLL
 @using Model
@@ -21,7 +21,7 @@
                     <option value="Todo">Todo</option>
                     <option value="ID">ID</option>
                     <option value="Nombre">Nombre</option>
-                    <option value="Rol">Rol</option>
+                    <option value="Cedula">cedula</option>
                 </select>
 
                 <label for="criterio ml-3 mr-3"> Criterio: </label>
@@ -36,28 +36,28 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Nombre Usuario</th>
-                    <th>Clave</th>
+                    <th>Cedula</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
                     <th>Email</th>
-                    <th>Fecha de Ingreso</th>
+                    <th>Fecha</th>
                 </tr>
             </thead>
             <tbody>
-                
-                    @foreach (var item in lista)
-                    {
-                        <tr class="table-striped">
-                            <td>@item.UsuarioId</td>
-                            <td>@item.Nombre</td>
-                            <td>@item.Apellidos</td>
-                            <td>@item.Usuario</td>
-                            <td>@item.Contrasena</td>
-                            <td>@item.Email</td>
-                            <td>@item.FechaIngreso</td>
-                        </tr>
-                    }
-               
+
+                @foreach (var item in lista)
+                {
+                    <tr class="table-striped">
+                        <td>@item.ClienteId</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Cedula</td>
+                        <td>@item.Telefono</td>
+                        <td>@item.Direccion</td>
+                        <td>@item.Email</td>
+                        <td>@item.Fecha</td>
+                    </tr>
+                }
+
 
             </tbody>
         </table>
@@ -69,32 +69,30 @@
 
 @code {
 
-    private List<Usuarios> lista { get; set; }
-    private List<Usuarios> listapaginada { get; set; }
+    private List<Clientes> lista { get; set; }
+    //  private List<Usuarios> listapaginada { get; set; }
 
     private string Filtro { get; set; }
     private string Criterio { get; set; }
 
 
-    double Paginas = 0;
-    double Elementos = 0;
-    int PaginaActual = 0;
+
 
 
 
 
     protected override void OnInitialized()
     {
-        lista = UsuarioBLL.GetList(C => true);
+        lista = ClienteBLL.GetList(C => true);
         Filtro = "Todo";
-  
+
     }
 
 
-   
 
 
- 
+
+
 
     private void Buscar()
     {
@@ -112,17 +110,17 @@
                     switch (Filtro)
                     {
                         case "Todo":
-                            listapaginada = UsuarioBLL.GetList(e => true);
-                            //  IniciarPaginacion();
+                            lista= ClienteBLL.GetList(e => true);
+
                             break;
                         case "Id":
-                            listapaginada = UsuarioBLL.GetList(e => e.UsuarioId == Convert.ToInt32(Criterio));
+                            lista = ClienteBLL.GetList(e => e.ClienteId == Convert.ToInt32(Criterio));
                             break;
                         case "Nombre":
-                            listapaginada = UsuarioBLL.GetList(e => e.Nombre == Criterio);
+                            lista = ClienteBLL.GetList(e => e.Nombre == Criterio);
                             break;
-                        case "Rol":
-                            listapaginada = UsuarioBLL.GetList(e => e.NivelUsuario == Criterio);
+                        case "Cedula":
+                            lista = ClienteBLL.GetList(e => e.Cedula == Criterio);
                             break;
                     }
                 }

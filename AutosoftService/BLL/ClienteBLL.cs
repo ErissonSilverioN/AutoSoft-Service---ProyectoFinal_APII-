@@ -144,13 +144,10 @@ namespace AutosoftService.BLL
         }
 
 
-        public List<Clientes> GetList(Expression<Func<Clientes, bool>> expression)
+        public static List<Clientes> GetList(Expression<Func<Clientes, bool>> expression)
         {
-
-
             List<Clientes> lista = new List<Clientes>();
             Contexto db = new Contexto();
-
 
             try
             {
@@ -158,18 +155,16 @@ namespace AutosoftService.BLL
             }
             catch (Exception)
             {
-                throw;
 
+                throw;
             }
             finally
             {
                 db.Dispose();
-
             }
 
             return lista;
         }
-
 
     }
 }
