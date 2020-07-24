@@ -1,4 +1,4 @@
-﻿@page "/Ccliente"
+﻿@page "/Cproveedor"
 
 @using BLL
 @using Model
@@ -21,7 +21,7 @@
                     <option value="Todo">Todo</option>
                     <option value="ID">ID</option>
                     <option value="Nombre">Nombre</option>
-                    <option value="Cedula">cedula</option>
+                    <option value="RNC">Rnc</option>
                 </select>
 
                 <label for="criterio ml-3 mr-3"> Criterio: </label>
@@ -35,27 +35,30 @@
             <thead class="thead-light">
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Cedula</th>
-                    <th>Telefono</th>
-                    <th>Direccion</th>
-                    <th>Email</th>
-                    <th>Fecha</th>
+                    <th style=" width:auto">Nombre</th>
+                    <th style=" width:auto">Rnc</th>
+                    <th style=" width:auto">Telefono</th>
+                    <th style=" width:auto">Direccion</th>
+                    <th style=" width:auto">Email</th>
+                    <th style=" width:auto">Fecha</th>
+                    <th style=" width:auto">Cantidad Pedidos </th>
+
                 </tr>
             </thead>
             <tbody>
 
                 @foreach (var item in lista)
                 {
-                    <tr class="table-striped">
-                        <td>@item.ClienteId</td>
-                        <td>@item.Nombre</td>
-                        <td>@item.Cedula</td>
-                        <td>@item.Telefono</td>
-                        <td>@item.Direccion</td>
-                        <td>@item.Email</td>
-                        <td>@item.Fecha</td>
-                    </tr>
+                <tr class="table-striped">
+                    <td style=" width:auto">@item.ProveedorId</td>
+                    <td style=" width:auto">@item.Nombre</td>
+                    <td style=" width:auto">@item.RNC</td>
+                    <td style=" width:auto">@item.Telefono</td>
+                    <td style=" width:auto">@item.Direccion</td>
+                    <td style=" width:auto">@item.Email</td>
+                    <td >@item.Fecha</td>
+                    <td style=" width:auto">@item.CantidadPedidos</td>
+                </tr>
                 }
 
 
@@ -69,8 +72,8 @@
 
 @code {
 
-    private List<Clientes> lista { get; set; }
-    //  private List<Usuarios> listapaginada { get; set; }
+    private List<Proveedores> lista { get; set; }
+  
 
     private string Filtro { get; set; }
     private string Criterio { get; set; }
@@ -83,7 +86,7 @@
 
     protected override void OnInitialized()
     {
-        lista = ClienteBLL.GetList(C => true);
+        lista = ProveedorBLL.GetList(C => true);
         Filtro = "Todo";
 
     }
@@ -110,17 +113,17 @@
                     switch (Filtro)
                     {
                         case "Todo":
-                            lista= ClienteBLL.GetList(e => true);
+                            lista = ProveedorBLL.GetList(e => true);
 
                             break;
                         case "Id":
-                            lista = ClienteBLL.GetList(e => e.ClienteId == Convert.ToInt32(Criterio));
+                            lista = ProveedorBLL.GetList(e => e.ProveedorId == Convert.ToInt32(Criterio));
                             break;
                         case "Nombre":
-                            lista = ClienteBLL.GetList(e => e.Nombre == Criterio);
+                            lista = ProveedorBLL.GetList(e => e.Nombre == Criterio);
                             break;
-                        case "Cedula":
-                            lista = ClienteBLL.GetList(e => e.Cedula == Criterio);
+                        case "Rnc":
+                            lista = ProveedorBLL.GetList(e => e.RNC == Criterio);
                             break;
 
                     }
