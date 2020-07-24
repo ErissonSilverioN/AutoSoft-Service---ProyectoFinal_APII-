@@ -25,25 +25,25 @@ namespace AutosoftService.DAL
         {
 
 
-            optionsBuilder.UseSqlite(@"Data Source = C:\Users\PANDA\source\repos\AutosoftService-ProyectoFinal2\AutosoftService\Data\AutoSoftServiceDB.db ");
+            optionsBuilder.UseSqlite(@"Data Source=Data\Autoservice.db");
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Usuarios>().HasData(new Usuarios
-        //    {
-        //        UsuarioId = 1,
-        //        Nombre = "Emerson",
-        //        Apellidos = "Del Orbe",
-        //        Email = "Emerson@gmail.com",
-        //        Usuario = "Administrador",
-        //        NivelUsuario = "Administrador",
-        //        Contrasena = "Admin",
-        //        ConfirmarContrasena = "Admin",
-        //        FechaIngreso = DateTime.Now
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+           modelBuilder.Entity<Usuarios>().HasData(new Usuarios
+            {
+             UsuarioId = 1,
+                Nombre = "Emerson",
+                Apellidos = "Del Orbe",
+                 Email = "Emerson@gmail.com",
+               Usuario = "Administrador",
+               NivelUsuario = "Administrador",
+               Contrasena = "Admin",
+               ConfirmarContrasena = "Admin",
+               FechaIngreso = DateTime.Now
 
 
-        //    }) ;
-        //}
+           });
+        }
     }
 }

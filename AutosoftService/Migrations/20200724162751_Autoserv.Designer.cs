@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutosoftService.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200718202350_Initial")]
-    partial class Initial
+    [Migration("20200724162751_Autoserv")]
+    partial class Autoserv
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -323,6 +323,20 @@ namespace AutosoftService.Migrations
                     b.HasKey("UsuarioId");
 
                     b.ToTable("usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            UsuarioId = 1,
+                            Apellidos = "Del Orbe",
+                            ConfirmarContrasena = "Admin",
+                            Contrasena = "Admin",
+                            Email = "Emerson@gmail.com",
+                            FechaIngreso = new DateTime(2020, 7, 24, 12, 27, 51, 465, DateTimeKind.Local).AddTicks(1950),
+                            NivelUsuario = "Administrador",
+                            Nombre = "Emerson",
+                            Usuario = "Administrador"
+                        });
                 });
 
             modelBuilder.Entity("AutosoftService.Model.Vehiculos", b =>

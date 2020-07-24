@@ -28,7 +28,7 @@ namespace AutosoftService.BLL
 
             try
             {
-                if (db.clientes.Add(clientes) != null)
+                db.clientes.Add(clientes);
                     paso = db.SaveChanges() > 0;
             }
             catch (Exception)

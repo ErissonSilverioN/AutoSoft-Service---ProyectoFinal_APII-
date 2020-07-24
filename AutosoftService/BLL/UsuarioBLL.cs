@@ -141,33 +141,29 @@ namespace AutosoftService.BLL
             return encontrado;
 
         }
-
-
-        public List<Usuarios> GetList(Expression<Func<Usuarios, bool>> expression)
+        public static List<Usuarios> GetList(Expression<Func<Usuarios, bool>> Criterio)
         {
-
-
             List<Usuarios> lista = new List<Usuarios>();
-            Contexto db = new Contexto();
-
+            Contexto contexto = new Contexto();
 
             try
             {
-                lista = db.usuarios.Where(expression).ToList();
+                lista = contexto.usuarios.Where(Criterio).ToList();
             }
             catch (Exception)
             {
                 throw;
-
             }
             finally
             {
-                db.Dispose();
-
+                contexto.Dispose();
             }
 
             return lista;
         }
+
+
+        
 
 
 

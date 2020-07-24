@@ -16,14 +16,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Consultas\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\AutoSoftServiceDB.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

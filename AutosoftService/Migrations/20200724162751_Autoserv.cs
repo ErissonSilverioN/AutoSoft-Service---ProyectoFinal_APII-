@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutosoftService.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Autoserv : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -219,6 +219,11 @@ namespace AutosoftService.Migrations
                         principalColumn: "PedidoId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "usuarios",
+                columns: new[] { "UsuarioId", "Apellidos", "ConfirmarContrasena", "Contrasena", "Email", "FechaIngreso", "NivelUsuario", "Nombre", "Usuario" },
+                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 24, 12, 27, 51, 465, DateTimeKind.Local).AddTicks(1950), "Administrador", "Emerson", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_facturaD_FacturaId",
