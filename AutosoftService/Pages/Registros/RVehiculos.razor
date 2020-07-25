@@ -1,0 +1,211 @@
+﻿@page "/Vehiculos"
+@page "/Vehiculos/{VehiculoId:int}"
+
+@using Model
+@using BLL
+
+@inject IJSRuntime js
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IToastService toast
+
+
+<EditForm Model="vehiculos" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card w-100">
+        <div class="card-header">
+            <h1>Registro de Vehiculos</h1>
+        </div>
+
+        @*vehiculoID y boton buscar al lado*@
+    <div class="card-body">
+        <form />
+        <div class="form-row align-items-center">
+            <div class="col">
+                <div class="form-group">
+                    <label>ID</label>
+                    <div class="input-group">
+                        <InputNumber @bind-Value="vehiculos.VehiculoId" class="form-control col-4" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Descripcion*@
+        <div class="form-group">
+            <label>Descripcion</label>
+            <InputText @bind-Value="vehiculos.Descripcion" class="form-control" />
+            <ValidationMessage For="@(() => vehiculos.Descripcion)" />
+        </div>
+        @*Cliente Id*@
+        <div class="form-group">
+            <label>Cliente Id</label>
+            <select class="form-control" @bind="vehiculos.ClienteId">
+                <option disabled="disabled" selected="selected">Elija una opción</option>
+                @foreach (var auxiliar in LlenarComboCliente())
+                {
+                    <option value="@auxiliar.ClienteId">@auxiliar.Nombre</option>
+                }
+            </select>
+            <ValidationMessage For="@(() => vehiculos.ClienteId)" />
+        </div>
+        @*Tipo de Vehiculos*@
+    <div class="form-group">
+        <label>Tipo de Vehiculos</label>
+        <InputSelect @bind-Value="@vehiculos.TipoVehiculo" class="form-control">
+            <option value="" disabled selected>Seleccione un Tipo</option>
+            <option value="Carro">Carro</option>
+            <option value="Camionetas">Camionetas</option>
+            <option value="Jeepetas">Jeepetas</option>
+            <option value="Motores">Motores</option>
+            <option value="Camiones">Camiones</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => vehiculos.TipoVehiculo)" />
+    </div>
+
+        @*Placa*@
+        <div class="form-group">
+            <label>Placa </label>
+            <InputText @bind-Value="vehiculos.Placa" class="form-control" />
+            <ValidationMessage For="@(() =>vehiculos.Placa)" />
+        </div>
+
+        @*Año*@
+        <div class="form-group">
+            <label>Año</label>
+            <InputNumber @bind-Value="vehiculos.Año" class="form-control" />
+            <ValidationMessage For="@(() => vehiculos.Año)" />
+        </div>
+
+        @*Fecha*@
+        <div class="form-group">
+            <label>Fecha</label>
+            <InputDate @bind-Value="vehiculos.Fecha" class="form-control" />
+            <ValidationMessage For="@(() => vehiculos.Fecha)" />
+        </div>
+
+    </div>
+
+        @*Botones*@
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="fa fa-plus"></i> Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
+            </div>
+        </div>
+
+    </div>
+</EditForm>
+
+
+
+
+@code{
+
+    [Parameter]
+    public int VehiculoId { get; set; }
+
+    Vehiculos vehiculos = new Vehiculos();
+
+    private Usuarios Usuario = new Usuarios();
+
+    public bool paso { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        if (VehiculoId> 0)
+        {
+            var Auxvehiculos = VehiculoBLL.Buscar(VehiculoId);
+            if (Auxvehiculos != null)
+                this.vehiculos = Auxvehiculos;
+            else
+                toast.ShowWarning("No encontrado.");
+        }
+
+
+    }
+
+    public List<Clientes> LlenarComboCliente()
+    {
+        List<Clientes> listaClientes = new List<Clientes>();
+
+        try
+        {
+            listaClientes = ClienteBLL.GetList(c => true);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
+        return listaClientes;
+    }
+
+
+    private void Nuevo()
+    {
+        this.vehiculos = new Vehiculos();
+
+    }
+
+    private void Buscar()
+    {
+        if (vehiculos.VehiculoId> 0)
+        {
+            var encontrado = VehiculoBLL.Buscar(vehiculos.VehiculoId);
+
+            if (encontrado != null)
+            {
+                this.vehiculos = encontrado;
+            }
+            else
+            {
+                toast.ShowWarning("No encontrado");
+
+
+            }
+        }
+    }
+
+    private void Guardar()
+    {
+        bool guardo = VehiculoBLL.Guardar(vehiculos);
+
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("Guardado correctamente");
+
+        }
+        else
+        {
+            toast.ShowError("No fue posible guardar");
+
+        }
+    }
+
+    private void Eliminar()
+    {
+        bool elimino;
+
+        elimino = VehiculoBLL.Eliminar(vehiculos.VehiculoId);
+
+        if (elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("Eliminado correctamente");
+
+        }
+        else
+        {
+            toast.ShowError("No fue posible eliminar");
+
+        }
+    }
+
+
+}
