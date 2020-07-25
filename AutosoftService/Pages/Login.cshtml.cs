@@ -45,7 +45,13 @@ namespace AutosoftService.Pages
 
             // (Always log the user in for this demo)
 
-            var claims = new List<Claim>
+
+            if (BLL.UsuarioBLL.InicioSesion(paramUsername,paramPassword))
+            {
+
+
+
+                var claims = new List<Claim>
 
             {
 
@@ -56,39 +62,41 @@ namespace AutosoftService.Pages
                 new Claim(ClaimTypes.Role, "User"),
             };
 
-            var claimsIdentity = new ClaimsIdentity(
+                var claimsIdentity = new ClaimsIdentity(
 
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var authProperties = new AuthenticationProperties
+                var authProperties = new AuthenticationProperties
 
-            {
+                {
 
-                IsPersistent = true,
+                    IsPersistent = true,
 
-                RedirectUri = this.Request.Host.Value
+                    RedirectUri = this.Request.Host.Value
 
-            };
+                };
 
-            try
+                try
 
-            {
+                {
 
-                await HttpContext.SignInAsync(
+                    await HttpContext.SignInAsync(
 
-                CookieAuthenticationDefaults.AuthenticationScheme,
+                    CookieAuthenticationDefaults.AuthenticationScheme,
 
-                new ClaimsPrincipal(claimsIdentity),
+                    new ClaimsPrincipal(claimsIdentity),
 
-                authProperties);
+                    authProperties);
 
-            }
+                }
 
-            catch (Exception ex)
+                catch (Exception ex)
 
-            {
+                {
 
-                string error = ex.Message;
+                    string error = ex.Message;
+
+                }
 
             }
 
