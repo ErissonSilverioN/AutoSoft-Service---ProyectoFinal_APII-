@@ -139,27 +139,28 @@ namespace AutosoftService.BLL
 
         }
 
-        public static List<Proveedores> GetList(Expression<Func<Proveedores, bool>> proveedores)
+        public List<Proveedores> GetList(Expression<Func<Proveedores, bool>> expression)
         {
-            List<Proveedores> Lista = new List<Proveedores>();
             Contexto db = new Contexto();
+            List<Proveedores> Lista = new List<Proveedores>();
+
             try
             {
-                Lista = db.proveedores.Where(proveedores).ToList();
-            }
+                Lista = db.proveedores.Where(expression).ToList();
 
+            }
             catch (Exception)
             {
                 throw;
+
             }
             finally
             {
                 db.Dispose();
+
             }
 
-
             return Lista;
-
         }
 
     }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutosoftService.Migrations
 {
-    public partial class Autoserv : Migration
+    public partial class Secundary : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,14 @@ namespace AutosoftService.Migrations
                 {
                     ArticuloId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Descripcion = table.Column<string>(nullable: true),
+                    ProveedorId = table.Column<int>(nullable: false),
+                    Cantidad = table.Column<int>(nullable: false),
                     Categoria = table.Column<string>(nullable: false),
                     Existencia = table.Column<decimal>(nullable: false),
+                    Costo = table.Column<decimal>(nullable: false),
                     Precio = table.Column<decimal>(nullable: false),
+                    Ganancias = table.Column<decimal>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -29,10 +34,10 @@ namespace AutosoftService.Migrations
                 {
                     ClienteId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(nullable: false),
+                    Nombre = table.Column<string>(maxLength: 40, nullable: false),
                     Cedula = table.Column<string>(nullable: false),
-                    Telefono = table.Column<string>(nullable: false),
-                    Direccion = table.Column<string>(nullable: false),
+                    Telefono = table.Column<string>(maxLength: 10, nullable: false),
+                    Direccion = table.Column<string>(maxLength: 100, nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)
                 },
@@ -115,10 +120,10 @@ namespace AutosoftService.Migrations
                 {
                     ProveedorId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(nullable: false),
-                    Telefono = table.Column<string>(nullable: false),
+                    Nombre = table.Column<string>(maxLength: 40, nullable: false),
+                    Telefono = table.Column<string>(maxLength: 10, nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    Direccion = table.Column<string>(nullable: false),
+                    Direccion = table.Column<string>(maxLength: 100, nullable: false),
                     RNC = table.Column<string>(nullable: false),
                     CantidadPedidos = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)
@@ -223,7 +228,7 @@ namespace AutosoftService.Migrations
             migrationBuilder.InsertData(
                 table: "usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "ConfirmarContrasena", "Contrasena", "Email", "FechaIngreso", "NivelUsuario", "Nombre", "Usuario" },
-                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 24, 12, 27, 51, 465, DateTimeKind.Local).AddTicks(1950), "Administrador", "Emerson", "Administrador" });
+                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 26, 3, 1, 28, 918, DateTimeKind.Local).AddTicks(2796), "Administrador", "Emerson", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_facturaD_FacturaId",

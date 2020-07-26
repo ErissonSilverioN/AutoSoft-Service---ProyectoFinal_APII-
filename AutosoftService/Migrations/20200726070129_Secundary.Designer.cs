@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutosoftService.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200724162751_Autoserv")]
-    partial class Autoserv
+    [Migration("20200726070129_Secundary")]
+    partial class Secundary
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,8 +24,17 @@ namespace AutosoftService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Categoria")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Costo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Descripcion")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Existencia")
@@ -34,8 +43,14 @@ namespace AutosoftService.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Ganancias")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Precio")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ProveedorId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ArticuloId");
 
@@ -54,7 +69,8 @@ namespace AutosoftService.Migrations
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -65,11 +81,13 @@ namespace AutosoftService.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(40);
 
                     b.Property<string>("Telefono")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(10);
 
                     b.HasKey("ClienteId");
 
@@ -253,7 +271,8 @@ namespace AutosoftService.Migrations
 
                     b.Property<string>("Direccion")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -264,7 +283,8 @@ namespace AutosoftService.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(40);
 
                     b.Property<string>("RNC")
                         .IsRequired()
@@ -272,7 +292,8 @@ namespace AutosoftService.Migrations
 
                     b.Property<string>("Telefono")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(10);
 
                     b.HasKey("ProveedorId");
 
@@ -332,7 +353,7 @@ namespace AutosoftService.Migrations
                             ConfirmarContrasena = "Admin",
                             Contrasena = "Admin",
                             Email = "Emerson@gmail.com",
-                            FechaIngreso = new DateTime(2020, 7, 24, 12, 27, 51, 465, DateTimeKind.Local).AddTicks(1950),
+                            FechaIngreso = new DateTime(2020, 7, 26, 3, 1, 28, 918, DateTimeKind.Local).AddTicks(2796),
                             NivelUsuario = "Administrador",
                             Nombre = "Emerson",
                             Usuario = "Administrador"

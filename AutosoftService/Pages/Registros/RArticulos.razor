@@ -1,0 +1,285 @@
+﻿@page "/RArticulos"
+@page "/RArticulos/{ArticuloId:int}"
+@inject IToastService toas
+
+@using AutosoftService.Model;
+@using AutosoftService.BLL;
+
+
+
+    <EditForm Model="articulos" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+
+        <div class="card">
+
+            <div class="card-header">
+                <div class="text-center">
+                    <h3>Registro de Articulos</h3>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+
+
+                <form>
+                    <div class="form-row">
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1"></div>
+
+
+                        <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                            <label class="col-auto">Codigo</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="@articulos.ArticuloId" class="form-control"></InputNumber>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass">Buscar</span></button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3     col-md-3     col-lg-4     col-xl-4" />
+
+
+                        <div class="form-group col-sm-4     col-md-4     col-lg-3     col-xl-3     ">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="@articulos.Fecha" class="form-control" />
+                        </div>
+
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+
+                        <div class="form-group col-md-12     col-lg-10     col-xl-10">
+                            <label>Descripción</label>
+                            <InputText @bind-Value="@articulos.Descripcion" class="form-control" placeholder="Descripcion" />
+                            <ValidationMessage For="@(()=>articulos.Descripcion)" />
+                        </div>
+
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label>Proveedor</label>
+                            <InputSelect @bind-Value="@ProveedorSelect" class="form-control " @onchange="SeleccionarProveedor" @onclick="SeleccionarProveedor">
+                                <option value="0" disabled selected>Seleccione un Proveedor</option>
+                                @if (listaProveedores.Count <= 0)
+                                {
+                                    <option value="" disabled>No Hay Proveedores Registrado</option>
+                                }
+                                else
+                                {
+                                    @foreach (var item in listaProveedores)
+                                    {
+                                        <option value="@item.ProveedorId">@item.Nombre</option>
+                                    }
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(()=>articulos.ProveedorId)" />
+                        </div>
+
+
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label>Categoría</label>
+                            <InputSelect @bind-Value="@articulos.Categoria" class="form-control ">
+                                <option value="0" disabled selected>---Elija una Categoria---</option>
+                                <option value="1" selected>A-Piezas Desgatables</option>
+                                <option value="2" selected>B-Consumibles</option>
+                                <option value="3" selected>C-Elementos de Regulacion</option>
+                                <option value="4" selected>D-Piezas Moviles</option>
+                                <option value="5" selected>E-Componentes Electronicos</option>
+                                <option value="6" selected>F-Piezas Estructurales</option>
+
+                            </InputSelect>
+                            <ValidationMessage For="@(()=>articulos.Categoria)" />
+                        </div>
+
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label>Costo</label>
+                            <InputNumber @bind-Value="@articulos.Costo" class="form-control" step="10" @onfocusin="CalcularPrecio" @onfocusout="CalcularPrecio" @onkeydown="CalcularPrecio" />
+                            <ValidationMessage For="@(()=>articulos.Costo)" />
+                        </div>
+
+
+
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label>% Ganancia</label>
+                            <input type="number" @bind="@articulos.Ganancias" max="100" class="form-control" @onfocusin="CalcularPrecio" @onfocusout="CalcularPrecio" @onkeydown="CalcularPrecio" />
+                            <ValidationMessage For="@(()=>articulos.Ganancias)" />
+                        </div>
+
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label for="Precio">Precio</label>
+                            <InputNumber @bind-Value="@articulos.Precio" class="form-control" disabled />
+                            <ValidationMessage For="@(()=>articulos.Precio)" />
+                        </div>
+
+
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label for="Cantidad">Cantidad</label>
+                            <InputNumber @bind-Value="@articulos.Cantidad" class="form-control" disabled />
+                        </div>
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                    </div>
+
+                </form>
+            </div>
+
+
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Limpiar"><i class="fa fa-plus"></i> Limpiar</button>
+                    <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+    </EditForm>
+
+
+
+
+@code {
+
+    [Parameter]
+    public int ArticuloId { get; set; }
+
+    private Articulos articulos = new Articulos();
+
+    private List<Proveedores> listaProveedores = new List<Proveedores>();
+    ProveedorBLL proveedoresBLL = new ProveedorBLL();
+
+    Proveedores proveedores = new Proveedores();
+    private string ProveedorSelect { get; set; }
+
+
+
+
+    protected override void OnInitialized()
+    {
+
+        listaProveedores = proveedoresBLL.GetList(e => true);
+        articulos = new Articulos();
+        Limpiar();
+        Buscar();
+        base.OnInitialized();
+    }
+
+
+
+    private void Buscar()
+    {
+        Articulos artTemp = BLL.ArticuloBLL.Buscar(articulos.ArticuloId);
+
+        if (artTemp != null)
+        {
+            Limpiar();
+            articulos = artTemp;
+            ProveedorSelect = articulos.ArticuloId.ToString();
+
+            CalcularPrecio();
+            toas.ShowSuccess("Producto encontrado.", "Exito");
+
+        }
+        else
+        {
+
+            Limpiar();
+            toas.ShowError("El Producto no fue encontrado.", "Fallo");
+
+        }
+    }
+
+
+    private void Guardar()
+    {
+
+        SeleccionarProveedor();
+        CalcularPrecio();
+
+        if (ArticuloBLL.Guardar(articulos))
+        {
+            Limpiar();
+            toas.ShowSuccess("Producto guardado correctamente.", "Exito");
+
+        }
+        else
+        {
+            toas.ShowError("Error al guardar el Producto.", "Fallo");
+
+        }
+    }
+
+
+    private void Eliminar()
+    {
+        Articulos artTemp = ArticuloBLL.Buscar(articulos.ArticuloId);
+
+        if (artTemp != null)
+        {
+            if (ArticuloBLL.Eliminar(articulos.ArticuloId))
+            {
+                Limpiar();
+                toas.ShowSuccess("Producto eliminado correctamente.", "Exito");
+                CalcularPrecio();
+
+            }
+            else
+            {
+                toas.ShowError("Error al eliminar el Producto.", "Fallo");
+
+            }
+        }
+        else
+        {
+            toas.ShowError("Error al eliminar el Producto.", "Fallo");
+
+        }
+    }
+
+
+    private void Limpiar()
+    {
+        this.articulos = new Articulos();
+
+
+    }
+
+
+    private void SeleccionarProveedor()
+    {
+        articulos.ArticuloId = Convert.ToInt32(ProveedorSelect);
+    }
+
+    public void CalcularPrecio()
+    {
+        articulos.Precio = articulos.Costo + (articulos.Costo * (articulos.Ganancias / 100));
+    }
+}

@@ -11,19 +11,30 @@ namespace AutosoftService.Model
         [Key]
 
         public int ArticuloId { get; set; }
+        public string Descripcion { get; set; }
+
+        public int ProveedorId { get; set; }
+        public int Cantidad { get; set; }
 
         [Required(ErrorMessage = "Debe elegir una categoria")]
         public string Categoria { get; set; }
         public decimal Existencia { get; set; }
+        public decimal Costo { get; set; }
         public decimal Precio { get; set; }
+        public decimal Ganancias { get; set; }
         public DateTime Fecha { get; set; }
 
         public Articulos()
         {
             ArticuloId = 0;
+            ProveedorId = 0;
+            Cantidad = 0;
             Categoria = string.Empty;
+            Descripcion = string.Empty;
             Existencia = 0;
+            Costo = 0;
             Precio = 0;
+            Ganancias = 0;
             Fecha = DateTime.Now;
         }
     }

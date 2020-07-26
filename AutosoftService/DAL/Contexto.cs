@@ -25,7 +25,7 @@ namespace AutosoftService.DAL
         {
 
 
-            optionsBuilder.UseSqlite(@"Data Source=Data\Autoservice.db");
+            optionsBuilder.UseSqlite(@"Data Source=Data\Autoservice1.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

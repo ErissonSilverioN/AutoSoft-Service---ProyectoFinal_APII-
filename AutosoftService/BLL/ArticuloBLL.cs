@@ -145,15 +145,13 @@ namespace AutosoftService.BLL
 
         public List<Articulos> GetList(Expression<Func<Articulos, bool>> expression)
         {
-
-
-            List<Articulos> lista = new List<Articulos>();
             Contexto db = new Contexto();
-
+            List<Articulos> Lista = new List<Articulos>();
 
             try
             {
-                lista = db.articulos.Where(expression).ToList();
+                Lista = db.articulos.Where(expression).ToList();
+
             }
             catch (Exception)
             {
@@ -166,7 +164,7 @@ namespace AutosoftService.BLL
 
             }
 
-            return lista;
+            return Lista;
         }
 
     }

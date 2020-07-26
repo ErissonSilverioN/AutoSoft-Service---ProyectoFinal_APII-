@@ -1,0 +1,226 @@
+﻿@page "/REntradaArticulos"
+@page "/EntradaArticulos/{EntradasArtId:int}"
+
+@inject IToastService toast
+@using AutosoftService.Model;
+@using AutosoftService.BLL;
+
+
+
+
+    <EditForm Model="entradasArticulos" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+
+        <div class="card">
+
+
+            <div class="card-header">
+                <div class="text-center">
+                    <h3>Registro de Entrada</h3>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+
+
+                <form>
+                    <div class="form-row">
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                        <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                            <label class="col-auto">Código</label>
+                            <div class="input-group ">
+                                <InputNumber @bind-Value="@entradasArticulos.EntradasArtId" class="form-control" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass" />&nbsp;&nbsp;Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-3     col-md-2     col-lg-4     col-xl-4" />
+
+
+                    <div class="form-group col-sm-4     col-md-5     col-lg-3     col-xl-3     ">
+                        <label>Fecha</label>
+                        <InputDate @bind-Value="@entradasArticulos.Fecha" class="form-control" />
+                    </div>
+
+                    <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+
+                    <div class="form-group col-sm-5     col-md-5     col-lg-4     col-xl-4">
+                        <label class="col-auto">Articulo</label>
+                        <div class="input-group ">
+
+                            <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onchange="SeleccionarArticulo" @onclick="SeleccionarArticulo">
+                                <option value="0" disabled selected>Seleccione un Articulo</option>
+                                @if (listaarticulos.Count == 0)
+                                {
+                                    <option value="" disabled>No hay Articulo Registrado</option>
+                                }
+                                else
+                                {
+                                    @foreach (var item in listaarticulos)
+                                    {
+                                        <option value="@item.ArticuloId">@item.Descripcion</option>
+                                    }
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3    col-md-2    col-lg-3     col-xl-3" />
+
+
+
+                    <div class="form-group col-sm-4     col-md-5     col-lg-3   col-xl-3">
+                        <label class="col-auto" for="Cantidad">Cantidad</label>
+                        <div class="input-group ">
+                            <InputNumber @bind-Value="@entradasArticulos.Cantidad" class="form-control"></InputNumber>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+
+
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Limpiar"><i class="fa fa-plus"></i> Limpiar</button>
+                    <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </EditForm>
+
+
+@code {
+
+    [Parameter]
+    public int EntradasArtId { get; set; }
+
+    private EntradasArticulos entradasArticulos = new EntradasArticulos();
+
+    Articulos articulos = new Articulos();
+    ArticuloBLL articuloBLL = new ArticuloBLL();
+    List<Articulos> listaarticulos = new List<Articulos>();
+
+    private string ArticuloSelect { get; set; }
+
+
+
+    protected override void OnInitialized()
+    {
+
+        listaarticulos = articuloBLL.GetList(e => true);
+        entradasArticulos = new EntradasArticulos();
+        Limpiar();
+        Buscar();
+        base.OnInitialized();
+    }
+
+
+    private void Buscar()
+    {
+        EntradasArticulos entradaTemp = BLL.EntradaArtBLL.Buscar(entradasArticulos.EntradasArtId);
+
+        if (entradaTemp != null)
+        {
+            Limpiar();
+            entradasArticulos = entradaTemp;
+            ArticuloSelect = articulos.ArticuloId.ToString();
+
+
+            toast.ShowSuccess("Producto encontrado.", "Exito");
+
+        }
+        else
+        {
+
+            Limpiar();
+            toast.ShowError("El Producto no fue encontrado.", "Fallo");
+
+        }
+    }
+
+
+    private void Limpiar()
+    {
+
+        this.entradasArticulos = new EntradasArticulos();
+
+
+    }
+
+
+
+
+    private void Guardar()
+    {
+
+
+        SeleccionarArticulo();
+
+
+        if (ArticuloBLL.Guardar(articulos))
+        {
+            Limpiar();
+            toast.ShowSuccess("Producto guardado correctamente.", "Exito");
+
+        }
+        else
+        {
+            toast.ShowError("Error al guardar el Producto.", "Fallo");
+
+        }
+    }
+
+
+
+    private void Eliminar()
+    {
+        EntradasArticulos entradaTemp = EntradaArtBLL.Buscar(entradasArticulos.EntradasArtId);
+
+        if (entradasArticulos != null)
+        {
+            if (EntradaArtBLL.Eliminar(entradasArticulos.EntradasArtId))
+            {
+                Limpiar();
+                toast.ShowSuccess("Producto eliminado correctamente.", "Exito");
+
+
+            }
+            else
+            {
+                toast.ShowError("Error al eliminar el Producto.", "Fallo");
+
+            }
+        }
+        else
+        {
+            toast.ShowError("Error al eliminar el Producto.", "Fallo");
+
+        }
+    }
+
+
+    private void SeleccionarArticulo()
+    {
+        articulos = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+    }
+
+}
