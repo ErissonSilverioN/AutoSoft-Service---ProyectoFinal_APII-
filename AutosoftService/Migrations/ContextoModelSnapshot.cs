@@ -22,9 +22,6 @@ namespace AutosoftService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Categoria")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -35,8 +32,8 @@ namespace AutosoftService.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Existencia")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Existencia")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
@@ -101,8 +98,8 @@ namespace AutosoftService.Migrations
                     b.Property<int>("ArticuloId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Cantidad")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
@@ -351,7 +348,7 @@ namespace AutosoftService.Migrations
                             ConfirmarContrasena = "Admin",
                             Contrasena = "Admin",
                             Email = "Emerson@gmail.com",
-                            FechaIngreso = new DateTime(2020, 7, 26, 3, 1, 28, 918, DateTimeKind.Local).AddTicks(2796),
+                            FechaIngreso = new DateTime(2020, 7, 26, 11, 56, 1, 878, DateTimeKind.Local).AddTicks(4108),
                             NivelUsuario = "Administrador",
                             Nombre = "Emerson",
                             Usuario = "Administrador"

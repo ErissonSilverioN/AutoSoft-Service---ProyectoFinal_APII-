@@ -6,6 +6,7 @@ using AutosoftService.Model;
 using AutosoftService.DAL;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using AutosoftService.BLL;
 
 namespace AutosoftService.BLL
 {
@@ -21,7 +22,7 @@ namespace AutosoftService.BLL
         }
 
 
-        private static bool Insertar(EntradasArticulos entradasArticulos)
+        public static bool Insertar(EntradasArticulos entradasArticulos)
         {
             bool paso = false;
             Contexto db = new Contexto();
@@ -33,6 +34,8 @@ namespace AutosoftService.BLL
                 {
 
                     Articulos articulos = BLL.ArticuloBLL.Buscar(entradasArticulos.ArticuloId);
+
+                  
 
                     articulos.Existencia += entradasArticulos.Cantidad;
 
@@ -52,6 +55,7 @@ namespace AutosoftService.BLL
             }
 
             return paso;
+
         }
 
         public static bool Modificar(EntradasArticulos entradasArticulos)
@@ -59,35 +63,36 @@ namespace AutosoftService.BLL
             bool paso = false;
             Contexto db = new Contexto();
 
+
             try
             {
-                EntradasArticulos EntArt = BLL.EntradaArtBLL.Buscar(entradasArticulos.EntradasArtId);
-                decimal resta;
+                var articulos = ArticuloBLL.Buscar(entradasArticulos.ArticuloId);
+                var anterior = Buscar(entradasArticulos.EntradasArtId);
 
-                resta = entradasArticulos.Cantidad - EntArt.Cantidad;
+                Articulos articulos1 = ArticuloBLL.Buscar(anterior.ArticuloId);
+                articulos1.Existencia -= anterior.Cantidad;
+                ArticuloBLL.Guardar(articulos);
 
-                Articulos articulos = BLL.ArticuloBLL.Buscar(entradasArticulos.ArticuloId);
-                articulos.Existencia += resta;
-                BLL.ArticuloBLL.Modificar(articulos);
-
+                db = new Contexto();
+                
+                db.articulos.Find(entradasArticulos.ArticuloId).Existencia += entradasArticulos.Cantidad;
                 db.Entry(entradasArticulos).State = EntityState.Modified;
+                paso = db.SaveChanges() > 0;
 
-                if (db.SaveChanges() > 0)
-                {
-                    paso = true;
-                }
-
-                db.Dispose();
             }
-
-
-
             catch (Exception)
             {
                 throw;
-            }
 
+            }
+            finally
+            {
+                db.Dispose();
+
+            }
             return paso;
+
+
         }
 
 
@@ -96,28 +101,17 @@ namespace AutosoftService.BLL
 
             bool paso = true;
             Contexto db = new Contexto();
+            EntradasArticulos entradasArticulos = new EntradasArticulos();
+
 
             try
             {
-                EntradasArticulos entradaArticulos = db.entradaArt.Find(id);
+                entradasArticulos = db.entradaArt.Find(id);
+                db.articulos.Find(entradasArticulos.ArticuloId).Existencia -= entradasArticulos.Cantidad;
 
-                if (entradaArticulos != null)
-                {
-                    Articulos articulos = BLL.ArticuloBLL.Buscar(entradaArticulos.EntradasArtId);
-                    articulos.Existencia -= entradaArticulos.Cantidad;
-                    BLL.ArticuloBLL.Modificar(articulos);
-
-                    db.Entry(entradaArticulos).State = EntityState.Deleted;
-                }
-
-                if (db.SaveChanges() > 0)
-                {
-                    paso = true;
-                    db.Dispose();
-                }
-
-
-
+                db.entradaArt.Remove(entradasArticulos);
+                // contexto.Entry(inscripcion).State = EntityState.Deleted;
+                paso = db.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -133,17 +127,21 @@ namespace AutosoftService.BLL
 
             Contexto db = new Contexto();
             EntradasArticulos entradasArticulos = new EntradasArticulos();
+           
 
             try
             {
-                entradasArticulos = db.entradaArt.Find(id);
-                db.Dispose();
 
+                entradasArticulos = db.entradaArt.Find(id);
 
             }
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                db.Dispose();
             }
 
             return entradasArticulos;

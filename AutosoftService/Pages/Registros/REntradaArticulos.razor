@@ -1,5 +1,5 @@
 ﻿@page "/REntradaArticulos"
-@page "/EntradaArticulos/{EntradasArtId:int}"
+@page "/REntradaArticulos/{EntradasArtId:int}"
 
 @inject IToastService toast
 @using AutosoftService.Model;
@@ -16,7 +16,7 @@
 
             <div class="card-header">
                 <div class="text-center">
-                    <h3>Registro de Entrada</h3>
+                    <h3>Entrada de Articulos</h3>
                 </div>
             </div>
 
@@ -27,62 +27,65 @@
                 <form>
                     <div class="form-row">
 
-                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1"></div>
+
 
                         <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                            <label class="col-auto">Código</label>
-                            <div class="input-group ">
-                                <InputNumber @bind-Value="@entradasArticulos.EntradasArtId" class="form-control" />
+                            <label class="col-auto">Codigo</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="@entradasArticulos.EntradasArtId" class="form-control"></InputNumber>
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass" />&nbsp;&nbsp;Buscar</button>
+                                    <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass">Buscar</span></button>
                                 </div>
                             </div>
                         </div>
 
-                    </div>
+
+                        <div class="col-sm-3     col-md-2     col-lg-4     col-xl-4" />
+
+                        <div class="form-group col-sm-4     col-md-5     col-lg-3     col-xl-3     ">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="@entradasArticulos.Fecha" class="form-control" />
+                        </div>
 
 
-                    <div class="col-sm-3     col-md-2     col-lg-4     col-xl-4" />
+
+                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                        <br />
+                        <br />
 
 
-                    <div class="form-group col-sm-4     col-md-5     col-lg-3     col-xl-3     ">
-                        <label>Fecha</label>
-                        <InputDate @bind-Value="@entradasArticulos.Fecha" class="form-control" />
-                    </div>
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label class="col-auto">Articulo</label>
+                            <div class="input-group ">
 
-                    <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
-
-
-                    <div class="form-group col-sm-5     col-md-5     col-lg-4     col-xl-4">
-                        <label class="col-auto">Articulo</label>
-                        <div class="input-group ">
-
-                            <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onchange="SeleccionarArticulo" @onclick="SeleccionarArticulo">
-                                <option value="0" disabled selected>Seleccione un Articulo</option>
-                                @if (listaarticulos.Count == 0)
-                                {
-                                    <option value="" disabled>No hay Articulo Registrado</option>
-                                }
-                                else
-                                {
-                                    @foreach (var item in listaarticulos)
+                                <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onchange="LlenaCombo" @onclick="LlenaCombo">
+                                    <option value="0" disabled selected>Seleccione un Articulo</option>
+                                    @if (listaarticulos.Count == 0)
                                     {
-                                        <option value="@item.ArticuloId">@item.Descripcion</option>
+                                        <option value="" disabled>No hay Articulo Registrado</option>
                                     }
-                                }
-                            </InputSelect>
+                                    else
+                                    {
+                                        @foreach (var item in listaarticulos)
+                                        {
+                                            <option value="@item.ArticuloId">@item.Descripcion</option>
+                                        }
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(()=>entradasArticulos.ArticuloId)" />
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-sm-3    col-md-2    col-lg-3     col-xl-3" />
 
 
-
-                    <div class="form-group col-sm-4     col-md-5     col-lg-3   col-xl-3">
-                        <label class="col-auto" for="Cantidad">Cantidad</label>
-                        <div class="input-group ">
-                            <InputNumber @bind-Value="@entradasArticulos.Cantidad" class="form-control"></InputNumber>
+                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
+                            <label class="col-auto" for="Cantidad">Cantidad</label>
+                            <div class="input-group ">
+                                <InputNumber @bind-Value="@entradasArticulos.Cantidad" class="form-control"></InputNumber>
+                            </div>
                         </div>
+
                     </div>
 
 
@@ -94,7 +97,7 @@
 
             <div class="card-footer">
                 <div class="form-group text-center" display: inline-block>
-                    <button type="button" class="btn btn-lg btn-primary" @onclick="Limpiar"><i class="fa fa-plus"></i> Limpiar</button>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Limpiar"><i class="fa fa-plus"></i> Nuevo</button>
                     <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
                     <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
                 </div>
@@ -117,9 +120,10 @@
 
     Articulos articulos = new Articulos();
     ArticuloBLL articuloBLL = new ArticuloBLL();
-    List<Articulos> listaarticulos = new List<Articulos>();
-
+    private List<Articulos> listaarticulos = new List<Articulos>();
     private string ArticuloSelect { get; set; }
+
+
 
 
 
@@ -142,7 +146,7 @@
         {
             Limpiar();
             entradasArticulos = entradaTemp;
-            ArticuloSelect = articulos.ArticuloId.ToString();
+            ArticuloSelect = entradasArticulos.EntradasArtId.ToString();
 
 
             toast.ShowSuccess("Producto encontrado.", "Exito");
@@ -164,6 +168,7 @@
         this.entradasArticulos = new EntradasArticulos();
 
 
+
     }
 
 
@@ -171,22 +176,20 @@
 
     private void Guardar()
     {
+        LlenaCombo();
 
-
-        SeleccionarArticulo();
-
-
-        if (ArticuloBLL.Guardar(articulos))
+        if (EntradaArtBLL.Guardar(entradasArticulos))
         {
             Limpiar();
-            toast.ShowSuccess("Producto guardado correctamente.", "Exito");
+            ArticuloSelect = "0";
+            toast.ShowSuccess("Entrada guardada correctamente", "Exito");
 
         }
         else
         {
-            toast.ShowError("Error al guardar el Producto.", "Fallo");
-
+            toast.ShowError("Error al guardar la entrada", "Fallo");
         }
+
     }
 
 
@@ -195,13 +198,13 @@
     {
         EntradasArticulos entradaTemp = EntradaArtBLL.Buscar(entradasArticulos.EntradasArtId);
 
-        if (entradasArticulos != null)
+        if (entradaTemp != null)
         {
             if (EntradaArtBLL.Eliminar(entradasArticulos.EntradasArtId))
             {
                 Limpiar();
                 toast.ShowSuccess("Producto eliminado correctamente.", "Exito");
-
+               
 
             }
             else
@@ -218,9 +221,9 @@
     }
 
 
-    private void SeleccionarArticulo()
+    private void LlenaCombo()
     {
-        articulos = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+        entradasArticulos.ArticuloId = Convert.ToInt32(ArticuloSelect);
     }
 
 }

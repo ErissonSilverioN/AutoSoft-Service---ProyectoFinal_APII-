@@ -11,8 +11,9 @@ namespace AutosoftService.Model
         [Key]
         public int EntradasArtId { get; set; }
         public int ArticuloId { get; set; }
+
         [Required(ErrorMessage ="Debe ingresar la cantidad")]
-        public decimal Cantidad { get; set; }
+        public int Cantidad { get; set; }
         public DateTime Fecha { get; set; }
 
         public EntradasArticulos()

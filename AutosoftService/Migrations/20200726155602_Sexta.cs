@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutosoftService.Migrations
 {
-    public partial class Secundary : Migration
+    public partial class Sexta : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,8 @@ namespace AutosoftService.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Descripcion = table.Column<string>(nullable: true),
                     ProveedorId = table.Column<int>(nullable: false),
-                    Cantidad = table.Column<int>(nullable: false),
                     Categoria = table.Column<string>(nullable: false),
-                    Existencia = table.Column<decimal>(nullable: false),
+                    Existencia = table.Column<int>(nullable: false),
                     Costo = table.Column<decimal>(nullable: false),
                     Precio = table.Column<decimal>(nullable: false),
                     Ganancias = table.Column<decimal>(nullable: false),
@@ -53,7 +52,7 @@ namespace AutosoftService.Migrations
                     EntradasArtId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ArticuloId = table.Column<int>(nullable: false),
-                    Cantidad = table.Column<decimal>(nullable: false),
+                    Cantidad = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -228,7 +227,7 @@ namespace AutosoftService.Migrations
             migrationBuilder.InsertData(
                 table: "usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "ConfirmarContrasena", "Contrasena", "Email", "FechaIngreso", "NivelUsuario", "Nombre", "Usuario" },
-                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 26, 3, 1, 28, 918, DateTimeKind.Local).AddTicks(2796), "Administrador", "Emerson", "Administrador" });
+                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 26, 11, 56, 1, 878, DateTimeKind.Local).AddTicks(4108), "Administrador", "Emerson", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_facturaD_FacturaId",

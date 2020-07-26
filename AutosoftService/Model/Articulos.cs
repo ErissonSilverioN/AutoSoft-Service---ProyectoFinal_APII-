@@ -14,11 +14,10 @@ namespace AutosoftService.Model
         public string Descripcion { get; set; }
 
         public int ProveedorId { get; set; }
-        public int Cantidad { get; set; }
 
         [Required(ErrorMessage = "Debe elegir una categoria")]
         public string Categoria { get; set; }
-        public decimal Existencia { get; set; }
+        public int Existencia { get; set; }
         public decimal Costo { get; set; }
         public decimal Precio { get; set; }
         public decimal Ganancias { get; set; }
@@ -28,7 +27,7 @@ namespace AutosoftService.Model
         {
             ArticuloId = 0;
             ProveedorId = 0;
-            Cantidad = 0;
+           
             Categoria = string.Empty;
             Descripcion = string.Empty;
             Existencia = 0;

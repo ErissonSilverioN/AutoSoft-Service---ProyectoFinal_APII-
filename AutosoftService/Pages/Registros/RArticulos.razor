@@ -67,7 +67,7 @@
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
                             <label>Proveedor</label>
-                            <InputSelect @bind-Value="@ProveedorSelect" class="form-control " @onchange="SeleccionarProveedor" @onclick="SeleccionarProveedor">
+                            <InputSelect class="form-control "  @bind-Value="@ProveedorSelect"  @onchange="SeleccionarProveedor" @onclick="SeleccionarProveedor">
                                 <option value="0" disabled selected>Seleccione un Proveedor</option>
                                 @if (listaProveedores.Count <= 0)
                                 {
@@ -135,7 +135,7 @@
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
                             <label for="Cantidad">Cantidad</label>
-                            <InputNumber @bind-Value="@articulos.Cantidad" class="form-control" disabled />
+                            <InputNumber @bind-Value="@articulos.Existencia" class="form-control" disabled />
                         </div>
 
                         <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
@@ -275,8 +275,11 @@
 
     private void SeleccionarProveedor()
     {
-        articulos.ArticuloId = Convert.ToInt32(ProveedorSelect);
+       articulos.ProveedorId = Convert.ToInt32(ProveedorSelect);
     }
+
+
+
 
     public void CalcularPrecio()
     {
