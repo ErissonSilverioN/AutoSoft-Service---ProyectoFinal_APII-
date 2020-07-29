@@ -143,7 +143,7 @@ namespace AutosoftService.BLL
         }
 
 
-        public List<Vehiculos> GetList(Expression<Func<Vehiculos, bool>> expression)
+        public  static List<Vehiculos> GetList(Expression<Func<Vehiculos, bool>> expression)
         {
 
 

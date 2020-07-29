@@ -171,7 +171,7 @@ namespace AutosoftService.BLL
         }
 
 
-        public static List<Facturas> GetList(Expression<Func<Facturas, bool>> expression)
+        public  List<Facturas> GetList(Expression<Func<Facturas, bool>> expression)
         {
             List<Facturas> Lista = new List<Facturas>();
             Contexto db = new Contexto();

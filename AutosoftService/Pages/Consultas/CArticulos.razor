@@ -200,7 +200,7 @@
     ArticuloBLL articuloBLL = new ArticuloBLL();
     private void CargarLista()
     {
-        ListadoArticulos = articuloBLL.GetList(e => true);
+        ListadoArticulos = ArticuloBLL.GetList(e => true);
         Lista = new List<Articulos>();
         foreach (var item in ListadoArticulos)
         {
@@ -302,7 +302,7 @@
                 switch (Filtro)
                 {
                     case "0":
-                        ListadoArticulos = articuloBLL.GetList(e => true);
+                        ListadoArticulos = ArticuloBLL.GetList(e => true);
                         break;
 
                     case "1":

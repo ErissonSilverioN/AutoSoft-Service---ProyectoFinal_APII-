@@ -130,7 +130,7 @@
     protected override void OnInitialized()
     {
 
-        listaarticulos = articuloBLL.GetList(e => true);
+        listaarticulos = ArticuloBLL.GetList(e => true);
         entradasArticulos = new EntradasArticulos();
         Limpiar();
         Buscar();

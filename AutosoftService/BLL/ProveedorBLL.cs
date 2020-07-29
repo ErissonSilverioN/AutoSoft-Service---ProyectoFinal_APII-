@@ -139,7 +139,7 @@ namespace AutosoftService.BLL
 
         }
 
-        public List<Proveedores> GetList(Expression<Func<Proveedores, bool>> expression)
+        public static List<Proveedores> GetList(Expression<Func<Proveedores, bool>> expression)
         {
             Contexto db = new Contexto();
             List<Proveedores> Lista = new List<Proveedores>();

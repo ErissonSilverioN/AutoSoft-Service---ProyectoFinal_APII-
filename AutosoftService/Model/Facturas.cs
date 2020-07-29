@@ -9,11 +9,13 @@ namespace AutosoftService.Model
 {
     public class Facturas
     {
+
         [Key]
 
         public int FacturaId { get; set; }
         public int VehiculoId { get; set; }
         public int ClienteId { get; set; }
+        public int ArticuloId { get; set; }
         public string Servicios { get; set; }
         public bool TipoPago { get; set; }
         public decimal SubTotal { get; set; }
@@ -31,6 +33,7 @@ namespace AutosoftService.Model
             FacturaId = 0;
             VehiculoId = 0;
             ClienteId = 0;
+            ArticuloId = 0;
             Servicios = string.Empty;
             TipoPago = false;
             SubTotal = 0;

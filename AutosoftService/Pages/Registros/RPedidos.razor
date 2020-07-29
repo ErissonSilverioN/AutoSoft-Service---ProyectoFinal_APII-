@@ -1,0 +1,445 @@
+﻿@page "/RPedidos"
+@page "/RPedios/{PedidoId:int}"
+
+@inject IToastService toas
+@using AutosoftService.Model;
+@using AutosoftService.BLL;
+
+
+<EditForm Model="pedidos" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="text-center">
+                <h3>Registro de Factura</h3>
+            </div>
+        </div>
+
+
+        <div class="card-body">
+
+            <form>
+
+                <div class="form-row">
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                        <label>Código</label>
+                        <div class="input-group ">
+                            <InputNumber @bind-Value="@pedidos.PedidoId" class="form-control" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass" />&nbsp;&nbsp;Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-2   col-md-2   col-lg-6  col-xl-4" />
+
+                    <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="@pedidos.Fecha" class="form-control" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
+
+
+                    <div class="form-group col-sm-5     col-md-5     col-lg-4     col-xl-4">
+                        <label>Proveedor</label>
+                        <div class="input-group ">
+
+                            <InputSelect @bind-Value="@ProveedorSelect" class="form-control" @onchange="LlenaComboxProveedor" @onclick="LlenaComboxProveedor">
+                                <option value="0" disabled selected>---Seleccione un Proveedor---</option>
+                                @if (ListaProveedores.Count == 0)
+                                {
+                                    <option value="" disabled>No hay Proveedores Registrado</option>
+                                }
+                                else
+                                {
+                                    @foreach (var item in ListaProveedores)
+                                    {
+                                        <option value="@item.ProveedorId">@item.Nombre</option>
+                                    }
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+
+
+
+
+                    <div class="form-group -">
+                        <label>Articulos</label>
+                        <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onclick="LlenaComboxArticulo" @onchange="LlenaComboxArticulo">
+                            <option value="0" disabled selected>---Seleccione un Articulo---</option>
+                            @if (ListaArticulos.Count == 0)
+                            {
+                                <option value="" disabled>No hay Articulos Registrado</option>
+                            }
+                            else
+                            {
+                                @foreach (var item in ListaArticulos)
+                                {
+                                    <option value="@item.ArticuloId">@item.Descripcion</option>
+                                }
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="form-group col-sm-4     col-md-4     col-lg-2    col-xl-2     ">
+                        <label>Existencia</label>
+                        <InputNumber @bind-Value="@existencia" class="form-control" Readonly="true" />
+                    </div>
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-0" />
+
+
+                    <div class="form-row col-md-12 col-lg-6">
+
+                        <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4     ">
+                            <label>Precio</label>
+                            <InputNumber @bind-Value="@precio" class="form-control" Readonly="true"></InputNumber>
+                        </div>
+
+
+                        <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4    ">
+                            <label>Unidad</label>
+                            <div class="input-group ">
+                                <InputNumber @bind-Value="@unidad" class="form-control " @onfocusin="CalcularSubtotal" @onfocusout="CalcularSubtotal" @onclick="CalcularSubtotal" />
+                                <div class="form-group col-sm-12     col-md-2    ">
+                                    <button type="button" class="btn btn-info" @onclick="Agregar">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-0     col-xl-1" />
+
+                    <div class="col-lg-12       col-xl-10 no-gutters ">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Articulo</th>
+                                            <th>Precio</th>
+                                            <th>Unidad</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in pedidos.Pedido_Detalle)
+                                        {
+                                            <tr>
+                                                <th>@item.ArticuloId</th>
+                                                <th>@item.Descripcion</th>
+                                                <th>@item.Precio</th>
+                                                <th>@item.Unidad</th>
+                                                <th><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(()=> Remover(item))">Eliminar</button></th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                                <div class="form-inline justify-content-end">
+                                    <label>SUBTOTAL:&nbsp;</label>
+                                    <InputNumber @bind-Value="@pedidos.Subtotal" class="form-control" Readonly="true" />
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <br />
+                    </div>
+
+                    <br />
+                    <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+                    <div class="form-group col-sm-10     col-md-10     col-lg-8     col-xl-8    ">
+                        <label><b>Fecha Entrega</b></label>
+                        <InputDate @bind-Value="pedidos.FechaEntrega" class="form-control"></InputDate>
+                        <ValidationMessage For="@(() => pedidos.FechaEntrega)"></ValidationMessage>
+                    </div>
+
+                </div>
+
+            </form>
+
+
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-warning btn-lg" @onclick="Nuevo"><span class="oi oi-file" />&nbsp;Limpiar</button>
+                    <button type="submit" class="btn btn-success btn-lg "><span class="oi oi-data-transfer-download"></span>&nbsp;Guardar</button>
+                    <button type="button" class="btn btn-danger btn-lg"><span class="oi oi-trash" />&nbsp;Eliminar</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+</EditForm>
+
+
+
+@code {
+
+    [Parameter]
+    public int PedidoId { get; set; }
+    private Pedidos pedidos = new Pedidos();
+
+
+    Proveedores proveedores = new Proveedores();
+    private List<Proveedores> ListaProveedores = new List<Proveedores>();
+    private string ProveedorSelect { get; set; }
+
+
+    Articulos articulos = new Articulos();
+    private List<Articulos> ListaArticulos = new List<Articulos>();
+    private string ArticuloSelect { get; set; }
+
+
+    private int unidad = 0;
+    private decimal precio = 0;
+    decimal importe = 0;
+    private int existencia = 0;
+
+    private string Notificacion = "";
+
+
+
+
+    protected override void OnInitialized()
+    {
+
+        ListaProveedores = BLL.ProveedorBLL.GetList(e => true);
+        ListaArticulos = ArticuloBLL.GetList(e => true);
+        pedidos = new Pedidos();
+        proveedores = new Proveedores();
+        articulos = new Articulos();
+        Nuevo();
+        Buscar();
+
+        base.OnInitialized();
+    }
+
+
+
+    private void Buscar()
+    {
+        if (pedidos.PedidoId != 0)
+        {
+            var encontrado = PedidoBLL.Buscar(pedidos.PedidoId);
+
+            if (encontrado != null)
+            {
+                this.pedidos = encontrado;
+            }
+            else
+            {
+                toas.ShowWarning("NO ENCONTRADO", "Fallo");
+            }
+        }
+    }
+
+
+
+    private void Nuevo()
+    {
+        this.pedidos = new Pedidos();
+    }
+
+
+
+    private void Guardar()
+    {
+
+        CalcularSubtotal();
+        if (ProveedorSelect == null)
+        {
+            toas.ShowInfo("debe seleccionar un Proveedor", "Info");
+        }
+        else
+        {
+            pedidos.ProveedorId = Convert.ToInt32(ProveedorSelect);
+
+            if (pedidos.Pedido_Detalle.Count == 0)
+            {
+                toas.ShowInfo("Debes agregar un Articulo al detalle", "Info");
+            }
+            else
+            {
+                if (PedidoBLL.Guardar(pedidos))
+                {
+                    Nuevo();
+                    toas.ShowSuccess("Factura Guardada", "Exito");
+                }
+                else
+                {
+                    toas.ShowError("Error al guardar Factura", "Fallo");
+                }
+            }
+        }
+    }
+
+
+    private void Eliminar()
+    {
+        bool paso;
+
+        paso = PedidoBLL.Eliminar(pedidos.PedidoId);
+
+        if (paso)
+        {
+            Nuevo();
+            toas.ShowWarning("ELIMINADO");
+        }
+        else
+        {
+            toas.ShowError("NO SE PUDO ELIMINAR");
+        }
+    }
+
+
+    private void Agregar()
+    {
+        if (ArticuloSelect == null)
+        {
+            Notificacion = "Debe seleccionar un Producto";
+        }
+        else
+        {
+            if (unidad <= 0)
+            {
+                Notificacion = "La cantidad debe ser mayor a 0";
+            }
+            else
+                if (unidad >= 999999)
+            {
+                Notificacion = "La cantidad esta fuera de rango";
+                return;
+            }
+            else
+            {
+                if (unidad > articulos.Existencia)
+                {
+                    Notificacion = "Solo quedan " + articulos.Existencia + " unidades de este producto";
+                }
+                else
+                {
+
+                    pedidos.Pedido_Detalle.Add(new PedidoD()
+                    {
+                        PedidoId = pedidos.PedidoId,
+                        ArticuloId = articulos.ArticuloId,
+                        Descripcion = articulos.Descripcion,
+                        Precio = precio,
+                        Unidad = unidad
+                    }); ;
+                    articulos = new Articulos();
+
+                    CalcularSubtotal();
+
+                    ArticuloSelect = "0";
+                    unidad = 0;
+                }
+            }
+
+        }
+    }
+
+
+
+    private void Remover(PedidoD detalle)
+    {
+        pedidos.Pedido_Detalle.Remove(detalle);
+        CalcularSubtotal();
+    }
+
+
+
+
+
+
+
+    private void LlenaComboxProveedor()
+    {
+        try
+        {
+            pedidos.ProveedorId = Convert.ToInt32(ProveedorSelect);
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+
+
+    private void LlenaComboxArticulo()
+    {
+        try
+        {
+            pedidos.ArticuloId = Convert.ToInt32(ArticuloSelect);
+            precio = articulos.Precio;
+            existencia = articulos.Existencia;
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+
+    private void CalcularSubtotal()
+    {
+        decimal Result = 0;
+
+        foreach (var item in pedidos.Pedido_Detalle)
+        {
+            Result += item.Precio * item.Unidad;
+        }
+
+        pedidos.Subtotal = Result;
+    }
+
+
+}

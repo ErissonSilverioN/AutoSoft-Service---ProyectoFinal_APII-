@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutosoftService.Migrations
 {
-    public partial class Sexta : Migration
+    public partial class Nueva : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,7 @@ namespace AutosoftService.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     VehiculoId = table.Column<int>(nullable: false),
                     ClienteId = table.Column<int>(nullable: false),
+                    ArticuloId = table.Column<int>(nullable: false),
                     Servicios = table.Column<string>(nullable: true),
                     TipoPago = table.Column<bool>(nullable: false),
                     SubTotal = table.Column<decimal>(nullable: false),
@@ -102,9 +103,10 @@ namespace AutosoftService.Migrations
                 {
                     PedidoId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    ArticuloId = table.Column<int>(nullable: false),
                     ProveedorId = table.Column<int>(nullable: false),
-                    Categoria = table.Column<string>(nullable: true),
                     Nota = table.Column<string>(nullable: true),
+                    Subtotal = table.Column<decimal>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false),
                     FechaEntrega = table.Column<DateTime>(nullable: false)
                 },
@@ -208,8 +210,8 @@ namespace AutosoftService.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     PedidoId = table.Column<int>(nullable: false),
                     ProveedorId = table.Column<int>(nullable: false),
-                    Categoria = table.Column<string>(nullable: true),
-                    Articulo = table.Column<string>(nullable: true),
+                    ArticuloId = table.Column<int>(nullable: false),
+                    Descripcion = table.Column<string>(nullable: true),
                     Unidad = table.Column<int>(nullable: false),
                     Precio = table.Column<decimal>(nullable: false)
                 },
@@ -227,7 +229,7 @@ namespace AutosoftService.Migrations
             migrationBuilder.InsertData(
                 table: "usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "ConfirmarContrasena", "Contrasena", "Email", "FechaIngreso", "NivelUsuario", "Nombre", "Usuario" },
-                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 26, 11, 56, 1, 878, DateTimeKind.Local).AddTicks(4108), "Administrador", "Emerson", "Administrador" });
+                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 29, 12, 43, 37, 379, DateTimeKind.Local).AddTicks(3386), "Administrador", "Emerson", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_facturaD_FacturaId",

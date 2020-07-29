@@ -12,9 +12,10 @@ namespace AutosoftService.Model
         [Key]
 
         public int PedidoId { get; set; }
+        public int ArticuloId { get; set; }
         public int ProveedorId { get; set; }
-        public string Categoria { get; set; }
         public string Nota { get; set; }
+        public decimal Subtotal { get; set; }
         public DateTime Fecha { get; set; }
         public DateTime FechaEntrega { get; set; }
 
@@ -26,8 +27,9 @@ namespace AutosoftService.Model
         public Pedidos()
         {
             PedidoId = 0;
+            ArticuloId = 0;
             ProveedorId = 0;
-            Categoria = string.Empty;
+            Subtotal = 0;
             Nota = string.Empty;
             Fecha = DateTime.Now;
             FechaEntrega = DateTime.Now.AddDays(15);

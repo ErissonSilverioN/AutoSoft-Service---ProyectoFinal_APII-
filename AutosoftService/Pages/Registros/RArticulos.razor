@@ -170,12 +170,9 @@
 
     [Parameter]
     public int ArticuloId { get; set; }
-
     private Articulos articulos = new Articulos();
 
     private List<Proveedores> listaProveedores = new List<Proveedores>();
-    ProveedorBLL proveedoresBLL = new ProveedorBLL();
-
     Proveedores proveedores = new Proveedores();
     private string ProveedorSelect { get; set; }
 
@@ -185,7 +182,7 @@
     protected override void OnInitialized()
     {
 
-        listaProveedores = proveedoresBLL.GetList(e => true);
+        listaProveedores = BLL.ProveedorBLL.GetList(e => true);
         articulos = new Articulos();
         Limpiar();
         Buscar();
@@ -205,14 +202,14 @@
             ProveedorSelect = articulos.ArticuloId.ToString();
 
             CalcularPrecio();
-            toas.ShowSuccess("Producto encontrado.", "Exito");
+            toas.ShowSuccess("Articulo encontrado.", "Exito");
 
         }
         else
         {
 
             Limpiar();
-            toas.ShowError("El Producto no fue encontrado.", "Fallo");
+            toas.ShowError("El Artculo no fue encontrado.", "Fallo");
 
         }
     }
@@ -227,12 +224,12 @@
         if (ArticuloBLL.Guardar(articulos))
         {
             Limpiar();
-            toas.ShowSuccess("Producto guardado correctamente.", "Exito");
+            toas.ShowSuccess("Articulo guardado correctamente.", "Exito");
 
         }
         else
         {
-            toas.ShowError("Error al guardar el Producto.", "Fallo");
+            toas.ShowError("Error al guardar el Articulo.", "Fallo");
 
         }
     }
@@ -247,19 +244,19 @@
             if (ArticuloBLL.Eliminar(articulos.ArticuloId))
             {
                 Limpiar();
-                toas.ShowSuccess("Producto eliminado correctamente.", "Exito");
+                toas.ShowSuccess("Articulo eliminado correctamente.", "Exito");
                 CalcularPrecio();
 
             }
             else
             {
-                toas.ShowError("Error al eliminar el Producto.", "Fallo");
+                toas.ShowError("Error al eliminar el Articulo.", "Fallo");
 
             }
         }
         else
         {
-            toas.ShowError("Error al eliminar el Producto.", "Fallo");
+            toas.ShowError("Error al eliminar el Articulo.", "Fallo");
 
         }
     }

@@ -123,7 +123,7 @@
 
     protected override void OnInitialized()
     {
-        lista = proveedorBLL.GetList(C => true);
+        lista = ProveedorBLL.GetList(C => true);
         Filtro = "Todo";
         IniciarPaginacion();
     }
@@ -202,17 +202,17 @@
                     switch (Filtro)
                     {
                         case "Todo":
-                            lista = proveedorBLL.GetList(e => true);
+                            lista = ProveedorBLL.GetList(e => true);
 
                             break;
                         case "Id":
-                            lista = proveedorBLL.GetList(e => e.ProveedorId == Convert.ToInt32(Criterio));
+                            lista = ProveedorBLL.GetList(e => e.ProveedorId == Convert.ToInt32(Criterio));
                             break;
                         case "Nombre":
-                            lista = proveedorBLL.GetList(e => e.Nombre == Criterio);
+                            lista = ProveedorBLL.GetList(e => e.Nombre == Criterio);
                             break;
                         case "Rnc":
-                            lista = proveedorBLL.GetList(e => e.RNC == Criterio);
+                            lista = ProveedorBLL.GetList(e => e.RNC == Criterio);
                             break;
 
                     }

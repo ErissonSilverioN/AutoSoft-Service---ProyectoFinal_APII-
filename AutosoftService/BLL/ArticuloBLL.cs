@@ -143,7 +143,7 @@ namespace AutosoftService.BLL
         }
 
 
-        public List<Articulos> GetList(Expression<Func<Articulos, bool>> expression)
+        public static List<Articulos> GetList(Expression<Func<Articulos, bool>> expression)
         {
             Contexto db = new Contexto();
             List<Articulos> Lista = new List<Articulos>();

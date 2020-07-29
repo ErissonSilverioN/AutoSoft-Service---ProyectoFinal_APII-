@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutosoftService.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200726155602_Sexta")]
-    partial class Sexta
+    [Migration("20200729164338_Nueva")]
+    partial class Nueva
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -148,6 +148,9 @@ namespace AutosoftService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("ArticuloId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ClienteId")
                         .HasColumnType("INTEGER");
 
@@ -206,10 +209,10 @@ namespace AutosoftService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Articulo")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ArticuloId")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Categoria")
+                    b.Property<string>("Descripcion")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("PedidoId")
@@ -237,8 +240,8 @@ namespace AutosoftService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Categoria")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ArticuloId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
@@ -251,6 +254,9 @@ namespace AutosoftService.Migrations
 
                     b.Property<int>("ProveedorId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("PedidoId");
 
@@ -350,7 +356,7 @@ namespace AutosoftService.Migrations
                             ConfirmarContrasena = "Admin",
                             Contrasena = "Admin",
                             Email = "Emerson@gmail.com",
-                            FechaIngreso = new DateTime(2020, 7, 26, 11, 56, 1, 878, DateTimeKind.Local).AddTicks(4108),
+                            FechaIngreso = new DateTime(2020, 7, 29, 12, 43, 37, 379, DateTimeKind.Local).AddTicks(3386),
                             NivelUsuario = "Administrador",
                             Nombre = "Emerson",
                             Usuario = "Administrador"

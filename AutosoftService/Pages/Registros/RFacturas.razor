@@ -1,0 +1,542 @@
+﻿@page "/RFacturas"
+@page "/RFacturas/{FacturaId:int}"
+
+@inject IToastService toas
+
+@using AutosoftService.Model;
+@using AutosoftService.BLL;
+
+
+<EditForm Model="facturas" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <div class="text-center">
+                <h3>Registro de Factura</h3>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <form>
+
+                <div class="form-row">
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                        <label>Código</label>
+                        <div class="input-group ">
+                            <InputNumber @bind-Value="@facturas.FacturaId" class="form-control" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass" />&nbsp;&nbsp;Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-2   col-md-2   col-lg-6  col-xl-4" />
+
+                    <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="@facturas.Fecha" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+
+
+
+                    <div class="form-group col-sm-10     col-md-10     col-lg-8     col-xl-8    ">
+                        <label class="text-center"><b>Descripcion del Servicio</b></label>
+                        <InputText @bind-Value="facturas.Servicios" class="form-control"></InputText>
+                        <ValidationMessage For="@(() => facturas.Servicios)"></ValidationMessage>
+                    </div>
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+
+                    <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4     ">
+                        <label>Clientes</label>
+                        <InputSelect @bind-Value="@ClienteSelect" class="form-control" @onclick="LlenaComboxCliente" @onchange="LlenaComboxCliente">
+                            <option value="0" disabled selected>---Seleccione un Cliente---</option>
+                            @if (ListaCliente.Count == 0)
+                            {
+                                <option value="" disabled>No hay Cliente Registrado</option>
+                            }
+                            else
+                            {
+                                @foreach (var item in ListaCliente)
+                                {
+                                    <option value="@item.ClienteId">@item.Nombre</option>
+                                }
+                            }
+                        </InputSelect>
+                    </div>
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+
+                    <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4     ">
+                        <label>Vehiculos</label>
+                        <InputSelect @bind-Value="@VehiculosSelect" class="form-control" @onclick="LlenaComboxVehiculo" @onchange="LlenaComboxVehiculo">
+                            <option value="0" disabled selected>---Seleccione un Vehiculo---</option>
+                            @if (ListaVehiculos.Count == 0)
+                            {
+                                <option value="" disabled>No hay Vehiculo Registrado</option>
+                            }
+                            else
+                            {
+                                @foreach (var item in ListaVehiculos)
+                                {
+                                    <option value="@item.ClienteId">@item.Descripcion</option>
+                                }
+                            }
+                        </InputSelect>
+                    </div>
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+                    <br />
+
+
+                    <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-3     ">
+                        <label>Articulos</label>
+                        <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onclick="LlenaComboxArticulo" @onchange="LlenaComboxArticulo">
+                            <option value="0" disabled selected>---Seleccione un Articulo---</option>
+                            @if (ListaArticulo.Count == 0)
+                            {
+                                <option value="" disabled>No hay Articulo Registrado</option>
+                            }
+                            else
+                            {
+                                @foreach (var item in ListaArticulo)
+                                {
+                                    <option value="@item.ArticuloId">@item.Descripcion</option>
+                                }
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="@(()=>facturas.ArticuloId)" />
+                    </div>
+
+                    <div class="form-group col-sm-4     col-md-4     col-lg-2    col-xl-2     ">
+                        <label>Cantidad</label>
+                        <InputNumber @bind-Value="@cantidad" class="form-control" @onfocusin="CalcularImporte" @onfocusout="CalcularImporte" @onclick="CalcularImporte" />
+                    </div>
+
+
+                    <div class="col-sm-0     col-md-0     col-lg-0     col-xl-0" />
+
+
+                    <div class="form-row col-md-12 col-lg-6">
+
+                        <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4     ">
+                            <label>Precio</label>
+                            <InputNumber @bind-Value="@precio" class="form-control" Readonly="true"></InputNumber>
+                        </div>
+
+
+                        <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4    ">
+                            <label>Importe</label>
+                            <div class="input-group ">
+                                <InputNumber @bind-Value="@importe" class="form-control " Readonly="true" @onfocusin="CalcularImporte" @onfocusout="CalcularImporte" @onclick="CalcularImporte" />
+                                <div class="form-group col-sm-12     col-md-2    ">
+                                    <button type="button" class="btn btn-info" @onclick="Agregar">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-0     col-xl-1" />
+
+
+
+                    <div class="col-lg-12       col-xl-10 no-gutters ">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Articulo</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in facturas.Factura_Detalle)
+                                        {
+                                            <tr>
+                                                <th>@item.ArticuloId</th>
+                                                <th>@item.Descripcion</th>
+                                                <th>@item.Cantidad</th>
+                                                <th>@item.Precio</th>
+                                                <th>@item.Importe</th>
+                                                <th><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(()=> Remover(item))">Eliminar</button></th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="form-inline justify-content-end">
+                                    <label>SUBTOTAL:&nbsp;</label>
+                                    <InputNumber @bind-Value="@facturas.SubTotal" class="form-control" Readonly="true" />
+                                </div>
+
+                                <div class="form-inline justify-content-end">
+                                    <label>ITBIS:&nbsp;</label>
+                                    <InputNumber @bind-Value="@facturas.Itbis" class="form-control" Readonly="true" />
+                                </div>
+
+                                <div class="form-inline justify-content-end">
+                                    <label>TOTAL:&nbsp;</label>
+                                    <InputNumber @bind-Value="@facturas.Total" class="form-control" Readonly="true" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+
+                    </div>
+
+                    <br />
+                    <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+                    <div class="form-group col-sm-10     col-md-10     col-lg-8     col-xl-8    ">
+                        <label><b>Proximo Mantenimiento</b></label>
+                        <InputDate @bind-Value="facturas.ProximoMantemiento" class="form-control"></InputDate>
+                        <ValidationMessage For="@(() => facturas.ProximoMantemiento)"></ValidationMessage>
+                    </div>
+
+
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-warning btn-lg" @onclick="Nuevo"><span class="oi oi-file" />&nbsp;Limpiar</button>
+                <button type="submit" class="btn btn-success btn-lg "><span class="oi oi-data-transfer-download"></span>&nbsp;Guardar</button>
+                <button type="button" class="btn btn-danger btn-lg"><span class="oi oi-trash" />&nbsp;Eliminar</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</EditForm>
+
+
+@code {
+
+    [Parameter]
+    public int FacturaId { get; set; }
+    private Facturas facturas = new Facturas();
+
+
+    private Articulos articulos { get; set; }
+    private List<Articulos> ListaArticulo = new List<Articulos>();
+    private string ArticuloSelect { get; set; }
+
+
+    Clientes clientes = new Clientes();
+    private List<Clientes> ListaCliente = new List<Clientes>();
+    private string ClienteSelect { get; set; }
+
+    Vehiculos vehiculos = new Vehiculos();
+    private List<Vehiculos> ListaVehiculos = new List<Vehiculos>();
+    private string VehiculosSelect { get; set; }
+
+
+    private int cantidad = 0;
+    private decimal precio = 0;
+    private int importe = 0;
+    private int artDisponible = 0;
+
+
+
+
+    protected override void OnInitialized()
+    {
+
+        ListaCliente = BLL.ClienteBLL.GetList(e => true);
+        ListaVehiculos = BLL.VehiculoBLL.GetList(e => true);
+        ListaArticulo = ArticuloBLL.GetList(e => true);
+        facturas = new Facturas();
+        clientes = new Clientes();
+        articulos = new Articulos();
+        vehiculos = new Vehiculos();
+
+        Nuevo();
+        Buscar();
+
+        base.OnInitialized();
+    }
+
+
+    private void Buscar()
+    {
+
+        var facturasTemp = FacturaBLL.Buscar(facturas.FacturaId);
+
+        if (facturasTemp != null)
+        {
+            Nuevo();
+            facturas = facturasTemp;
+            ArticuloSelect = Convert.ToString(facturas.ArticuloId);
+            toas.ShowSuccess("Factura encontrada.", "Exito");
+        }
+        else
+        {
+            facturas = new Facturas();
+            toas.ShowError("Factura no existe", "Fallo");
+        }
+
+    }
+
+
+
+
+    private void Nuevo()
+    {
+        this.facturas = new Facturas();
+    }
+
+
+
+
+    private void Guardar()
+    {
+
+        CalcularImporte();
+        if (ClienteSelect == null)
+        {
+            toas.ShowInfo("debe seleccionar un Cliente", "Info");
+        }
+        else
+        {
+            facturas.ClienteId = Convert.ToInt32(ClienteSelect);
+
+            if (facturas.Factura_Detalle.Count == 0)
+            {
+                toas.ShowInfo("Debes agregar un Articulo al detalle", "Info");
+            }
+            else
+            {
+                if (FacturaBLL.Guardar(facturas))
+                {
+                    Nuevo();
+                    toas.ShowSuccess("Factura Guardada", "Exito");
+                }
+                else
+                {
+                    toas.ShowError("Error al guardar Factura", "Fallo");
+                }
+            }
+        }
+    }
+
+
+    private void Eliminar()
+    {
+        bool paso;
+
+        paso = FacturaBLL.Eliminar(facturas.FacturaId);
+
+        if (paso)
+        {
+            Nuevo();
+            toas.ShowWarning("ELIMINADO");
+        }
+        else
+        {
+            toas.ShowError("NO SE PUDO ELIMINAR");
+        }
+    }
+
+
+    private void Agregar()
+    {
+        if (ArticuloSelect == null)
+        {
+            toas.ShowWarning("Debe seleccionar un Articulo");
+        }
+        else
+        {
+            if (cantidad <= 0)
+            {
+                toas.ShowWarning("La cantidad debe ser mayor a 0");
+            }
+            else
+                if (cantidad >= 999999)
+            {
+                toas.ShowWarning("La cantidad esta fuera de rango");
+                return;
+            }
+            else
+            {
+                if (cantidad > articulos.Existencia)
+                {
+                    toas.ShowWarning("Solo quedan " + articulos.Existencia + " unidades de este articulo");
+                }
+                else
+                {
+
+                    facturas.Factura_Detalle.Add(new FacturaD()
+                    {
+                        FacturaId = facturas.FacturaId,
+                        ArticuloId = articulos.ArticuloId,
+                        Descripcion = articulos.Descripcion,
+                        Cantidad = cantidad,
+                        Precio = precio,
+                        Importe = (cantidad * precio)
+                    });
+                    articulos = new Articulos();
+
+                    Total();
+
+                    ArticuloSelect = "0";
+                    cantidad = 0;
+                }
+            }
+
+        }
+    }
+
+
+
+
+
+    private void Remover(FacturaD Detalle)
+    {
+        facturas.Factura_Detalle.Remove(Detalle);
+        Total();
+    }
+
+
+    private void LlenaComboxCliente()
+    {
+        try
+        {
+            facturas.ClienteId = Convert.ToInt32(ClienteSelect);
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+
+    private void LlenaComboxVehiculo()
+    {
+        try
+        {
+            facturas.VehiculoId = Convert.ToInt32(VehiculosSelect);
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+
+
+    private void LlenaComboxArticulo()
+    {
+        try
+        {
+            articulos = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+            precio = articulos.Precio;
+        }
+        catch (Exception)
+        {
+            //	mensaje = ex.ToString();
+        }
+
+    }
+
+
+    private void Subtotal()
+    {
+        decimal Result = 0;
+
+        foreach (var item in facturas.Factura_Detalle)
+        {
+            Result += item.Importe;
+        }
+
+        facturas.SubTotal = Result;
+    }
+
+
+
+    private void Itbis()
+    {
+        decimal Result = 0;
+        decimal Porcentaje = (decimal)0.18;
+
+        foreach (var item in facturas.Factura_Detalle)
+        {
+            Result += facturas.SubTotal * Porcentaje;
+        }
+
+        facturas.Itbis = Result;
+
+    }
+
+
+
+    private void Total()
+    {
+        decimal Result = 0;
+
+        foreach (var item in facturas.Factura_Detalle)
+        {
+            Result += facturas.SubTotal + facturas.Itbis;
+        }
+
+        facturas.Total = Result;
+    }
+
+
+
+
+
+
+    private void CalcularImporte()
+    {
+        if (facturas != null)
+        {
+            importe = Convert.ToInt32(precio) * cantidad;
+        }
+        else
+        {
+            toas.ShowError("Error al Calcular");
+        }
+    }
+
+
+
+}
