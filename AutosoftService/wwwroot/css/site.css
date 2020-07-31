@@ -25,6 +25,7 @@ app {
     height: 3.5rem;
     display: flex;
     align-items: center;
+    background-image: linear-gradient(180deg, #002266 0%, #ffff99 100%);
 }
 
 .main {
@@ -39,7 +40,7 @@ app {
 
         .main .top-row > a, .main .top-row .btn-link {
             white-space: nowrap;
-            margin-left: 1.5rem;
+            margin-left: 2.5rem;
         }
 
 .main .top-row a:first-child {
@@ -158,7 +159,7 @@ app {
 
     .sidebar {
         width: 260px;
-        height: 200vh;
+        height: 160vh;
         position: sticky;
         top: 0;
     }

@@ -1,7 +1,7 @@
 ﻿@page "/RFacturas"
 @page "/RFacturas/{FacturaId:int}"
 
-@inject IToastService toas
+@inject IToastService toast
 
 @using AutosoftService.Model;
 @using AutosoftService.BLL;
@@ -102,7 +102,7 @@
                             {
                                 @foreach (var item in ListaVehiculos)
                                 {
-                                    <option value="@item.ClienteId">@item.Descripcion</option>
+                                    <option value="@item.VehiculoId">@item.Descripcion</option>
                                 }
                             }
                         </InputSelect>
@@ -120,7 +120,7 @@
                         <label>Articulos</label>
                         <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onclick="LlenaComboxArticulo" @onchange="LlenaComboxArticulo">
                             <option value="0" disabled selected>---Seleccione un Articulo---</option>
-                            @if (ListaArticulo.Count == 0)
+                            @if (ListaVehiculos.Count == 0)
                             {
                                 <option value="" disabled>No hay Articulo Registrado</option>
                             }
@@ -150,7 +150,6 @@
                             <label>Precio</label>
                             <InputNumber @bind-Value="@precio" class="form-control" Readonly="true"></InputNumber>
                         </div>
-
 
                         <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4    ">
                             <label>Importe</label>
@@ -197,19 +196,26 @@
                                     </tbody>
                                 </table>
                                 <div class="form-inline justify-content-end">
-                                    <label>SUBTOTAL:&nbsp;</label>
+                                    <label><b>SUBTOTAL:</b>&nbsp;</label>
                                     <InputNumber @bind-Value="@facturas.SubTotal" class="form-control" Readonly="true" />
                                 </div>
 
                                 <div class="form-inline justify-content-end">
-                                    <label>ITBIS:&nbsp;</label>
+                                    <label><b>ITBIS:</b>:&nbsp;</label>
                                     <InputNumber @bind-Value="@facturas.Itbis" class="form-control" Readonly="true" />
                                 </div>
 
                                 <div class="form-inline justify-content-end">
-                                    <label>TOTAL:&nbsp;</label>
+                                    <label><b>TOTAL:</b>:&nbsp;</label>
                                     <InputNumber @bind-Value="@facturas.Total" class="form-control" Readonly="true" />
                                 </div>
+
+
+                                <div class="form-check justify-content-start">
+                                    <label class="form-check-label">&nbsp;&nbsp;Facturar a credito</label>
+                                    <input class="form-check-inline" type="checkbox" value="" id="defaultCheck1">
+                                </div>
+
                             </div>
                         </div>
 
@@ -218,7 +224,9 @@
                     </div>
 
                     <br />
+
                     <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+
                     <div class="form-group col-sm-10     col-md-10     col-lg-8     col-xl-8    ">
                         <label><b>Proximo Mantenimiento</b></label>
                         <InputDate @bind-Value="facturas.ProximoMantemiento" class="form-control"></InputDate>
@@ -261,19 +269,21 @@
     private string ArticuloSelect { get; set; }
 
 
-    Clientes clientes = new Clientes();
+    Clientes clientes { get; set; }
     private List<Clientes> ListaCliente = new List<Clientes>();
     private string ClienteSelect { get; set; }
 
-    Vehiculos vehiculos = new Vehiculos();
+    Vehiculos vehiculos { get; set; }
     private List<Vehiculos> ListaVehiculos = new List<Vehiculos>();
     private string VehiculosSelect { get; set; }
 
 
-    private int cantidad = 0;
+    private int cantidad = 0, importe = 0;
     private decimal precio = 0;
-    private int importe = 0;
-    private int artDisponible = 0;
+   
+
+
+
 
 
 
@@ -290,8 +300,6 @@
         vehiculos = new Vehiculos();
 
         Nuevo();
-        Buscar();
-
         base.OnInitialized();
     }
 
@@ -305,13 +313,14 @@
         {
             Nuevo();
             facturas = facturasTemp;
-            ArticuloSelect = Convert.ToString(facturas.ArticuloId);
-            toas.ShowSuccess("Factura encontrada.", "Exito");
+
         }
+
         else
+
         {
             facturas = new Facturas();
-            toas.ShowError("Factura no existe", "Fallo");
+            toast.ShowError("Factura no encontrada", "Fallo");
         }
 
     }
@@ -322,6 +331,12 @@
     private void Nuevo()
     {
         this.facturas = new Facturas();
+        ClienteSelect = "0";
+        VehiculosSelect = "0";
+        ArticuloSelect = "0";
+        precio = 0;
+        cantidad = 0;
+        importe = 0;
     }
 
 
@@ -331,28 +346,29 @@
     {
 
         CalcularImporte();
-        if (ClienteSelect == null)
+        if (ClienteSelect == null && VehiculosSelect == null)
         {
-            toas.ShowInfo("debe seleccionar un Cliente", "Info");
+            toast.ShowInfo("Seleccione un Cliente", "Info");
         }
         else
         {
             facturas.ClienteId = Convert.ToInt32(ClienteSelect);
+            facturas.VehiculoId = Convert.ToInt32(VehiculosSelect);
 
             if (facturas.Factura_Detalle.Count == 0)
             {
-                toas.ShowInfo("Debes agregar un Articulo al detalle", "Info");
+                toast.ShowInfo("Debes agregar un Articulo", "Info");
             }
             else
             {
                 if (FacturaBLL.Guardar(facturas))
                 {
                     Nuevo();
-                    toas.ShowSuccess("Factura Guardada", "Exito");
+                    toast.ShowSuccess("Factura Guardada", "Exito");
                 }
                 else
                 {
-                    toas.ShowError("Error al guardar Factura", "Fallo");
+                    toast.ShowError("Error al guardar Factura", "Fallo");
                 }
             }
         }
@@ -368,56 +384,64 @@
         if (paso)
         {
             Nuevo();
-            toas.ShowWarning("ELIMINADO");
+            toast.ShowWarning("Factura eliminada", "Exito");
         }
         else
         {
-            toas.ShowError("NO SE PUDO ELIMINAR");
+            toast.ShowError("No se pudo eliminar","Fallo");
         }
     }
 
-
     private void Agregar()
     {
+        var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+
         if (ArticuloSelect == null)
         {
-            toas.ShowWarning("Debe seleccionar un Articulo");
+            toast.ShowInfo("Ingrese un Articulo", "Info");
         }
         else
         {
+
             if (cantidad <= 0)
             {
-                toas.ShowWarning("La cantidad debe ser mayor a 0");
+                toast.ShowInfo("Ingrese una cantidad", "Info");
             }
             else
-                if (cantidad >= 999999)
+
+               if (cantidad >= 999999)
             {
-                toas.ShowWarning("La cantidad esta fuera de rango");
+                toast.ShowInfo("La cantidad ingresa no es valida", "Info");
                 return;
             }
             else
             {
-                if (cantidad > articulos.Existencia)
+                if (articuloTemp.Existencia == 0)
                 {
-                    toas.ShowWarning("Solo quedan " + articulos.Existencia + " unidades de este articulo");
+                    toast.ShowInfo("No hay articulos en existencia", "Info");
                 }
                 else
                 {
 
+
+
+
                     facturas.Factura_Detalle.Add(new FacturaD()
                     {
                         FacturaId = facturas.FacturaId,
-                        ArticuloId = articulos.ArticuloId,
-                        Descripcion = articulos.Descripcion,
+                        ArticuloId = facturas.ArticuloId,
+                        Descripcion = articuloTemp.Descripcion,
                         Cantidad = cantidad,
                         Precio = precio,
                         Importe = (cantidad * precio)
+
                     });
+
                     articulos = new Articulos();
 
-                    Total();
+                    Calculos();
 
-                    ArticuloSelect = "0";
+
                     cantidad = 0;
                 }
             }
@@ -426,26 +450,26 @@
     }
 
 
-
-
-
     private void Remover(FacturaD Detalle)
     {
         facturas.Factura_Detalle.Remove(Detalle);
-        Total();
+        Calculos();
     }
 
 
     private void LlenaComboxCliente()
     {
+
         try
         {
             facturas.ClienteId = Convert.ToInt32(ClienteSelect);
         }
         catch (Exception)
         {
-
+            toast.ShowError("Algo salio mal", "Error");
         }
+
+
     }
 
 
@@ -457,7 +481,7 @@
         }
         catch (Exception)
         {
-
+            toast.ShowError("Algo salio mal", "Error");
         }
     }
 
@@ -465,64 +489,26 @@
 
     private void LlenaComboxArticulo()
     {
+
         try
         {
-            articulos = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
-            precio = articulos.Precio;
+            facturas.ArticuloId  = Convert.ToInt32(ArticuloSelect);
+
+            var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+
+            if (articuloTemp != null)
+            {
+                precio = articuloTemp.Precio;
+            }
+
         }
         catch (Exception)
         {
-            //	mensaje = ex.ToString();
+            toast.ShowError("Algo salio mal", "Error");
         }
 
-    }
-
-
-    private void Subtotal()
-    {
-        decimal Result = 0;
-
-        foreach (var item in facturas.Factura_Detalle)
-        {
-            Result += item.Importe;
-        }
-
-        facturas.SubTotal = Result;
-    }
-
-
-
-    private void Itbis()
-    {
-        decimal Result = 0;
-        decimal Porcentaje = (decimal)0.18;
-
-        foreach (var item in facturas.Factura_Detalle)
-        {
-            Result += facturas.SubTotal * Porcentaje;
-        }
-
-        facturas.Itbis = Result;
 
     }
-
-
-
-    private void Total()
-    {
-        decimal Result = 0;
-
-        foreach (var item in facturas.Factura_Detalle)
-        {
-            Result += facturas.SubTotal + facturas.Itbis;
-        }
-
-        facturas.Total = Result;
-    }
-
-
-
-
 
 
     private void CalcularImporte()
@@ -533,10 +519,32 @@
         }
         else
         {
-            toas.ShowError("Error al Calcular");
+            toast.ShowError("Error al Calcular", "Fallo");
         }
     }
 
 
+    private void Calculos()
+    {
+
+        decimal subtotal = 0;
+        decimal itbis = 0;
+        decimal total = 0;
+
+
+        foreach (var item in facturas.Factura_Detalle)
+        {
+            subtotal += item.Importe;
+            itbis += subtotal * (decimal)0.18;
+            total += item.Importe + Convert.ToDecimal(itbis);
+        }
+
+        facturas.SubTotal = subtotal;
+        facturas.Itbis = itbis;
+        facturas.Total = total;
+
+
+
+    }
 
 }
