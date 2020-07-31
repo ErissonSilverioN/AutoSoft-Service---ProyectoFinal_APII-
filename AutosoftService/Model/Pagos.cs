@@ -12,14 +12,16 @@ namespace AutosoftService.Model
 
         public int PagoId { get; set; }
         public int ClienteId { get; set; }
-        public decimal MontoPago { get; set; }
+        public decimal Monto { get; set; }
+        public decimal Deuda { get; set; }
         public DateTime Fecha { get; set; }
 
         public Pagos()
         {
             PagoId = 0;
             ClienteId = 0;
-            MontoPago = 0;
+            Monto = 0;
+            Deuda = 0;
             Fecha = DateTime.Now;
         }
     }

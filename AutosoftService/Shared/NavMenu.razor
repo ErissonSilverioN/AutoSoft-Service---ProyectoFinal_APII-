@@ -2,7 +2,7 @@
 <div class="top-row pl-4 navbar navbar-dark ">
 
 
-    <a class="navbar-brand" href=" " style="font-size: 24px; text-align: center; font-family: 'Allerta', Stencil"> Autosoft Service</a>
+    <a class="navbar-brand" href=" " style=" color:floralwhite; font-size: 32px; text-align: center; font-family: Impact"> Autosoft Service</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,8 +16,8 @@
             <span aria-hidden="true" class="mdi:location-exit" style="color:white; text-align:center"> </span>
 
             <p style="color:ghostwhite; font-size:20px; font-family:Georgia, 'Times New Roman', Times, serif,cursive; text-align:center; margin-top: 20px">
-
-                Bienvenido, @context.User.Identity.Name!
+                ¡¡LA SOLUCION A TU NEGOCIO!!
+                @*Bienvenido, @context.User.Identity.Name!*@
             </p>
         </a>
 
@@ -58,52 +58,52 @@
                         <ul class="children">
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/RUsuarios">
-                                    <span aria-hidden="true" class="oi oi-person" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px"> R. Usuarios</p>
+                                    <span aria-hidden="true" class="oi oi-person" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Usuarios</p>
                                 </NavLink>
                             </li>
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/RClientes">
-                                    <span aria-hidden="true" class="oi oi-people" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px"> R.Clientes</p>
+                                    <span aria-hidden="true" class="oi oi-people" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Clientes</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/RProveedores">
-                                    <span aria-hidden="true" class="oi oi-people" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px"> R. Proveedores</p>
+                                    <span aria-hidden="true" class="oi oi-people" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Proveedores</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/RPedidos">
-                                    <span aria-hidden="true" class="oi oi-cart" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px"> R. Pedidos</p>
+                                    <span aria-hidden="true" class="oi oi-cart" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Pedidos</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/Vehiculos">
-                                    <span aria-hidden="true" class="oi oi-wrench" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">R. Vehiculos</p>
+                                    <span aria-hidden="true" class="oi oi-wrench" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Vehiculos</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/rArticulos">
-                                    <span aria-hidden="true" class="oi oi-tags" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">R. Articulos</p>
+                                    <span aria-hidden="true" class="oi oi-tags" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Articulos</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/rEntradaArticulos">
-                                    <span aria-hidden="true" class="oi oi-clipboard" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">R. Entrada Articuos</p>
+                                    <span aria-hidden="true" class="oi oi-clipboard" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Entrada de Articuos</p>
                                 </NavLink>
                             </li>
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/RFacturas">
-                                    <span aria-hidden="true" class="oi oi-credit-card" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">R. Facturas</p>
+                                    <span aria-hidden="true" class="oi oi-credit-card" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Facturas</p>
                                 </NavLink>
                             </li>
                             <li class="list-unstyled">
-                                <NavLink class="nav-link" href="/rPagos">
-                                    <span aria-hidden="true" class="oi oi-dollar" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">R. Pagos</p>
+                                <NavLink class="nav-link" href="/RPagos">
+                                    <span aria-hidden="true" class="oi oi-dollar" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Pagos</p>
                                 </NavLink>
                             </li>
                         </ul>
@@ -122,53 +122,55 @@
                         <ul class="children">
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/CUsuarios">
-                                    <span aria-hidden="true" class="oi oi-person" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Usuarios</p>
+                                    <span aria-hidden="true" class="oi oi-person" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Usuarios</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/CClientes">
-                                    <span aria-hidden="true" class="oi oi-person" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Clientes</p>
+                                    <span aria-hidden="true" class="oi oi-person" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Clientes</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/CProveedores">
-                                    <span aria-hidden="true" class="oi oi-people" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Proveedores</p>
+                                    <span aria-hidden="true" class="oi oi-people" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Proveedores</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/cPedidos">
-                                    <span aria-hidden="true" class="oi oi-cart" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Pedidos</p>
+                                    <span aria-hidden="true" class="oi oi-cart" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Pedidos</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/cVehiculos">
-                                    <span aria-hidden="true" class="oi oi-wrench" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Vehiculos</p>
+                                    <span aria-hidden="true" class="oi oi-wrench" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Vehiculos</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/CArticulos">
-                                    <span aria-hidden="true" class="oi oi-tags" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Articulos</p>
+                                    <span aria-hidden="true" class="oi oi-tags" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Articulos</p>
                                 </NavLink>
                             </li>
 
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/CEntradaArticulos">
-                                    <span aria-hidden="true" class="oi oi-clipboard" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Entrada Articulos.</p>
+                                    <span aria-hidden="true" class="oi oi-clipboard" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Entrada de Articulos.</p>
                                 </NavLink>
                             </li>
+
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/cFacturas">
-                                    <span aria-hidden="true" class="oi oi-credit-card" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Facturas</p>
+                                    <span aria-hidden="true" class="oi oi-credit-card" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Facturas</p>
                                 </NavLink>
                             </li>
+
                             <li class="list-unstyled">
                                 <NavLink class="nav-link" href="/cPagos">
-                                    <span aria-hidden="true" class="oi oi-dollar" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">C. Pagos</p>
+                                    <span aria-hidden="true" class="oi oi-dollar" style="color:white"></span><p style="color:white; font-size:14px; vertical-align:central; margin-top: 18px">Pagos</p>
                                 </NavLink>
                             </li>
                         </ul>

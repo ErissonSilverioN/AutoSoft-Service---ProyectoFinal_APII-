@@ -31,7 +31,7 @@
 
 
                         <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                            <label class="col-auto">Codigo</label>
+                            <label>Entrada ID</label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="@entradasArticulos.EntradasArtId" class="form-control"></InputNumber>
                                 <div class="input-group-append">
@@ -50,14 +50,11 @@
 
 
 
-                        <div class="col-sm-0     col-md-0     col-lg-1     col-xl-1" />
-
-                        <br />
-                        <br />
+                        <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
 
 
-                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label class="col-auto">Articulo</label>
+                        <div class="form-group col-sm-8     col-md-8     col-lg-8     col-xl-8    ">
+                            <label>Articulo</label>
                             <div class="input-group ">
 
                                 <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onchange="LlenaCombo" @onclick="LlenaCombo">
@@ -78,9 +75,12 @@
                             </div>
                         </div>
 
+                        <div class="form-group col-sm-4     col-md-4     col-lg-1    col-xl-1     "></div>
 
-                        <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label class="col-auto" for="Cantidad">Cantidad</label>
+                        <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+
+                        <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4    ">
+                            <label>Cantidad</label>
                             <div class="input-group ">
                                 <InputNumber @bind-Value="@entradasArticulos.Cantidad" class="form-control"></InputNumber>
                             </div>

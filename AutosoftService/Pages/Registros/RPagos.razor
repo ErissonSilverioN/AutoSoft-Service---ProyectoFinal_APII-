@@ -1,0 +1,153 @@
+﻿@page "/RPagos"
+
+
+@using AutosoftService.Model;
+@using AutosoftService.BLL;
+
+    <EditForm Model="pagos" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <div class="card">
+
+            <div class="card-header">
+                <div class="text-center">
+                    <h3>Registro de Pagos</h3>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <form>
+
+                    <div class="form-row">
+
+                        <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
+
+
+                        <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                            <label>Pago ID</label>
+                            <div class="input-group ">
+                                <InputNumber @bind-Value="@pagos.PagoId" class="form-control" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" @onclick="Buscar"><span class="oi oi-magnifying-glass" />&nbsp;&nbsp;Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-2   col-md-2   col-lg-6  col-xl-4" />
+
+
+                        <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
+                            <label>Fecha</label>
+                            <InputDate @bind-Value="@pagos.Fecha" class="form-control" />
+                        </div>
+
+
+                        <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+
+                        <br />
+                        <div class="form-group col-sm-8     col-md-8     col-lg-8     col-xl-8    ">
+                            <label><b>Clientes</b></label>
+                            <InputSelect class="form-control" @bind-Value="pagos.ClienteId" @onclick="LlenarComboxCliente">
+                                <option value="0">---Seleccione un Cliente---</option>
+
+                                @foreach (var item in ListaCliente)
+                                                            {
+                                <option value="@item.ClienteId">@item.</option>
+                                                            }
+
+                            </InputSelect>
+                        </div>
+
+                       
+
+                        <div class="form-group col-sm-4     col-md-4     col-lg-1    col-xl-1     ">
+                            <label>Deuda</label>
+                            <InputNumber @bind-Value="@deuda" class="form-control" Readonly="true" />
+                        </div>
+
+                        <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
+
+                        <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4    ">
+                            <label>Monto a pagar</label>
+                            <InputNumber @bind-Value="@pagos.Monto" class="form-control" />
+                            <ValidationMessage For="(() => pagos.Monto)" />
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="card-footer">
+                <div class="form-group text-center" display: inline-block>
+                    <button type="button" class="btn btn-warning btn-lg" @onclick="Nuevo"><span class="oi oi-file" />&nbsp;Limpiar</button>
+                    <button type="submit" class="btn btn-success btn-lg "><span class="oi oi-data-transfer-download"></span>&nbsp;Guardar</button>
+                    <button type="button" class="btn btn-danger btn-lg"><span class="oi oi-trash" />&nbsp;Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </EditForm>
+
+
+
+@code{
+
+    public int PagoId { get; set; }
+    private Pagos pagos = new Pagos();
+
+
+    Clientes clientes = new Clientes();
+    List<Clientes> ListaCliente = new List<Clientes>();
+    private string ClienteSelect { get; set; }
+
+    private decimal deuda = 0;
+
+    protected override void OnInitialized()
+    {
+        ListaCliente = ClienteBLL.GetList(e => true);
+        pagos = new Pagos();
+        Nuevo();
+
+        if (PagoId != 0)
+        {
+            pagos.PagoId = PagoId;
+            Buscar();
+        }
+    }
+
+
+    private void Buscar()
+    {
+
+    }
+
+    private void Nuevo()
+    {
+
+    }
+
+    private void Guardar()
+    {
+
+    }
+
+    private void Eliminar()
+    {
+
+    }
+
+
+    private void LlenarComboxCliente()
+    {
+        pagos.ClienteId = Convert.ToInt32(ClienteSelect);
+        clientes = ClienteBLL.Buscar(Convert.ToInt32(ClienteSelect));
+    }
+
+
+
+}
