@@ -30,7 +30,7 @@
                     <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
 
                     <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                        <label>Código</label>
+                        <label>Factura ID</label>
                         <div class="input-group ">
                             <InputNumber @bind-Value="@facturas.FacturaId" class="form-control" />
                             <div class="input-group-append">
@@ -213,7 +213,7 @@
 
                                 <div class="form-check justify-content-start">
                                     <label class="form-check-label">&nbsp;&nbsp;Facturar a credito</label>
-                                    <input class="form-check-inline" type="checkbox" value="" id="defaultCheck1">
+                                    <input class="form-check-inline" type="checkbox" @bind-value="facturas.FacturaCredito">
                                 </div>
 
                             </div>
@@ -246,7 +246,7 @@
             <div class="form-group text-center" display: inline-block>
                 <button type="button" class="btn btn-warning btn-lg" @onclick="Nuevo"><span class="oi oi-file" />&nbsp;Limpiar</button>
                 <button type="submit" class="btn btn-success btn-lg "><span class="oi oi-data-transfer-download"></span>&nbsp;Guardar</button>
-                <button type="button" class="btn btn-danger btn-lg"><span class="oi oi-trash" />&nbsp;Eliminar</button>
+                <button type="button" class="btn btn-danger btn-lg" @onclick="Eliminar"><span class="oi oi-trash" />&nbsp;Eliminar</button>
             </div>
         </div>
 
@@ -280,7 +280,7 @@
 
     private int cantidad = 0, importe = 0;
     private decimal precio = 0;
-   
+
 
 
 
@@ -313,6 +313,9 @@
         {
             Nuevo();
             facturas = facturasTemp;
+            ClienteSelect = facturas.FacturaId.ToString();
+            VehiculosSelect = facturas.FacturaId.ToString();
+            
 
         }
 
@@ -346,6 +349,7 @@
     {
 
         CalcularImporte();
+
         if (ClienteSelect == null && VehiculosSelect == null)
         {
             toast.ShowInfo("Seleccione un Cliente", "Info");
@@ -435,13 +439,13 @@
                         Precio = precio,
                         Importe = (cantidad * precio)
 
-                    });
+                    }); ;
 
                     articulos = new Articulos();
 
                     Calculos();
-
-
+                    precio = 0;
+                    ArticuloSelect = "0";
                     cantidad = 0;
                 }
             }

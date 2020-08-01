@@ -29,7 +29,7 @@
 
 
                         <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                            <label class="col-auto">Codigo</label>
+                            <label>Articulo ID</label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="@articulos.ArticuloId" class="form-control"></InputNumber>
                                 <div class="input-group-append">
@@ -185,7 +185,11 @@
         listaProveedores = BLL.ProveedorBLL.GetList(e => true);
         articulos = new Articulos();
         Limpiar();
-        Buscar();
+        if (ArticuloId != 0)
+        {
+            articulos.ArticuloId = ArticuloId;
+            Buscar();
+        }
         base.OnInitialized();
     }
 
@@ -272,7 +276,7 @@
 
     private void SeleccionarProveedor()
     {
-       articulos.ProveedorId = Convert.ToInt32(ProveedorSelect);
+        articulos.ProveedorId = Convert.ToInt32(ProveedorSelect);
     }
 
 

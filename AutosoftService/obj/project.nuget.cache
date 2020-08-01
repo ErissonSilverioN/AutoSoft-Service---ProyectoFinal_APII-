@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q7qaUmVR+CARfPzJapVFnZZ+cUufJA+1PwSFHrm/6ktoYbqlv8WCJl/XjqS6N9tGcCghRc3WESDgto7bMdk09A==",
+  "dgSpecHash": "KOrgWpKG/vCF71H8dcEMFtnfDa+hDnzhYlqi4Rjia+7+qchrW0uQkbxgSjv9wwv81PHs5sspnhCckwKQn078aw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal4\\AutosoftService\\AutosoftService.csproj",
+  "projectFilePath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal5\\AutosoftService\\AutosoftService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PANDA\\.nuget\\packages\\blazored.toast\\3.1.2\\blazored.toast.3.1.2.nupkg.sha512",
     "C:\\Users\\PANDA\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

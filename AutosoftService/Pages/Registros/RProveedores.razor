@@ -71,7 +71,7 @@
         @*Cantidad*@
         <div class="form-group">
             <label>Cantidad De pedidos</label>
-            <InputNumber @bind-Value="proveedores.CantidadPedidos" class="form-control" />
+            <InputNumber @bind-Value="proveedores.CantidadPedidos" class="form-control" Readonly="true" />
             <ValidationMessage For="@(() => proveedores.CantidadPedidos)" />
         </div>
         @*Fecha*@

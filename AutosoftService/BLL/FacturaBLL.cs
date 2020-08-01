@@ -32,24 +32,38 @@ namespace AutosoftService.BLL
                 {
                     foreach (var item in facturas.Factura_Detalle)
                     {
-                        var articulo = db.articulos.Find(item.ArticuloId);
-                        articulo.Existencia -= item.Cantidad;
+                        db.articulos.Find(item.ArticuloId).Existencia -= item.Cantidad;
                     }
-
-                    db.SaveChanges();
-                    paso = true;
+  
                 }
 
-                db.Dispose();
+                if (facturas.FacturaCredito != false)
+                {
+                    
+                        db.clientes.Find(facturas.ClienteId).Deuda += facturas.Total;
+                   
+                    
+
+                }
+
+
+                paso = db.SaveChanges() > 0;
+
+                
 
             }
-
             catch (Exception)
             {
                 throw;
             }
 
-          return paso;
+            finally
+            {
+                db.Dispose();
+            }
+
+            return paso;
+        
 
         }
 
@@ -63,35 +77,65 @@ namespace AutosoftService.BLL
 
             try
             {
+                Facturas facturaAnterior = db.facturas.Where(e => e.FacturaId == facturas.FacturaId)
+                    .Include(f => f.Factura_Detalle)
+                    .FirstOrDefault();
 
-                var anterior = FacturaBLL.Buscar(facturas.FacturaId);
 
-                foreach (var item in anterior.Factura_Detalle)
+                if (facturas.FacturaCredito != false)
                 {
-                    if (!facturas.Factura_Detalle.Exists(d => d.Id == item.Id))
+                     var clientes = ClienteBLL.Buscar(facturaAnterior.ClienteId);
+                    clientes.Deuda -= facturaAnterior.Total;
+                    ClienteBLL.Guardar(clientes);
+                }
+             
+
+                db = new Contexto();
+                foreach (var item in facturaAnterior.Factura_Detalle)
+                {
+                    if (!facturas.Factura_Detalle.Any(f => f.Id == item.Id))
+                    {
+                        db.articulos.Find(item.ArticuloId).Existencia += item.Cantidad;
                         db.Entry(item).State = EntityState.Deleted;
+                    }
                 }
 
                 foreach (var item in facturas.Factura_Detalle)
                 {
-                    var estado = item.Id > 0 ? EntityState.Modified : EntityState.Added;
-                    db.Entry(item).State = estado;
+                    if (item.Id == 0)
+                    {
+                        db.articulos.Find(item.ArticuloId).Existencia -= item.Cantidad;
+                        db.Entry(item).State = EntityState.Added;
+
+                    }
+                    else
+                    {
+                        db.Entry(item).State = EntityState.Modified;
+
+                    }
+                }
+                
+
+                if (facturas.FacturaCredito != false)
+                {
+                    db.clientes.Find(facturas.ClienteId).Deuda += facturas.Total;
                 }
 
                 db.Entry(facturas).State = EntityState.Modified;
                 paso = db.SaveChanges() > 0;
-            }
 
+            }
             catch (Exception)
             {
                 throw;
+
             }
 
             finally
             {
                 db.Dispose();
-            }
 
+            }
             return paso;
         }
 
@@ -103,8 +147,23 @@ namespace AutosoftService.BLL
 
             try
             {
-                var eliminar = db.facturas.Find(id);
-                db.Entry(eliminar).State = EntityState.Deleted;
+                Facturas facturas = db.facturas.Where(e => e.FacturaId == id)
+                    .Include(f => f.Factura_Detalle)
+                    .FirstOrDefault();
+
+
+                foreach (var item in facturas.Factura_Detalle)
+                {
+                    db.articulos.Find(item.ArticuloId).Existencia += item.Cantidad;
+
+                }
+
+                if(facturas.FacturaCredito != false)
+                {
+                    db.clientes.Find(facturas.ClienteId).Deuda -= facturas.Total;
+                }
+
+                db.facturas.Remove(facturas);
                 paso = db.SaveChanges() > 0;
             }
             catch (Exception)
@@ -171,7 +230,7 @@ namespace AutosoftService.BLL
         }
 
 
-        public  List<Facturas> GetList(Expression<Func<Facturas, bool>> expression)
+        public static List<Facturas> GetList(Expression<Func<Facturas, bool>> expression)
         {
             List<Facturas> Lista = new List<Facturas>();
             Contexto db = new Contexto();

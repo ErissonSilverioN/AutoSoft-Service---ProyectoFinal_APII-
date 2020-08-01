@@ -41,6 +41,8 @@ namespace AutosoftService.Model
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage = "El campo fecha no puede estar vacío.")]
         [DisplayFormat(DataFormatString = "{0:dd,mm,yyyy}")]
+
+        public decimal Deuda { get; set; }
         public DateTime Fecha { get; set; }
 
         public Clientes()
@@ -50,6 +52,7 @@ namespace AutosoftService.Model
             Cedula = string.Empty;
             Telefono = string.Empty;
             Direccion = string.Empty;
+            Deuda = 0;
             Email = string.Empty; 
             Fecha = DateTime.Now; 
         }

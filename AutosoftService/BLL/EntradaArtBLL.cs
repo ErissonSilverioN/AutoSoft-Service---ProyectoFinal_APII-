@@ -27,19 +27,17 @@ namespace AutosoftService.BLL
             bool paso = false;
             Contexto db = new Contexto();
 
+           
 
             try
             {
                 if (db.entradaArt.Add(entradasArticulos) != null)
                 {
-
-                    Articulos articulos = BLL.ArticuloBLL.Buscar(entradasArticulos.ArticuloId);
-
-                  
+                    Articulos articulos = ArticuloBLL.Buscar(entradasArticulos.ArticuloId);
 
                     articulos.Existencia += entradasArticulos.Cantidad;
 
-                    BLL.ArticuloBLL.Modificar(articulos);
+                    ArticuloBLL.Modificar(articulos);
 
                     db.SaveChanges();
                     paso = true;
@@ -69,14 +67,14 @@ namespace AutosoftService.BLL
                 var articulos = ArticuloBLL.Buscar(entradasArticulos.ArticuloId);
                 var anterior = Buscar(entradasArticulos.EntradasArtId);
 
-                Articulos articulos1 = ArticuloBLL.Buscar(anterior.ArticuloId);
-                articulos1.Existencia -= anterior.Cantidad;
-                ArticuloBLL.Guardar(articulos);
+                articulos.Existencia -= anterior.Cantidad;
+                db.entradaArt.Add(entradasArticulos);
 
-                db = new Contexto();
-                
-                db.articulos.Find(entradasArticulos.ArticuloId).Existencia += entradasArticulos.Cantidad;
+                articulos.Existencia += entradasArticulos.Cantidad;
+                ArticuloBLL.Modificar(articulos);
+
                 db.Entry(entradasArticulos).State = EntityState.Modified;
+
                 paso = db.SaveChanges() > 0;
 
             }

@@ -17,65 +17,72 @@
         </div>
 
         @*ClientesID y boton al lado*@
-        <div class="card-body">
-            <form />
-            <div class="form-row align-items-center">
-                <div class="col">
-                    <div class="form-group">
-                        <label>ID</label>
-                        <div class="input-group">
-                            <InputNumber @bind-Value="cliente.ClienteId" class="form-control col-4" />
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
-                            </div>
+    <div class="card-body">
+        <form />
+        <div class="form-row align-items-center">
+            <div class="col">
+                <div class="form-group">
+                    <label>ID</label>
+                    <div class="input-group">
+                        <InputNumber @bind-Value="cliente.ClienteId" class="form-control col-4" />
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @*Nombres*@
-            <div class="form-group">
-                <label>Cliente</label>
-                <InputText @bind-Value="cliente.Nombre" class="form-control" />
-                <ValidationMessage For="@(() => cliente.Nombre)" />
-            </div>
-
-            @*Fecha de Nacimiento*@
-            <div class="form-group">
-                <label>Fecha de Nacimiento</label>
-                <InputDate @bind-Value="cliente.Fecha" class="form-control" />
-                <ValidationMessage For="@(() => cliente.Fecha)" />
-            </div>
-
-            @*Cedula*@
-            <div class="form-group">
-                <label>Cédula </label>
-                <InputText @bind-Value="cliente.Cedula" class="form-control" />
-                <ValidationMessage For="@(() => cliente.Cedula)" />
-            </div>
-
-            @*Telefono*@
-            <div class="form-group">
-                <label>Teléfono </label>
-                <InputText @bind-Value="cliente.Telefono" class="form-control" />
-                <ValidationMessage For="@(() => cliente.Telefono)" />
-            </div>
-
-            @*Dirección*@
-            <div class="form-group">
-                <label>Dirección</label>
-                <InputText @bind-Value="cliente.Direccion" class="form-control" />
-                <ValidationMessage For="@(() => cliente.Direccion)" />
-            </div>
-
-            @*Gmail*@
-            <div class="form-group">
-                <label>Email</label>
-                <InputText @bind-Value="cliente.Email" class="form-control" />
-                <ValidationMessage For="@(() => cliente.Email)" />
-            </div>
-
         </div>
+
+        @*Nombres*@
+        <div class="form-group">
+            <label>Cliente</label>
+            <InputText @bind-Value="cliente.Nombre" class="form-control" />
+            <ValidationMessage For="@(() => cliente.Nombre)" />
+        </div>
+
+        @*Fecha de Nacimiento*@
+        <div class="form-group">
+            <label>Fecha de Nacimiento</label>
+            <InputDate @bind-Value="cliente.Fecha" class="form-control" />
+            <ValidationMessage For="@(() => cliente.Fecha)" />
+        </div>
+
+        @*Cedula*@
+        <div class="form-group">
+            <label>Cédula </label>
+            <InputText @bind-Value="cliente.Cedula" class="form-control" />
+            <ValidationMessage For="@(() => cliente.Cedula)" />
+        </div>
+
+        @*Telefono*@
+        <div class="form-group">
+            <label>Teléfono </label>
+            <InputText @bind-Value="cliente.Telefono" class="form-control" />
+            <ValidationMessage For="@(() => cliente.Telefono)" />
+        </div>
+
+        @*Dirección*@
+        <div class="form-group">
+            <label>Dirección</label>
+            <InputText @bind-Value="cliente.Direccion" class="form-control" />
+            <ValidationMessage For="@(() => cliente.Direccion)" />
+        </div>
+
+        @*Gmail*@
+        <div class="form-group">
+            <label>Email</label>
+            <InputText @bind-Value="cliente.Email" class="form-control" />
+            <ValidationMessage For="@(() => cliente.Email)" />
+        </div>
+
+        @*Deuda*@
+        <div class="form-group">
+            <label>Deuda</label>
+            <InputNumber @bind-Value="cliente.Deuda" class="form-control" Readonly="true" />
+            <ValidationMessage For="@(() => cliente.Deuda)" />
+        </div>
+
+    </div>
 
         @*Botones*@
         <div class="card-footer">

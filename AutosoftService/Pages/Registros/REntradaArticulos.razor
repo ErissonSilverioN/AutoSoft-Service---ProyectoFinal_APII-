@@ -133,7 +133,12 @@
         listaarticulos = ArticuloBLL.GetList(e => true);
         entradasArticulos = new EntradasArticulos();
         Limpiar();
-        Buscar();
+      
+        if (EntradasArtId != 0)
+        {
+            entradasArticulos.EntradasArtId = EntradasArtId;
+            Buscar();
+        }
         base.OnInitialized();
     }
 
@@ -149,14 +154,12 @@
             ArticuloSelect = entradasArticulos.EntradasArtId.ToString();
 
 
-            toast.ShowSuccess("Producto encontrado.", "Exito");
-
         }
         else
         {
 
             Limpiar();
-            toast.ShowError("El Producto no fue encontrado.", "Fallo");
+            toast.ShowError("La Entrada no Existe", "Fallo");
 
         }
     }
@@ -166,6 +169,8 @@
     {
 
         this.entradasArticulos = new EntradasArticulos();
+        ArticuloSelect = "0";
+
 
 
 
@@ -203,21 +208,17 @@
             if (EntradaArtBLL.Eliminar(entradasArticulos.EntradasArtId))
             {
                 Limpiar();
-                toast.ShowSuccess("Producto eliminado correctamente.", "Exito");
-               
+                toast.ShowSuccess("Entrada eliminada correctamente.", "Exito");
+
 
             }
             else
             {
-                toast.ShowError("Error al eliminar el Producto.", "Fallo");
+                toast.ShowError("Error al eliminar la entrada", "Fallo");
 
             }
         }
-        else
-        {
-            toast.ShowError("Error al eliminar el Producto.", "Fallo");
 
-        }
     }
 
 

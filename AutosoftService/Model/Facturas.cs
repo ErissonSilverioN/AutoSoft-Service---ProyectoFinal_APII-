@@ -17,7 +17,7 @@ namespace AutosoftService.Model
         public int ClienteId { get; set; }
         public int ArticuloId { get; set; }
         public string Servicios { get; set; }
-        public bool TipoPago { get; set; }
+        public bool FacturaCredito { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Itbis { get; set; }
         public decimal Total { get; set; }
@@ -35,7 +35,7 @@ namespace AutosoftService.Model
             ClienteId = 0;
             ArticuloId = 0;
             Servicios = string.Empty;
-            TipoPago = false;
+            FacturaCredito = false;
             SubTotal = 0;
             Itbis = 0;
             Total = 0;

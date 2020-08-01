@@ -62,6 +62,9 @@ namespace AutosoftService.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Deuda")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -152,6 +155,9 @@ namespace AutosoftService.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("FacturaCredito")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
@@ -166,9 +172,6 @@ namespace AutosoftService.Migrations
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("TipoPago")
-                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("TEXT");
@@ -190,10 +193,13 @@ namespace AutosoftService.Migrations
                     b.Property<int>("ClienteId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Deuda")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("MontoPago")
+                    b.Property<decimal>("Monto")
                         .HasColumnType("TEXT");
 
                     b.HasKey("PagoId");
@@ -354,7 +360,7 @@ namespace AutosoftService.Migrations
                             ConfirmarContrasena = "Admin",
                             Contrasena = "Admin",
                             Email = "Emerson@gmail.com",
-                            FechaIngreso = new DateTime(2020, 7, 29, 12, 43, 37, 379, DateTimeKind.Local).AddTicks(3386),
+                            FechaIngreso = new DateTime(2020, 8, 1, 0, 29, 34, 997, DateTimeKind.Local).AddTicks(3074),
                             NivelUsuario = "Administrador",
                             Nombre = "Emerson",
                             Usuario = "Administrador"

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AutosoftService.Migrations
 {
-    public partial class Nueva : Migration
+    public partial class Prueba7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,6 +38,7 @@ namespace AutosoftService.Migrations
                     Telefono = table.Column<string>(maxLength: 10, nullable: false),
                     Direccion = table.Column<string>(maxLength: 100, nullable: false),
                     Email = table.Column<string>(nullable: false),
+                    Deuda = table.Column<decimal>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -70,7 +71,7 @@ namespace AutosoftService.Migrations
                     ClienteId = table.Column<int>(nullable: false),
                     ArticuloId = table.Column<int>(nullable: false),
                     Servicios = table.Column<string>(nullable: true),
-                    TipoPago = table.Column<bool>(nullable: false),
+                    FacturaCredito = table.Column<bool>(nullable: false),
                     SubTotal = table.Column<decimal>(nullable: false),
                     Itbis = table.Column<decimal>(nullable: false),
                     Total = table.Column<decimal>(nullable: false),
@@ -89,7 +90,8 @@ namespace AutosoftService.Migrations
                     PagoId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ClienteId = table.Column<int>(nullable: false),
-                    MontoPago = table.Column<decimal>(nullable: false),
+                    Monto = table.Column<decimal>(nullable: false),
+                    Deuda = table.Column<decimal>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -229,7 +231,7 @@ namespace AutosoftService.Migrations
             migrationBuilder.InsertData(
                 table: "usuarios",
                 columns: new[] { "UsuarioId", "Apellidos", "ConfirmarContrasena", "Contrasena", "Email", "FechaIngreso", "NivelUsuario", "Nombre", "Usuario" },
-                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 7, 29, 12, 43, 37, 379, DateTimeKind.Local).AddTicks(3386), "Administrador", "Emerson", "Administrador" });
+                values: new object[] { 1, "Del Orbe", "Admin", "Admin", "Emerson@gmail.com", new DateTime(2020, 8, 1, 0, 29, 34, 997, DateTimeKind.Local).AddTicks(3074), "Administrador", "Emerson", "Administrador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_facturaD_FacturaId",

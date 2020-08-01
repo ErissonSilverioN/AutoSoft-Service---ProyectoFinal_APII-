@@ -26,19 +26,27 @@ namespace AutosoftService.BLL
             bool paso = false;
             Contexto db = new Contexto();
 
+
             try
             {
                 if (db.pagos.Add(pagos) != null)
+                {
+                    db.clientes.Find(pagos.ClienteId).Deuda -= pagos.Monto;
                     paso = db.SaveChanges() > 0;
+
+                }
             }
             catch (Exception)
             {
                 throw;
+
             }
             finally
             {
                 db.Dispose();
+
             }
+
             return paso;
         }
 
@@ -49,18 +57,34 @@ namespace AutosoftService.BLL
             bool paso = false;
             Contexto db = new Contexto();
 
+
             try
             {
-                db.Entry(pagos).State = EntityState.Modified;
+                Pagos pagosTemp = db.pagos.Find(pagos.PagoId);
+                Clientes clientes = ClienteBLL.Buscar(pagosTemp.ClienteId);
+
+                clientes.Deuda += pagosTemp.Monto;
+                db.Entry(clientes).State = EntityState.Modified;
+
                 paso = db.SaveChanges() > 0;
+
+                if (paso)
+                {
+                    db = new Contexto();
+                    db.clientes.Find(pagos.ClienteId).Deuda -= pagos.Monto;
+                    db.Entry(pagos).State = EntityState.Modified;
+                    paso = db.SaveChanges() > 0;
+                }
             }
             catch (Exception)
             {
                 throw;
+
             }
             finally
             {
                 db.Dispose();
+
             }
 
             return paso;
@@ -71,22 +95,27 @@ namespace AutosoftService.BLL
         {
             bool paso = false;
             Contexto db = new Contexto();
+            Pagos pagos = new Pagos();
 
             try
             {
-                var eliminar = db.pagos.Find(id);
-                db.Entry(eliminar).State = EntityState.Deleted;
+                pagos = db.pagos.Find(id);
+                db.clientes.Find(pagos.ClienteId).Deuda += pagos.Monto;
+
+                db.Entry(pagos).State = EntityState.Deleted;
                 paso = db.SaveChanges() > 0;
+
             }
 
             catch (Exception)
             {
                 throw;
-            }
 
+            }
             finally
             {
                 db.Dispose();
+
             }
 
             return paso;
@@ -144,7 +173,7 @@ namespace AutosoftService.BLL
         }
 
 
-        public List<Pagos> GetList(Expression<Func<Pagos, bool>> expression)
+        public static List<Pagos> GetList(Expression<Func<Pagos, bool>> expression)
         {
 
 
