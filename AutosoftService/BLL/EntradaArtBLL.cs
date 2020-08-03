@@ -22,7 +22,7 @@ namespace AutosoftService.BLL
         }
 
 
-        public static bool Insertar(EntradasArticulos entradasArticulos)
+        private static bool Insertar(EntradasArticulos entradasArticulos)
         {
             bool paso = false;
             Contexto db = new Contexto();
