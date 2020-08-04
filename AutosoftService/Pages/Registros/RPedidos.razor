@@ -134,6 +134,7 @@
                                     <thead class="thead-light">
                                         <tr>
                                             <th>ID</th>
+                                            <th>Proveedor</th>
                                             <th>Articulo</th>
                                             <th>Precio</th>
                                             <th>Unidad</th>
@@ -143,13 +144,15 @@
                                     <tbody>
                                         @foreach (var item in pedidos.Pedido_Detalle)
                                         {
-                                            <tr>
-                                                <th>@item.ArticuloId</th>
-                                                <th>@item.Descripcion</th>
-                                                <th>@item.Precio</th>
-                                                <th>@item.Unidad</th>
-                                                <th><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(()=> Remover(item))">Eliminar</button></th>
-                                            </tr>
+                                        <tr>
+                                            <th>@item.ArticuloId</th>
+                                            <th>@GetNombreProveedor(item.ProveedorId)</th>
+                                            <th>@item.Descripcion</th>
+                                           
+                                            <th>@item.Precio</th>
+                                            <th>@item.Unidad</th>
+                                            <th><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(()=> Remover(item))">Eliminar</button></th>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -216,7 +219,7 @@
     decimal importe = 0;
     private int existencia = 0;
 
-   
+
 
 
 
@@ -259,6 +262,11 @@
     private void Nuevo()
     {
         this.pedidos = new Pedidos();
+        ArticuloSelect = "0";
+        unidad = 0;
+        existencia = 0;
+        precio = 0;
+        ProveedorSelect = "0";
     }
 
 
@@ -315,27 +323,33 @@
 
     private void Agregar()
     {
+        var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+        var proveedorTemp = ProveedorBLL.Buscar(Convert.ToInt32(ProveedorSelect));
+
+
+
+
         if (ArticuloSelect == null)
         {
-            toas.ShowInfo("Debe seleccionar un Articulo");
+            toas.ShowWarning("Debe ingresar un Articulo");
         }
         else
         {
-            if (unidad <= 0)
+            if (ProveedorSelect == null)
             {
-                toas.ShowInfo("La cantidad debe ser mayor a 0");
-            }
-            else
-                if (unidad >= 999999)
-            {
-                toas.ShowInfo("Cantida no Valida");
-                return;
+
+
+
+                toas.ShowWarning("Debe ingresar un Proveedor");
             }
             else
             {
-                if (unidad > articulos.Existencia)
+                if (unidad == 0)
                 {
-                    toas.ShowInfo("Solo quedan " + articulos.Existencia + " unidades de este producto");
+
+
+
+                    toas.ShowWarning("Debe ingresar una cantidad");
                 }
                 else
                 {
@@ -343,13 +357,16 @@
                     pedidos.Pedido_Detalle.Add(new PedidoD()
                     {
                         PedidoId = pedidos.PedidoId,
-                        ArticuloId = articulos.ArticuloId,
-                        Descripcion = articulos.Descripcion,
+                        ArticuloId = articuloTemp.ArticuloId,
+                        ProveedorId =proveedorTemp.ProveedorId,
+                        Descripcion = articuloTemp.Descripcion,
                         Precio = precio,
                         Unidad = unidad
                     }); ;
                     articulos = new Articulos();
-
+                    existencia = 0;
+                    precio = 0;
+                    ProveedorSelect = "0";
                     CalcularSubtotal();
 
                     ArticuloSelect = "0";
@@ -393,12 +410,25 @@
         try
         {
             pedidos.ArticuloId = Convert.ToInt32(ArticuloSelect);
-            precio = articulos.Precio;
-            existencia = articulos.Existencia;
+
+
+
+            var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
+
+
+
+            if (articuloTemp != null)
+            {
+                precio = Convert.ToDecimal(articuloTemp.Precio.ToString("N2"));
+                existencia = articuloTemp.Existencia;
+            }
+
+
+
         }
         catch (Exception)
         {
-
+            toas.ShowError("Algo salio mal", "Error");
         }
     }
 
@@ -415,5 +445,14 @@
         pedidos.Subtotal = Result;
     }
 
-
+    public string GetNombreProveedor(int id)
+    {
+        Proveedores proveedores = ProveedorBLL.Buscar(id);
+        if (proveedores != null)
+        {
+            return proveedores.Nombre;
+        }
+        id = 0;
+        return "Error...";
+    }
 }

@@ -7916,23 +7916,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PANDA\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Emerson\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal8\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
+      "projectUniqueName": "C:\\Users\\Emerson\\Source\\Repos\\AutosoftService-ProyectoFinal3\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
       "projectName": "AutosoftServiceTests",
-      "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal8\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
-      "packagesPath": "C:\\Users\\PANDA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal8\\AutosoftServiceTests\\obj\\",
+      "projectPath": "C:\\Users\\Emerson\\Source\\Repos\\AutosoftService-ProyectoFinal3\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
+      "packagesPath": "C:\\Users\\Emerson\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Emerson\\Source\\Repos\\AutosoftService-ProyectoFinal3\\AutosoftServiceTests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\PANDA\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Emerson\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7945,8 +7941,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal8\\AutosoftService\\AutosoftService.csproj": {
-              "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal8\\AutosoftService\\AutosoftService.csproj"
+            "C:\\Users\\Emerson\\Source\\Repos\\AutosoftService-ProyectoFinal3\\AutosoftService\\AutosoftService.csproj": {
+              "projectPath": "C:\\Users\\Emerson\\Source\\Repos\\AutosoftService-ProyectoFinal3\\AutosoftService\\AutosoftService.csproj"
             }
           }
         }
@@ -7995,7 +7991,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
