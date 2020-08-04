@@ -188,8 +188,8 @@
                                                 <th>@item.ArticuloId</th>
                                                 <th>@item.Descripcion</th>
                                                 <th>@item.Cantidad</th>
-                                                <th>@item.Precio</th>
-                                                <th>@item.Importe</th>
+                                                <th>@item.Precio.ToString("N2")</th>
+                                                <th>@item.Importe.ToString("N2")</th>
                                                 <th><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(()=> Remover(item))">Eliminar</button></th>
                                             </tr>
                                         }
@@ -502,7 +502,7 @@
 
             if (articuloTemp != null)
             {
-                precio = articuloTemp.Precio;
+                precio = Convert.ToDecimal(articuloTemp.Precio.ToString("N2"));
             }
 
         }
@@ -543,9 +543,9 @@
             total += item.Importe + Convert.ToDecimal(itbis);
         }
 
-        facturas.SubTotal = subtotal;
-        facturas.Itbis = itbis;
-        facturas.Total = total;
+        facturas.SubTotal = Convert.ToDecimal(subtotal.ToString("N2"));
+        facturas.Itbis = Convert.ToDecimal(itbis.ToString("N2"));
+        facturas.Total = Convert.ToDecimal(total.ToString("N2"));
 
 
 

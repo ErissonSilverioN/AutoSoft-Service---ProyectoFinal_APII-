@@ -213,7 +213,7 @@
         {
 
             Limpiar();
-            toas.ShowError("El Artculo no fue encontrado.", "Fallo");
+            toas.ShowError("El Artculo no fue encontrado", "Fallo");
 
         }
     }
@@ -228,12 +228,12 @@
         if (ArticuloBLL.Guardar(articulos))
         {
             Limpiar();
-            toas.ShowSuccess("Articulo guardado correctamente.", "Exito");
+            toas.ShowSuccess("Articulo guardado correctamente", "Exito");
 
         }
         else
         {
-            toas.ShowError("Error al guardar el Articulo.", "Fallo");
+            toas.ShowError("Error al guardar el Articulo", "Fallo");
 
         }
     }
@@ -248,7 +248,7 @@
             if (ArticuloBLL.Eliminar(articulos.ArticuloId))
             {
                 Limpiar();
-                toas.ShowSuccess("Articulo eliminado correctamente.", "Exito");
+                toas.ShowSuccess("Articulo eliminado correctamente", "Exito");
                 CalcularPrecio();
 
             }
@@ -284,6 +284,10 @@
 
     public void CalcularPrecio()
     {
-        articulos.Precio = articulos.Costo + (articulos.Costo * (articulos.Ganancias / 100));
+        decimal Result = 0;
+
+        Result = articulos.Costo + (articulos.Costo * (articulos.Ganancias / 100));
+
+        articulos.Precio = Convert.ToDecimal(Result.ToString("N2"));
     }
 }
