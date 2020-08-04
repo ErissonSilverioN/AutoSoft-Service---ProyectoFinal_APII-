@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutosoftService.Model;
+using AutosoftService.Model.Consultas;
 
 namespace AutosoftService.DAL
 {
@@ -21,11 +22,15 @@ namespace AutosoftService.DAL
         public DbSet<Vehiculos> vehiculos { get; set; }
         public DbSet<Pagos> pagos { get; set; }
 
+        public DbSet<FacturasConsult> facturasConsults { get; set; }
+        public DbSet<ArticulosConsult> articulosConsults { get; set; }
+        public DbSet<PedidosConsult> pedidosConsults { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
 
-            optionsBuilder.UseSqlite(@"Data Source=Data\Autoservice9.db");
+            optionsBuilder.UseSqlite(@"Data Source=Data\Autoservice10.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

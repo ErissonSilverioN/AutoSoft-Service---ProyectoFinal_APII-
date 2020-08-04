@@ -1,6 +1,7 @@
 ﻿@page "/CFacturas"
 
 @using AutosoftService.Model;
+@using AutosoftService.Model.Consultas;
 @using AutosoftService.DAL;
 @using AutosoftService.BLL;
 
@@ -47,7 +48,7 @@
                     <br />
 
                     <div class="DivConsulta text-center     col-12">
-                        <input class="ml-1" type="checkbox" @bind-value="BuscarPorFecha" style="margin-top:15px">&nbsp;&nbsp;Filtrar por Fecha
+                        <input class="ml-1" type="checkbox" @bind-value="FiltrarFecha" style="margin-top:15px">&nbsp;&nbsp;Filtrar por Fecha
                     </div>
 
 
@@ -78,10 +79,10 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Codigo</th>
-                                <th>Fecha</th>
                                 <th>Servicio</th>
                                 <th>Cliente</th>
                                 <th>Total</th>
+                                <th>Fecha</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -97,14 +98,14 @@
 
                                 @foreach (var item in ListadoPaginado)
                                 {
-                                    <tr>
-                                        <th>@item.FacturaId</th>
-                                        <th>@item.Fecha.ToString("dd/MM/yyyy")</th>
-                                        <th>@item.Servicios</th>
-                                        <th>@item.ClienteId</th>
-                                        <th>@item.Total</th>
-                                        <th><a class="btn btn-light" href="rFacturas/@item.FacturaId">Ver</a></th>
-                                    </tr>
+                        <tr>
+                                    <th>@item.FacturaId</th>
+                                    <th>@item.Servicios</th>
+                                    <th>@item.Cliente</th>
+                                    <th>@item.Total.ToString("N2")</th>
+                                    <th>@item.Fecha.ToString("dd/MM/yyyy")</th>
+                                    <th><a class="btn btn-light" href="rFacturas/@item.FacturaId">Ver</a></th>
+                        </tr>
                                 }
                             }
                         </tbody>
@@ -117,7 +118,8 @@
 
                 <div class="form-inline justify-content-end">
                     <label>Total:&nbsp;</label>
-                    <InputNumber @bind-Value="@Total" class="form-control" disabled />
+                    <input type="number" step="1.0" @bind-value="@Total" disabled />
+                    @*<InputNumber @bind-Value="@Total"class="form-control" disabled />*@
                 </div>
 
             </form>
@@ -164,29 +166,28 @@
     DateTime Desde;
     DateTime Hasta;
 
-    bool BuscarPorFecha;
-    decimal Total = 0;
-
     string Filtro;
     string Criterio;
 
-    Clientes clientes = new Clientes();
+    bool FiltrarFecha;
+    decimal Total = 0;
+
+    Clientes clienteTemp = new Clientes();
+    Facturas facturaTemp = new Facturas();
 
     public List<Facturas> listaFacturas = new List<Facturas>();
 
-    List<Facturas> Listado { get; set; }
-    List<Facturas> ListadoPaginado { get; set; }
+    List<FacturasConsult> Listado { get; set; }
+    List<FacturasConsult> ListadoPaginado { get; set; }
 
     double Paginas = 0;
     double Elementos = 0;
     int PaginaActual = 0;
 
-    Contexto db = new Contexto();
+    Contexto contexto = new Contexto();
     Paginacion paginacion = new Paginacion();
 
-
-    List<Facturas> ListaTemp = new List<Facturas>();
-
+    List<FacturasConsult> listaTemp = new List<FacturasConsult>();
 
     protected override void OnInitialized()
     {
@@ -195,32 +196,34 @@
         Criterio = string.Empty;
         Desde = DateTime.Now;
         Hasta = DateTime.Now;
-        BuscarPorFecha = false;
-        Filtro = "0";
+        FiltrarFecha = false;
+
+
         LlenarLista();
     }
 
-
     private void LlenarLista()
     {
-        listaFacturas = AutosoftService.BLL.FacturaBLL.GetList(e => true);
-        Listado = new List<Facturas>();
+        listaFacturas = FacturaBLL.GetList(e => true);
+        Listado = new List<FacturasConsult>();
         foreach (var item in listaFacturas)
         {
-            Facturas facturas = new Facturas();
+            FacturasConsult facturas = new FacturasConsult();
             facturas.FacturaId = item.FacturaId;
-            facturas.Servicios = item.Servicios;
-            clientes = BLL.ClienteBLL.Buscar(item.ClienteId);
-            facturas.ClienteId = item.ClienteId;
-            facturas.Fecha = item.Fecha;
+            facturaTemp = FacturaBLL.Buscar(item.FacturaId);
+            facturas.Servicios = (clienteTemp == null) ? "Factura eliminda" : facturaTemp.Servicios;
+            clienteTemp = ClienteBLL.Buscar(item.ClienteId);
+            facturas.Cliente = (clienteTemp == null) ? "Cliente eliminado" : clienteTemp.Nombre;
             facturas.Total = item.Total;
+            facturas.Fecha = item.Fecha;
 
             Listado.Add(facturas);
         }
 
-        CagarTotal();
+        CalcularTotal();
         IniciarPaginacion();
     }
+
 
 
     public void IniciarPaginacion()
@@ -230,6 +233,8 @@
         Paginas = Math.Ceiling(Elementos / paginacion.Mostrar);
         ListadoPaginado = Listado.Take(paginacion.Mostrar).ToList();
     }
+
+
 
     private void PaginaSiguiente()
     {
@@ -242,6 +247,8 @@
                 .ToList();
         }
     }
+
+
 
 
     private void PaginaAnterior()
@@ -258,35 +265,35 @@
 
 
 
-    public void FiltrarPorLaFecha()
+
+    public void FiltrarFechas()
     {
         if (Filtro == "0")
-            ListaTemp = Listado;
+            listaTemp = Listado;
 
-        if (BuscarPorFecha == true && ListaTemp.Count > 0)
+        if (FiltrarFecha == true && listaTemp.Count > 0)
         {
-            Listado = new List<Facturas>();
-            foreach (var item in ListaTemp)
+            Listado = new List<FacturasConsult>();
+
+            foreach (var item in listaTemp)
             {
                 if (item.Fecha.Date >= Desde.Date && item.Fecha.Date <= Hasta.Date)
                 {
                     Listado.Add(item);
                 }
             }
-
-            BuscarPorFecha = false;
+            FiltrarFecha = false;
         }
         else
         {
-            Listado = new List<Facturas>();
-            Listado = ListaTemp;
+            Listado = new List<FacturasConsult>();
+            Listado = listaTemp;
         }
-        CagarTotal();
+        CalcularTotal();
         IniciarPaginacion();
     }
 
-
-    public void CagarTotal()
+    public void CalcularTotal()
     {
         Total = 0;
         if (Listado != null)
@@ -297,92 +304,95 @@
     }
 
 
+
     private void Buscar()
     {
         if (Filtro == "0")
         {
             LlenarLista();
-            FiltrarPorLaFecha();
+            FiltrarFechas();
         }
         else
         {
             if (Criterio == "")
             {
-                toast.ShowInfo("Agregue el criterio de busqueda");
+                toast.ShowInfo("Debe ingresar un criterio");
             }
             else
             {
                 LlenarLista();
-                ListaTemp = Listado;
-
-
+                listaTemp = Listado;
                 switch (Filtro)
                 {
                     case "0":
-                        listaFacturas = AutosoftService.BLL.FacturaBLL.GetList(e => true);
+                        listaFacturas = FacturaBLL.GetList(e => true);
                         break;
 
                     case "1":
-                        ListaTemp = new List<Facturas>();
+                        listaTemp = new List<FacturasConsult>();
                         foreach (var item in listaFacturas)
                         {
                             if (Convert.ToString(item.FacturaId).Contains(Criterio))
                             {
-                                Facturas facturas = new Facturas();
+                                FacturasConsult facturas = new FacturasConsult();
                                 facturas.FacturaId = item.FacturaId;
-                                facturas.Servicios = item.Servicios;
-                                clientes = ClienteBLL.Buscar(item.ClienteId);
-                                facturas.ClienteId = Convert.ToInt32(clientes.Nombre);
-                                facturas.Fecha = item.Fecha;
+                                facturaTemp = FacturaBLL.Buscar(item.FacturaId);
+                                facturas.Servicios = (clienteTemp == null) ? "Factura eliminda" : facturaTemp.Servicios;
+                                clienteTemp = ClienteBLL.Buscar(item.ClienteId);
+                                facturas.Cliente = clienteTemp.Nombre;
                                 facturas.Total = item.Total;
+                                facturas.Fecha = item.Fecha;
 
-                                ListaTemp.Add(facturas);
+                                listaTemp.Add(facturas);
                             }
                         }
                         break;
 
                     case "2":
-                        ListaTemp = new List<Facturas>();
+                        listaTemp = new List<FacturasConsult>();
                         foreach (var item in listaFacturas)
                         {
-                            clientes = ClienteBLL.Buscar(item.ClienteId);
-                            if (clientes.Nombre.Contains(Criterio))
+                            clienteTemp = ClienteBLL.Buscar(item.ClienteId);
+                            if (clienteTemp.Nombre.Contains(Criterio))
                             {
-                                Facturas facturas = new Facturas();
+                                FacturasConsult facturas = new FacturasConsult();
                                 facturas.FacturaId = item.FacturaId;
-                                facturas.ClienteId = Convert.ToInt32(clientes.Nombre);
-                                facturas.Fecha = item.Fecha;
+                                facturaTemp = FacturaBLL.Buscar(item.FacturaId);
+                                facturas.Servicios = (clienteTemp == null) ? "Factura eliminda" : facturaTemp.Servicios;
+                                facturas.Cliente = clienteTemp.Nombre;
                                 facturas.Total = item.Total;
+                                facturas.Fecha = item.Fecha;
 
-                                ListaTemp.Add(facturas);
+                                listaTemp.Add(facturas);
                             }
                         }
                         break;
 
                     case "3":
-                        ListaTemp = new List<Facturas>();
+                        listaTemp = new List<FacturasConsult>();
                         foreach (var item in listaFacturas)
                         {
                             if (Convert.ToString(item.Total).Contains(Criterio))
                             {
-                                Facturas facturas = new Facturas();
+                                FacturasConsult facturas = new FacturasConsult();
                                 facturas.FacturaId = item.FacturaId;
-                                facturas.Servicios = item.Servicios;
-                                facturas.ClienteId = clientes.ClienteId;
-                                facturas.Fecha = item.Fecha;
+                                facturaTemp = FacturaBLL.Buscar(item.FacturaId);
+                                facturas.Servicios = (clienteTemp == null) ? "Factura eliminda" : facturaTemp.Servicios;
+                                clienteTemp = ClienteBLL.Buscar(item.ClienteId);
+                                facturas.Cliente = clienteTemp.Nombre;
                                 facturas.Total = item.Total;
+                                facturas.Fecha = item.Fecha;
 
-                                ListaTemp.Add(facturas);
+                                listaTemp.Add(facturas);
                             }
                         }
                         break;
                 }
 
-                FiltrarPorLaFecha();
+                FiltrarFechas();
             }
         }
     }
-
 
 
 }
