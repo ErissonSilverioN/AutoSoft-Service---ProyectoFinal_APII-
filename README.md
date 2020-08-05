@@ -10,4 +10,8 @@ el cual te van a facilitar el uso del mismo y asi evitaras posible fallos.
  Es una aplicacion desarrollada en el ecositema tecnologico de Microsoft, con tecnologias tendencias 
  como son ASP.NET CORE, SQL Server y Blazor Server.
  
+ # Login 
+![Login](../master/Resources/Login.jpg)
+ 
+ 
 
