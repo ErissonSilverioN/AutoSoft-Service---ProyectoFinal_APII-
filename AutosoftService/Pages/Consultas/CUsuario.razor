@@ -9,7 +9,7 @@
 <div class="card">
     <div class="card-header"style="        background-color: #6378F0
 ">
-        <h3>Consultas De Clientes</h3>
+        <h3>Consultas De Usuarios</h3>
     </div>
 
     <div class="card-body">
@@ -119,6 +119,7 @@
     {
         lista = UsuarioBLL.GetList(C => true);
         Filtro = "Todo";
+        IniciarPaginacion();
 
     }
 
@@ -208,6 +209,8 @@
                         case "Rol":
                             listapaginada = UsuarioBLL.GetList(e => e.NivelUsuario == Criterio);
                             break;
+                            //case "Fecha":listapaginada=UsuarioBLL.GetList(e=>)
+                            //    break;
                     }
                 }
                 else

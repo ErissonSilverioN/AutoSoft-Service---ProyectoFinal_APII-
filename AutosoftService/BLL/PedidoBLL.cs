@@ -24,7 +24,7 @@ namespace AutosoftService.BLL
         {
             bool paso = false;
             Contexto db = new Contexto();
-
+            PedidoD pedidoD = new PedidoD();
             try
             {
                 if (db.pedidos.Add(pedidos) != null)
@@ -34,10 +34,9 @@ namespace AutosoftService.BLL
                         var proveedor = db.proveedores.Find(item.ProveedorId);
 
                         proveedor.CantidadPedidos += 1;
+
                     }
-
-
-                    db.SaveChanges();
+                        db.SaveChanges();
                     paso = true;
                 }
                 db.Dispose();

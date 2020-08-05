@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\Autoservice10.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Autoservice9.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
