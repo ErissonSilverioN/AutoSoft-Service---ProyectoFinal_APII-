@@ -29,7 +29,7 @@
 
 
                         <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                            <label>Articulo ID</label>
+                            <label><b>Articulo ID</b></label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="@articulos.ArticuloId" class="form-control"></InputNumber>
                                 <div class="input-group-append">
@@ -43,7 +43,7 @@
 
 
                         <div class="form-group col-sm-4     col-md-4     col-lg-3     col-xl-3     ">
-                            <label>Fecha</label>
+                            <label><b>Fecha</b></label>
                             <InputDate @bind-Value="@articulos.Fecha" class="form-control" />
                         </div>
 
@@ -54,7 +54,7 @@
 
 
                         <div class="form-group col-md-12     col-lg-10     col-xl-10">
-                            <label>Descripción</label>
+                            <label><b>Descripción</b></label>
                             <InputText @bind-Value="@articulos.Descripcion" class="form-control" placeholder="Descripcion" />
                             <ValidationMessage For="@(()=>articulos.Descripcion)" />
                         </div>
@@ -66,7 +66,7 @@
 
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label>Proveedor</label>
+                            <label><b>Proveedor</b></label>
                             <InputSelect class="form-control "  @bind-Value="@ProveedorSelect"  @onchange="SeleccionarProveedor" @onclick="SeleccionarProveedor">
                                 <option value="0" disabled selected>Seleccione un Proveedor</option>
                                 @if (listaProveedores.Count <= 0)
@@ -86,7 +86,7 @@
 
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label>Categoría</label>
+                            <label><b>Categoría</b></label>
                             <InputSelect @bind-Value="@articulos.Categoria" class="form-control ">
                                 <option value="0" disabled selected>---Elija una Categoria---</option>
                                 <option value="1" selected>A-Piezas Desgatables</option>
@@ -107,7 +107,7 @@
 
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label>Costo</label>
+                            <label><b>Costo</b></label>
                             <InputNumber @bind-Value="@articulos.Costo" class="form-control" step="10" @onfocusin="CalcularPrecio" @onfocusout="CalcularPrecio" @onkeydown="CalcularPrecio" />
                             <ValidationMessage For="@(()=>articulos.Costo)" />
                         </div>
@@ -115,7 +115,7 @@
 
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label>% Ganancia</label>
+                            <label><b>% Ganancia</b></label>
                             <input type="number" @bind="@articulos.Ganancias" max="100" class="form-control" @onfocusin="CalcularPrecio" @onfocusout="CalcularPrecio" @onkeydown="CalcularPrecio" />
                             <ValidationMessage For="@(()=>articulos.Ganancias)" />
                         </div>
@@ -127,14 +127,14 @@
 
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label for="Precio">Precio</label>
+                            <label ><b>Precio</b></label>
                             <InputNumber @bind-Value="@articulos.Precio" class="form-control" disabled />
                             <ValidationMessage For="@(()=>articulos.Precio)" />
                         </div>
 
 
                         <div class="form-group container col-sm-6     col-md-6     col-lg-5     col-xl-5">
-                            <label for="Cantidad">Cantidad</label>
+                            <label><b>Cantidad</b></label>
                             <InputNumber @bind-Value="@articulos.Existencia" class="form-control" disabled />
                         </div>
 

@@ -12,6 +12,8 @@ namespace AutosoftService.Model
 
         public int PagoId { get; set; }
         public int ClienteId { get; set; }
+        [Required(ErrorMessage = "El Monto es obligatorio.")]
+        [Range(minimum: 1, maximum: 999999999999, ErrorMessage = "El Monto esta fuera del rango")]
         public decimal Monto { get; set; }
         public decimal Deuda { get; set; }
         public DateTime Fecha { get; set; }

@@ -2,76 +2,101 @@
 
 @using System.Web;
 
-
-
 <AuthorizeView>
-    <NotAuthorized>
-        <div class="container">
 
-            <div style="        margin: 0;
-        background-color:darkblue;
-        box-sizing: padding-box;
-        max-width: 500px;
-        padding: 22px;
-        box-shadow: 8px 14px 38px #e1c559;
-        margin: auto;
-        margin-top: 115px;
-        border-radius: 16px;">
+    <Authorized>
 
 
+        <div class="card">
 
-                <div class="text-center">
-                    <h1 style="        font-family: Impact, Charcoal, sans-serif; text-decoration: underline; color:antiquewhite">
-                        AutoSoft Service Login
+            <div class="card-header-tabs">
+
+                <h1 class="text-center" style="background-color:#f6d760">
+                    ¿QUE ES AUTOSOFT SERVICE?
+                </h1>
+
+            </div>
+
+            <div class="card-body">
+
+                <img src="Resources/Logo.jpeg" class="align-items-md-center" cont alt="Logoweb" height="400" width="400" style="border-radius: 25px; align-content:space-between" />
+
+                <br />
+                <br />
+
+                <div class="align-content-end">
+                    <p>
+                        <b>
+                            AUTOSOFT SERVICE es una aplicacion web consebida para pequeños y medianos negicio del campo automatriz, esta busca sistematizas los
+                            primcipales procesos que ese llevan a cabo en la praxis de estos negocio. Es una aplicacion desarrolla con tecnologia propias de Microsoft,
+                            como son ASP.NET CORE, SQL Server y Blazor Server.
+                        </b>
+                    </p>
+                </div>
+                <br />
+
+                <div class="card-header-tabs">
+
+                    <h1 class="text-center" style="background-color:#f6d760">
+                       PRINCIPALES MODULOS
                     </h1>
+
                 </div>
 
 
-                <br />
-                <br />
-
-                <form class="form-group">
-
-                    <div class="form-group">
-
-                        <input type="text" class="form-control" @bind="Username" id="Usuario" aria-describedby="Usuario" placeholder="Usuario">
-
+                <div class="card" style="border-bottom-style">
+                    <img src="Resources/Register.png" height="225" width="225" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Registros de transacciones</b></h5>
+                        <p class="card-text">Con Autosoft Servive usted puede realizar el registro de las que son casi todas sus transacciones, para tenerlas asi a la mano en cuanto la necesite y almacenadas de manera segura.</p>
                     </div>
+                </div>
 
-                    <div class="form-group">
 
-                        <input type="password" class="form-control" @bind="Password" id="exampleInputPassword1" placeholder="Contraseña">
+                <div class="card">
+                    <img src="Resources/Consultar.png" height="225" width="225" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">consultas</h5>
+                        <p class="card-text">Puede consultar los datos que tienes almacenados de una manera muy facil, teniendo la oportunidad de saber como se encuentra su empresa en ese momento en especifico y solo teniendo coneccion a internet!</p>
                     </div>
-
-
-                    <br />
-
-
-
-                    <div class="form-group">
-
-                        <a class=" font-weight-bold btn btn-info btn-info px-4"
-                           href="/login?paramUsername=@encode(@Username)&paramPassword=@encode(@Password)"
-                           target="_top">Iniciar Sesion</a>
-
-
-                        <a class=" font-weight-bold  btn btn-warning btn-warning px-4"
-                           href="/RUsuarios "
-                           target="_top">Registrarse</a>
-
-
-                    </div>
-
-
-                </form>
+                </div>
 
 
             </div>
 
+            <div class="card-footer">
+                <h5 class="text-center">
+                    GRACIAS POR SU VISITA
+                </h5>
+            </div>
+
+
         </div>
-    </NotAuthorized>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </Authorized>
+
+
+
+
 
 </AuthorizeView>
+
+
+
 
 @code {
 
@@ -80,22 +105,22 @@
 
 
 
-    string Username = "";
+    //string Username = "";
 
-    string Password = "";
-
-
-
-    private string encode(string param)
-
-    {
+    //string Password = "";
 
 
 
-        return HttpUtility.UrlEncode(param);
+    //private string encode(string param)
+
+    //{
 
 
-    }
+
+    //    return HttpUtility.UrlEncode(param);
+
+
+    //}
 
 
 

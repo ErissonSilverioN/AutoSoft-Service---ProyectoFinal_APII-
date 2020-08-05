@@ -16,6 +16,7 @@ namespace AutosoftService.Model
         public int VehiculoId { get; set; }
         public int ClienteId { get; set; }
         public int ArticuloId { get; set; }
+        [Required(ErrorMessage = "El campo nombre no puede estar vació.")]
         public string Servicios { get; set; }
         public bool FacturaCredito { get; set; }
         public decimal SubTotal { get; set; }

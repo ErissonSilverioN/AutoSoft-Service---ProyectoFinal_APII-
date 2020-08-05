@@ -14,8 +14,12 @@ namespace AutosoftService.Model
         public int VehiculoId { get; set; }
         public int ClienteId { get; set; }
         public string TipoVehiculo { get; set; }
+
+        [Required(ErrorMessage = "Debe ingresar una descripcion")]
         public string Descripcion { get; set; }
+        [Required(ErrorMessage = "Debe ingresar la placa")]
         public string Placa { get; set; }
+        [Required(ErrorMessage = "Debe ingresar el año")]
         public int Año { get; set; }
         public DateTime Fecha { get; set; }
 

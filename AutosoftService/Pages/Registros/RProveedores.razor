@@ -22,7 +22,7 @@
         <div class="form-row align-items-center">
             <div class="col">
                 <div class="form-group">
-                    <label>ID</label>
+                    <label><b>ID</b></label>
                     <div class="input-group">
                         <InputNumber @bind-Value="proveedores.ProveedorId" class="form-control col-4" />
                         <div class="input-group-append">
@@ -35,48 +35,48 @@
 
         @*Nombres*@
         <div class="form-group">
-            <label>Nombre</label>
+            <label><b>Nombre</b></label>
             <InputText @bind-Value="proveedores.Nombre" class="form-control" />
             <ValidationMessage For="@(() => proveedores.Nombre)" />
         </div>
 
         @*Telefono*@
         <div class="form-group">
-            <label>Telefono</label>
+            <label><b>Telefono</b></label>
             <InputText @bind-Value="proveedores.Telefono" class="form-control" />
             <ValidationMessage For="@(() => proveedores.Telefono)" />
         </div>
 
         @*Email*@
         <div class="form-group">
-            <label>Email </label>
+            <label><b>Email </b></label>
             <InputText @bind-Value="proveedores.Email" class="form-control" />
             <ValidationMessage For="@(() => proveedores.Email)" />
         </div>
 
         @*Direccion*@
         <div class="form-group">
-            <label>Direccion </label>
+            <label><b>Direccion </b></label>
             <InputText @bind-Value="proveedores.Direccion" class="form-control" />
             <ValidationMessage For="@(() => proveedores.Direccion)" />
         </div>
 
         @*Rnc*@
         <div class="form-group">
-            <label>RNC</label>
+            <label><b>RNC</b></label>
             <InputText @bind-Value="proveedores.RNC" class="form-control" />
             <ValidationMessage For="@(() => proveedores.RNC)" />
         </div>
 
         @*Cantidad*@
         <div class="form-group">
-            <label>Cantidad De pedidos</label>
+            <label><b>Cantidad De pedidos</b></label>
             <InputNumber @bind-Value="proveedores.CantidadPedidos" class="form-control" Readonly="true" />
             <ValidationMessage For="@(() => proveedores.CantidadPedidos)" />
         </div>
         @*Fecha*@
         <div class="form-group">
-            <label>Fecha</label>
+            <label><b>Fecha</b></label>
             <InputDate @bind-Value="proveedores.Fecha" class="form-control" />
             <ValidationMessage For="@(() => proveedores.Fecha)" />
         </div>

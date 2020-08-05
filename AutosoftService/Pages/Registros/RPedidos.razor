@@ -29,7 +29,7 @@
                     <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
 
                     <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                        <label>Pedido ID</label>
+                        <label><b>Pedido ID</b></label>
                         <div class="input-group ">
                             <InputNumber @bind-Value="@pedidos.PedidoId" class="form-control" />
                             <div class="input-group-append">
@@ -43,7 +43,7 @@
 
                     <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
                         <div class="form-group">
-                            <label>Fecha</label>
+                            <label><b>Fecha</b></label>
                             <InputDate @bind-Value="@pedidos.Fecha" class="form-control" />
                         </div>
                     </div>
@@ -53,7 +53,7 @@
 
 
                     <div class="form-group col-sm-8     col-md-8     col-lg-8     col-xl-8    ">
-                        <label>Proveedores</label>
+                        <label><b>Proveedores</b></label>
                         <div class="input-group ">
 
                             <InputSelect @bind-Value="@ProveedorSelect" class="form-control" @onchange="LlenaComboxProveedor" @onclick="LlenaComboxProveedor">
@@ -79,7 +79,7 @@
 
 
                     <div class="form-group form-group col-sm-6     col-md-6     col-lg-3     col-xl-3    ">
-                        <label>Articulos</label>
+                        <label><b>Articulos</b></label>
                         <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onclick="LlenaComboxArticulo" @onchange="LlenaComboxArticulo">
                             <option value="0" disabled selected>---Seleccione un Articulo---</option>
                             @if (ListaArticulos.Count == 0)
@@ -97,7 +97,7 @@
                     </div>
 
                     <div class="form-group col-sm-4     col-md-4     col-lg-1    col-xl-1     ">
-                        <label>Existencia</label>
+                        <label><b>Existencia</b></label>
                         <InputNumber @bind-Value="@existencia" class="form-control" Readonly="true" />
                     </div>
 
@@ -108,13 +108,13 @@
                     <div class="form-row col-md-12 col-lg-6">
 
                         <div class="form-group col-sm-4     col-md-4     col-lg-2    col-xl-2     ">
-                            <label>Precio</label>
+                            <label><b>Precio</b></label>
                             <InputNumber @bind-Value="@precio" class="form-control" Readonly="true"></InputNumber>
                         </div>
 
 
                         <div class="form-group col-sm-4     col-md-4     col-lg-3    col-xl-3    ">
-                            <label>Unidad</label>
+                            <label><b>Unidad</b></label>
                             <div class="input-group ">
                                 <InputNumber @bind-Value="@unidad" class="form-control " @onfocusin="CalcularSubtotal" @onfocusout="CalcularSubtotal" @onclick="CalcularSubtotal" />
                                 <div class="form-group col-sm-12     col-md-2    ">
@@ -148,7 +148,6 @@
                                             <th>@item.ArticuloId</th>
                                             <th>@GetNombreProveedor(item.ProveedorId)</th>
                                             <th>@item.Descripcion</th>
-                                           
                                             <th>@item.Precio</th>
                                             <th>@item.Unidad</th>
                                             <th><button type="button" class="btn btn-outline-danger btn-sm" @onclick="(()=> Remover(item))">Eliminar</button></th>
@@ -183,9 +182,9 @@
 
             <div class="card-footer">
                 <div class="form-group text-center" display: inline-block>
-                    <button type="button" class="btn btn-warning btn-lg" @onclick="Nuevo"><span class="oi oi-file" />&nbsp;Limpiar</button>
-                    <button type="submit" class="btn btn-success btn-lg "><span class="oi oi-data-transfer-download"></span>&nbsp;Guardar</button>
-                    <button type="button" class="btn btn-danger btn-lg"><span class="oi oi-trash" />&nbsp;Eliminar</button>
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
                 </div>
             </div>
 
@@ -323,10 +322,9 @@
 
     private void Agregar()
     {
+        
         var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
         var proveedorTemp = ProveedorBLL.Buscar(Convert.ToInt32(ProveedorSelect));
-
-
 
 
         if (ArticuloSelect == null)
@@ -338,8 +336,6 @@
             if (ProveedorSelect == null)
             {
 
-
-
                 toas.ShowWarning("Debe ingresar un Proveedor");
             }
             else
@@ -347,33 +343,32 @@
                 if (unidad == 0)
                 {
 
-
-
                     toas.ShowWarning("Debe ingresar una cantidad");
                 }
                 else
                 {
-
                     pedidos.Pedido_Detalle.Add(new PedidoD()
                     {
                         PedidoId = pedidos.PedidoId,
                         ArticuloId = articuloTemp.ArticuloId,
-                        ProveedorId =proveedorTemp.ProveedorId,
+                        ProveedorId = proveedorTemp.ProveedorId,
                         Descripcion = articuloTemp.Descripcion,
                         Precio = precio,
                         Unidad = unidad
-                    }); ;
+                    });
+
                     articulos = new Articulos();
-                    existencia = 0;
-                    precio = 0;
-                    ProveedorSelect = "0";
+
                     CalcularSubtotal();
 
                     ArticuloSelect = "0";
                     unidad = 0;
+                    ProveedorSelect = "0";
+                    existencia = 0;
+                    precio = 0;
+
                 }
             }
-
         }
     }
 
@@ -411,11 +406,7 @@
         {
             pedidos.ArticuloId = Convert.ToInt32(ArticuloSelect);
 
-
-
             var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
-
-
 
             if (articuloTemp != null)
             {
@@ -423,13 +414,13 @@
                 existencia = articuloTemp.Existencia;
             }
 
-
-
         }
+
         catch (Exception)
         {
             toas.ShowError("Algo salio mal", "Error");
         }
+
     }
 
 
@@ -444,6 +435,9 @@
 
         pedidos.Subtotal = Result;
     }
+
+
+
 
     public string GetNombreProveedor(int id)
     {

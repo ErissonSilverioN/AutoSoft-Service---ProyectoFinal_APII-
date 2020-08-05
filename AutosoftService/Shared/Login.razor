@@ -1,0 +1,110 @@
+﻿@page "/Login"
+
+@using System.Web;
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject IJSRuntime jsRunTime
+@inject IToastService toast
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="container">
+
+            <div style="        margin: 0;
+        background-color:darkblue;
+        box-sizing: padding-box;
+        max-width: 500px;
+        padding: 22px;
+        box-shadow: 8px 14px 38px #e1c559;
+        margin: auto;
+        margin-top: 115px;
+        border-radius: 16px;">
+
+
+
+                <div class="text-center">
+                    <h1 style="        font-family: Impact, Charcoal, sans-serif; text-decoration: underline; color:antiquewhite">
+                        AutoSoft Service Login
+                    </h1>
+                </div>
+
+
+                <br />
+                <br />
+
+                <form class="form-group">
+
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" @bind="Username" id="Usuario" aria-describedby="Usuario" placeholder="Usuario">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="password" class="form-control" @bind="Password" id="exampleInputPassword1" placeholder="Contraseña">
+                    </div>
+
+
+                    <br />
+
+
+
+                    <div class="form-group">
+
+                        <a class=" font-weight-bold btn btn-info btn-info px-4"
+                           href="/login?paramUsername=@encode(@Username)&paramPassword=@encode(@Password)"
+                           target="_top">Iniciar Sesion</a>
+
+
+                        <a class=" font-weight-bold  btn btn-warning btn-warning px-4"
+                           href="/RUsuarios "
+                           target="_top">Registrarse</a>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </NotAuthorized>
+
+</AuthorizeView>
+
+
+
+
+@code {
+
+
+
+
+
+
+    string Username = "";
+
+    string Password = "";
+
+
+
+    private string encode(string param)
+
+    {
+
+
+
+        return HttpUtility.UrlEncode(param);
+
+
+    }
+
+
+
+
+
+}

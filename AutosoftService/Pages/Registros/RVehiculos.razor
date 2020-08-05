@@ -22,7 +22,7 @@
         <div class="form-row align-items-center">
             <div class="col">
                 <div class="form-group">
-                    <label>ID</label>
+                    <label><b>ID</b></label>
                     <div class="input-group">
                         <InputNumber @bind-Value="vehiculos.VehiculoId" class="form-control col-4" />
                         <div class="input-group-append">
@@ -35,13 +35,13 @@
 
         @*Descripcion*@
         <div class="form-group">
-            <label>Descripcion</label>
+            <label><b>Descripcion</b></label>
             <InputText @bind-Value="vehiculos.Descripcion" class="form-control" />
             <ValidationMessage For="@(() => vehiculos.Descripcion)" />
         </div>
         @*Cliente Id*@
         <div class="form-group">
-            <label>Cliente Id</label>
+            <label><b>Cliente</b></label>
             <select class="form-control" @bind="vehiculos.ClienteId">
                 <option disabled="disabled" selected="selected">Elija una opción</option>
                 @foreach (var auxiliar in LlenarComboCliente())
@@ -53,7 +53,7 @@
         </div>
         @*Tipo de Vehiculos*@
     <div class="form-group">
-        <label>Tipo de Vehiculos</label>
+        <label><b>Tipo de Vehiculos</b></label>
         <InputSelect @bind-Value="@vehiculos.TipoVehiculo" class="form-control">
             <option value="" disabled selected>Seleccione un Tipo</option>
             <option value="Carro">Carro</option>
@@ -67,21 +67,21 @@
 
         @*Placa*@
         <div class="form-group">
-            <label>Placa </label>
+            <label><b>Placa </b></label>
             <InputText @bind-Value="vehiculos.Placa" class="form-control" />
             <ValidationMessage For="@(() =>vehiculos.Placa)" />
         </div>
 
         @*Año*@
         <div class="form-group">
-            <label>Año</label>
+            <label><b>Año</b></label>
             <InputNumber @bind-Value="vehiculos.Año" class="form-control" />
             <ValidationMessage For="@(() => vehiculos.Año)" />
         </div>
 
         @*Fecha*@
         <div class="form-group">
-            <label>Fecha</label>
+            <label><b>Fecha</b></label>
             <InputDate @bind-Value="vehiculos.Fecha" class="form-control" />
             <ValidationMessage For="@(() => vehiculos.Fecha)" />
         </div>

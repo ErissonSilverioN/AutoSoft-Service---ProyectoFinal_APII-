@@ -1,0 +1,228 @@
+﻿@page "/CVehiculos"
+
+
+@using AutosoftService.BLL;
+@using AutosoftService.Model;
+@using AutosoftService.DAL;
+
+
+@inject IToastService toast
+
+
+<EditForm Model="listapaginada">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header" style="        background-color: #6378F0
+">
+            <h3>Consultas De Clientes</h3>
+        </div>
+
+        <div class="card-body">
+            <div class="input-group mb-4">
+                <div class="input-group">
+
+                    <label for="filtro">Filtro: </label>
+                    <select class="form-control ml-3 mr-3" @bind="Filtro">
+                        <option value="" disabled selected>Seleccione un filtro</option>
+                        <option value="Todo">Todo</option>
+                        <option value="ID">ID</option>
+                        <option value="Descripcion">Descripcion</option>
+                        <option value="Año">Año</option>
+                    </select>
+
+                    <label for="criterio ml-3 mr-3"> Criterio: </label>
+                    <input type="search" class="form-control ml-3 mr-3" @bind-value="Criterio" />
+
+                    <button type="button" class="btn btn-primary" @onclick="Buscar">Buscar </button>
+                </div>
+            </div>
+
+            <table class=" table mb-3 mt-3" id="example">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripcion</th>
+                        <th>Placa</th>
+                        <th>TipoVehiculo</th>
+                        <th>Año</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (listapaginada.Count == 0)
+                    {
+                        toast.ShowWarning("No hay datos");
+                    }
+                    else
+                    {
+
+                        @foreach (var item in listapaginada)
+                        {
+                            <tr class="table-striped">
+                                <td>@item.VehiculoId</td>
+                                <td>@item.Descripcion</td>
+                                <td>@item.Placa</td>
+                                <td>@item.TipoVehiculo</td>
+                                <td>@item.Año</td>
+                                <td>@item.Fecha</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <div class="form-row col-12 justify-content-center">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item bt">
+                            <a class="page-link" @onclick="PaginaAnterior">
+                                <span class="oi oi-media-skip-backward "></span>
+                            </a>
+                        </li>
+
+                        @for (int i = 1; i <= Paginas; i++)
+                        {
+                            <li class=" @(PaginaActual == i ? "text-danger" : "page-item")" @onclick="Mover"> <a class="page-link disabled">@i</a></li>
+
+                        }
+
+                        <li class="page-item">
+                            <a class="page-link" @onclick="PaginaSiguiente">
+                                <span class="oi oi-media-skip-forward "></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</EditForm>
+
+
+@code {
+
+
+    private List<Vehiculos> lista { get; set; }
+    private List<Vehiculos> listapaginada { get; set; }
+
+    private string Filtro { get; set; }
+    private string Criterio { get; set; }
+    Paginacion paginacion = new Paginacion();
+    double Paginas = 0;
+    double Elementos = 0;
+    int PaginaActual = 0;
+
+
+
+
+
+
+    protected override void OnInitialized()
+    {
+        lista = VehiculoBLL.GetList(C => true);
+        Filtro = "Todo";
+        IniciarPaginacion();
+    }
+
+
+
+    public void IniciarPaginacion()
+    {
+        PaginaActual = 1;
+        Elementos = lista.Count();
+        Paginas = Math.Ceiling(Elementos / paginacion.Mostrar);
+        listapaginada = lista.Take(paginacion.Mostrar).ToList();
+    }
+
+    private void PaginaSiguiente()
+    {
+        if (PaginaActual < Paginas)
+        {
+            PaginaActual++;
+            listapaginada = lista
+                .Skip((PaginaActual - 1) * paginacion.Mostrar)
+                .Take(paginacion.Mostrar)
+                .ToList();
+        }
+    }
+    private void Mover()
+    {
+        if (PaginaActual < Paginas)
+        {
+            PaginaActual++;
+            listapaginada = lista
+                .Skip((PaginaActual - 1) * paginacion.Mostrar)
+                .Take(paginacion.Mostrar)
+                .ToList();
+        }
+        else if (PaginaActual > 1)
+        {
+            PaginaActual--;
+            listapaginada = lista
+                .Skip((PaginaActual - 1) * paginacion.Mostrar)
+                .Take(paginacion.Mostrar)
+                .ToList();
+        }
+    }
+
+
+    private void PaginaAnterior()
+    {
+        if (PaginaActual > 1)
+        {
+            PaginaActual--;
+            listapaginada = lista
+                .Skip((PaginaActual - 1) * paginacion.Mostrar)
+                .Take(paginacion.Mostrar)
+                .ToList();
+        }
+    }
+
+
+
+
+    private void Buscar()
+    {
+        try
+        {
+            if (Filtro == null)
+            {
+                toast.ShowWarning("Selecciones un filtro");
+            }
+            else
+            {
+                if (Filtro != null)
+                {
+
+                    switch (Filtro)
+                    {
+                        case "Todo":
+                            lista = VehiculoBLL.GetList(e => true);
+
+                            break;
+                        case "Id":
+                            lista = VehiculoBLL.GetList(e => e.VehiculoId == Convert.ToInt32(Criterio));
+                            break;
+                        case "Nombre":
+                            lista = VehiculoBLL.GetList(e => e.Descripcion == Criterio);
+                            break;
+                        case "Año":
+                            lista = VehiculoBLL.GetList(e => e.Año == Convert.ToInt32(Criterio));
+                            break;
+
+                    }
+                }
+                else
+                {
+                    toast.ShowWarning("debes de insertar un dato al criterio");
+                }
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+}

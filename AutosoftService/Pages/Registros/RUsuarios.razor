@@ -19,7 +19,7 @@
                     <div class="col">
                         @*ID*@
                         <div class="form-group">
-                            <label>Id</label>
+                            <label><b>Id</b></label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="usuarios.UsuarioId" class="form-control col-4" />
                                 <ValidationMessage For="@(() => usuarios.UsuarioId)"></ValidationMessage>
@@ -32,31 +32,31 @@
                 </div>
                 @*Nombres*@
                 <div class="form-group">
-                    <label>Nombres</label>
+                    <label><b>Nombres</b></label>
                     <InputText @bind-Value="usuarios.Nombre" class="form-control " />
                     <ValidationMessage For="@(() => usuarios.Nombre)" />
                 </div>
                 @*Apellidos*@
                 <div class="form-group">
-                    <label>Apellidos</label>
+                    <label><b>Apellidos</b></label>
                     <InputText @bind-Value="usuarios.Apellidos" class="form-control " />
                     <ValidationMessage For="@(() => usuarios.Apellidos)" />
                 </div>
                 @*Email*@
                 <div class="form-group">
-                    <label>Email</label>
+                    <label><b>Email</b></label>
                     <InputText @bind-Value="usuarios.Email" class="form-control " />
                     <ValidationMessage For="@(() => usuarios.Email)" />
                 </div>
                 @*Nombre de Usuario*@
                 <div class="form-group">
-                    <label>Nombre de usuario:</label>
+                    <label><b>Nombre de usuario</b></label>
                     <InputText @bind-Value="usuarios.Usuario" class="form-control " />
                     <ValidationMessage For="@(() => usuarios.Usuario)" />
                 </div>
                 @*Rol de Usuario*@
                 <div class="form-group">
-                    <label>Roles de usuarios</label>
+                    <label><b>Roles de usuarios</b></label>
                     <InputSelect @bind-Value="@usuarios.NivelUsuario" class="form-control">
                         <option value="" disabled selected>Seleccione un Rol</option>
                         <option value="Administrador">Administrador</option>
@@ -67,20 +67,20 @@
                 </div>
                 @*Contraseña*@
                 <div class="form-group">
-                    <label>Clave</label>
+                    <label><b>Clave</b></label>
                     <InputText type="password" class="form-control " @bind-Value="usuarios.Contrasena"></InputText>
                     <ValidationMessage For="@(() => usuarios.Contrasena)" />
                 </div>
 
                 @*confirmar Contraseña*@
                 <div class="form-group">
-                    <label>Confirmar Clave</label>
+                    <label><b>Confirmar Clave</b></label>
                     <InputText type="password" class="form-control " @bind-Value="usuarios.ConfirmarContrasena"></InputText>
                     <ValidationMessage For="@(() => usuarios.ConfirmarContrasena)" />
                 </div>
                 @*Fecha*@
                 <div class="form-group">
-                    <label>Fecha</label>
+                    <label><b>Fecha</b></label>
                     <InputDate @bind-Value="usuarios.FechaIngreso" class="form-control "></InputDate>
                     <ValidationMessage For="@(() => usuarios.FechaIngreso)"></ValidationMessage>
                 </div>
@@ -88,9 +88,9 @@
         </div>
         <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="fa fa-plus"></i> Nuevo </button>
-                <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar </button>
-                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar </button>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="fa fa-plus"></i> Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
             </div>
 
         </div>

@@ -10,10 +10,13 @@ namespace AutosoftService.Model
     {
         [Key]
         public int EntradasArtId { get; set; }
+
         public int ArticuloId { get; set; }
 
         [Required(ErrorMessage ="Debe ingresar la cantidad")]
         public int Cantidad { get; set; }
+
+        [Required(ErrorMessage = "La fecha esta fuera de rango")]
         public DateTime Fecha { get; set; }
 
         public EntradasArticulos()

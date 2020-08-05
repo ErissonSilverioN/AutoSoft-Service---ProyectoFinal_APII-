@@ -1,19 +1,44 @@
 ﻿@inherits LayoutComponentBase
-<AuthorizeView>
-<div class="sidebar">
-    <NavMenu />
-</div>
-</AuthorizeView>
-<div class="main">
-    <div class="top-row px-4">
-        <Login_Control />
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+<AuthorizeView>
+
+    <Authorized>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+
+        <div class="main">
+            <div class="top-row px-4" style="background-color: #ffffff">
+
+                <b class="text-white">Bienvenido, @context.User.Identity.Name...</b>
+                <a class="ml-md-auto btn btn-info"
+                   href="/logout?returnUrl=/"
+                   target="_top" style="color: #ffffff">Logout</a>
+            </div>
+
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+
+    </Authorized>
+
+
+    <NotAuthorized>
+
+        <div class="main">
+            <div class="content px-4">
+                <Login />
+            </div>
+        </div>
+
+
+    </NotAuthorized>
+
+
+</AuthorizeView>
 
 
 <BlazoredToasts />

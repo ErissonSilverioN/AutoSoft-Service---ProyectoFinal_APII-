@@ -31,7 +31,7 @@
 
 
                         <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                            <label>Entrada ID</label>
+                            <label><b>Entrada ID</b></label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="@entradasArticulos.EntradasArtId" class="form-control"></InputNumber>
                                 <div class="input-group-append">
@@ -44,7 +44,7 @@
                         <div class="col-sm-3     col-md-2     col-lg-4     col-xl-4" />
 
                         <div class="form-group col-sm-4     col-md-5     col-lg-3     col-xl-3     ">
-                            <label>Fecha</label>
+                            <label><b>Fecha</b></label>
                             <InputDate @bind-Value="@entradasArticulos.Fecha" class="form-control" />
                         </div>
 
@@ -54,7 +54,7 @@
 
 
                         <div class="form-group col-sm-8     col-md-8     col-lg-8     col-xl-8    ">
-                            <label>Articulo</label>
+                            <label><b>Articulo</b></label>
                             <div class="input-group ">
 
                                 <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onchange="LlenaCombo" @onclick="LlenaCombo">
@@ -80,7 +80,7 @@
                         <div class="col-sm-2   col-md-2   col-lg-0  col-xl-0" />
 
                         <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4    ">
-                            <label>Cantidad</label>
+                            <label><b>Cantidad</b></label>
                             <div class="input-group ">
                                 <InputNumber @bind-Value="@entradasArticulos.Cantidad" class="form-control"></InputNumber>
                             </div>

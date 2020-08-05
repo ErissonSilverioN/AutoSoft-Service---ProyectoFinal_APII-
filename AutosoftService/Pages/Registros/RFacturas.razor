@@ -30,7 +30,7 @@
                     <div class="col-sm-0     col-md-0     col-lg-0     col-xl-1" />
 
                     <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
-                        <label>Factura ID</label>
+                        <label><b>Factura ID</b></label>
                         <div class="input-group ">
                             <InputNumber @bind-Value="@facturas.FacturaId" class="form-control" />
                             <div class="input-group-append">
@@ -44,7 +44,7 @@
 
                     <div class="form-group col-sm-5     col-md-5     col-lg-3     col-xl-3     ">
                         <div class="form-group">
-                            <label>Fecha</label>
+                            <label><b>Fecha</b></label>
                             <InputDate @bind-Value="@facturas.Fecha" class="form-control" />
                         </div>
                     </div>
@@ -67,7 +67,7 @@
 
 
                     <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4     ">
-                        <label>Clientes</label>
+                        <label><b>Cliente</b></label>
                         <InputSelect @bind-Value="@ClienteSelect" class="form-control" @onclick="LlenaComboxCliente" @onchange="LlenaComboxCliente">
                             <option value="0" disabled selected>---Seleccione un Cliente---</option>
                             @if (ListaCliente.Count == 0)
@@ -91,7 +91,7 @@
 
 
                     <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-4     ">
-                        <label>Vehiculos</label>
+                        <label><b>Vehiculo</b></label>
                         <InputSelect @bind-Value="@VehiculosSelect" class="form-control" @onclick="LlenaComboxVehiculo" @onchange="LlenaComboxVehiculo">
                             <option value="0" disabled selected>---Seleccione un Vehiculo---</option>
                             @if (ListaVehiculos.Count == 0)
@@ -117,7 +117,7 @@
 
 
                     <div class="form-group col-sm-6     col-md-6     col-lg-4     col-xl-3     ">
-                        <label>Articulos</label>
+                        <label><b>Articulo</b></label>
                         <InputSelect @bind-Value="@ArticuloSelect" class="form-control" @onclick="LlenaComboxArticulo" @onchange="LlenaComboxArticulo">
                             <option value="0" disabled selected>---Seleccione un Articulo---</option>
                             @if (ListaVehiculos.Count == 0)
@@ -136,7 +136,7 @@
                     </div>
 
                     <div class="form-group col-sm-4     col-md-4     col-lg-2    col-xl-2     ">
-                        <label>Cantidad</label>
+                        <label><b>Cantidad</b></label>
                         <InputNumber @bind-Value="@cantidad" class="form-control" @onfocusin="CalcularImporte" @onfocusout="CalcularImporte" @onclick="CalcularImporte" />
                     </div>
 
@@ -147,12 +147,12 @@
                     <div class="form-row col-md-12 col-lg-6">
 
                         <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4     ">
-                            <label>Precio</label>
+                            <label><b>Precio</b></label>
                             <InputNumber @bind-Value="@precio" class="form-control" Readonly="true"></InputNumber>
                         </div>
 
                         <div class="form-group col-sm-6     col-md-6     col-lg-4    col-xl-4    ">
-                            <label>Importe</label>
+                            <label><b>Importe</b></label>
                             <div class="input-group ">
                                 <InputNumber @bind-Value="@importe" class="form-control " Readonly="true" @onfocusin="CalcularImporte" @onfocusout="CalcularImporte" @onclick="CalcularImporte" />
                                 <div class="form-group col-sm-12     col-md-2    ">
@@ -212,7 +212,7 @@
 
 
                                 <div class="form-check justify-content-start">
-                                    <label class="form-check-label">&nbsp;&nbsp;Facturar a credito</label>
+                                    <label class="form-check-label">&nbsp;&nbsp;<b>Facturar a credito</b></label>
                                     <input class="form-check-inline" type="checkbox" @bind-value="facturas.FacturaCredito">
                                 </div>
 
@@ -244,9 +244,9 @@
 
         <div class="card-footer">
             <div class="form-group text-center" display: inline-block>
-                <button type="button" class="btn btn-warning btn-lg" @onclick="Nuevo"><span class="oi oi-file" />&nbsp;Limpiar</button>
-                <button type="submit" class="btn btn-success btn-lg "><span class="oi oi-data-transfer-download"></span>&nbsp;Guardar</button>
-                <button type="button" class="btn btn-danger btn-lg" @onclick="Eliminar"><span class="oi oi-trash" />&nbsp;Eliminar</button>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo"><i class="fa fa-plus"></i> Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success"><i class="fa fa-save"></i> Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
             </div>
         </div>
 
