@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LGxT2nnloZ5oEBZeQdwdXVa7aylCE66dVCGuFcqxM4+mtXz3kGdU6wAzT6R4qSgl11SkePJourEbPh2WXFj5rw==",
+  "dgSpecHash": "DDWB16tE6XL2s+CiI6DGvMldwWp6+oNGI3Y3xdlmIQtLgaEPBqDaisW2+qcPZINNNpM2W2SAvO/2L4SpawOUlw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
+  "projectFilePath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PANDA\\.nuget\\packages\\blazored.toast\\3.1.2\\blazored.toast.3.1.2.nupkg.sha512",
     "C:\\Users\\PANDA\\.nuget\\packages\\coverlet.collector\\1.2.0\\coverlet.collector.1.2.0.nupkg.sha512",

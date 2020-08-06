@@ -2492,11 +2492,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftService\\AutosoftService.csproj",
+      "projectUniqueName": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftService\\AutosoftService.csproj",
       "projectName": "AutosoftService",
-      "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftService\\AutosoftService.csproj",
+      "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftService\\AutosoftService.csproj",
       "packagesPath": "C:\\Users\\PANDA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftService\\obj\\",
+      "outputPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

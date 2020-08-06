@@ -7922,11 +7922,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
+      "projectUniqueName": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
       "projectName": "AutosoftServiceTests",
-      "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
+      "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftServiceTests\\AutosoftServiceTests.csproj",
       "packagesPath": "C:\\Users\\PANDA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftServiceTests\\obj\\",
+      "outputPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftServiceTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -7945,8 +7945,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftService\\AutosoftService.csproj": {
-              "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal11\\AutosoftService\\AutosoftService.csproj"
+            "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftService\\AutosoftService.csproj": {
+              "projectPath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal12\\AutosoftService\\AutosoftService.csproj"
             }
           }
         }
