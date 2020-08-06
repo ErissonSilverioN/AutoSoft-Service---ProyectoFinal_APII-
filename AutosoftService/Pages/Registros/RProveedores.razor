@@ -13,75 +13,77 @@
     <DataAnnotationsValidator />
     <div class="card w-100">
         <div class="card-header">
-            <h1>Registro de Proveedores</h1>
+            <div class="text-center">
+                <h3>Registro de Proveedores</h3>
+            </div>
         </div>
 
         @*ClientesID y boton al lado*@
-    <div class="card-body">
-        <form />
-        <div class="form-row align-items-center">
-            <div class="col">
-                <div class="form-group">
-                    <label><b>ID</b></label>
-                    <div class="input-group">
-                        <InputNumber @bind-Value="proveedores.ProveedorId" class="form-control col-4" />
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
+        <div class="card-body">
+            <form />
+            <div class="form-row align-items-center">
+                <div class="col">
+                    <div class="form-group">
+                        <label><b>ID</b></label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="proveedores.ProveedorId" class="form-control col-4" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @*Nombres*@
-        <div class="form-group">
-            <label><b>Nombre</b></label>
-            <InputText @bind-Value="proveedores.Nombre" class="form-control" />
-            <ValidationMessage For="@(() => proveedores.Nombre)" />
-        </div>
+            @*Nombres*@
+            <div class="form-group">
+                <label><b>Nombre</b></label>
+                <InputText @bind-Value="proveedores.Nombre" class="form-control" />
+                <ValidationMessage For="@(() => proveedores.Nombre)" />
+            </div>
 
-        @*Telefono*@
-        <div class="form-group">
-            <label><b>Telefono</b></label>
-            <InputText @bind-Value="proveedores.Telefono" class="form-control" />
-            <ValidationMessage For="@(() => proveedores.Telefono)" />
-        </div>
+            @*Telefono*@
+            <div class="form-group">
+                <label><b>Telefono</b></label>
+                <InputText @bind-Value="proveedores.Telefono" class="form-control" />
+                <ValidationMessage For="@(() => proveedores.Telefono)" />
+            </div>
 
-        @*Email*@
-        <div class="form-group">
-            <label><b>Email </b></label>
-            <InputText @bind-Value="proveedores.Email" class="form-control" />
-            <ValidationMessage For="@(() => proveedores.Email)" />
-        </div>
+            @*Email*@
+            <div class="form-group">
+                <label><b>Email </b></label>
+                <InputText @bind-Value="proveedores.Email" class="form-control" />
+                <ValidationMessage For="@(() => proveedores.Email)" />
+            </div>
 
-        @*Direccion*@
-        <div class="form-group">
-            <label><b>Direccion </b></label>
-            <InputText @bind-Value="proveedores.Direccion" class="form-control" />
-            <ValidationMessage For="@(() => proveedores.Direccion)" />
-        </div>
+            @*Direccion*@
+            <div class="form-group">
+                <label><b>Direccion </b></label>
+                <InputText @bind-Value="proveedores.Direccion" class="form-control" />
+                <ValidationMessage For="@(() => proveedores.Direccion)" />
+            </div>
 
-        @*Rnc*@
-        <div class="form-group">
-            <label><b>RNC</b></label>
-            <InputText @bind-Value="proveedores.RNC" class="form-control" />
-            <ValidationMessage For="@(() => proveedores.RNC)" />
-        </div>
+            @*Rnc*@
+            <div class="form-group">
+                <label><b>RNC</b></label>
+                <InputText @bind-Value="proveedores.RNC" class="form-control" />
+                <ValidationMessage For="@(() => proveedores.RNC)" />
+            </div>
 
-        @*Cantidad*@
-        <div class="form-group">
-            <label><b>Cantidad De pedidos</b></label>
-            <InputNumber @bind-Value="proveedores.CantidadPedidos" class="form-control" Readonly="true" />
-            <ValidationMessage For="@(() => proveedores.CantidadPedidos)" />
-        </div>
-        @*Fecha*@
-        <div class="form-group">
-            <label><b>Fecha</b></label>
-            <InputDate @bind-Value="proveedores.Fecha" class="form-control" />
-            <ValidationMessage For="@(() => proveedores.Fecha)" />
-        </div>
+            @*Cantidad*@
+            <div class="form-group">
+                <label><b>Cantidad De pedidos</b></label>
+                <InputNumber @bind-Value="proveedores.CantidadPedidos" class="form-control" Readonly="true" />
+                <ValidationMessage For="@(() => proveedores.CantidadPedidos)" />
+            </div>
+            @*Fecha*@
+            <div class="form-group">
+                <label><b>Fecha</b></label>
+                <InputDate @bind-Value="proveedores.Fecha" class="form-control" />
+                <ValidationMessage For="@(() => proveedores.Fecha)" />
+            </div>
 
-    </div>
+        </div>
 
         @*Botones*@
         <div class="card-footer">

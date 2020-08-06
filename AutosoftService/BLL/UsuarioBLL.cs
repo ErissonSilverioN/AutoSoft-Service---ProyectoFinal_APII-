@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 using AutosoftService.DAL;
 using AutosoftService.Model;
@@ -28,6 +29,7 @@ namespace AutosoftService.BLL
             try
             {
                 if (db.usuarios.Add(usuarios) != null)
+                    usuarios.Contrasena = Encriptar(usuarios.Contrasena);
                     paso = db.SaveChanges() > 0;
             }
             catch (Exception)
@@ -185,6 +187,19 @@ namespace AutosoftService.BLL
 
             return paso;
 
+        }
+
+        public static string Encriptar(string password)
+        {
+            if (!string.IsNullOrEmpty(password))
+            {
+                string resultado = string.Empty;
+                byte[] encryted = Encoding.Unicode.GetBytes(password);
+                resultado = Convert.ToBase64String(encryted);
+
+                return resultado;
+            }
+            return string.Empty;
         }
 
 
