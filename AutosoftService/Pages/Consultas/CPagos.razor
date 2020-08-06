@@ -37,18 +37,18 @@
                     </div>
 
 
-                  
+
                     <div class="form-inline DivConsulta col-sm-12     col-md-6     col-lg-5     col-xl-4">
                         <label for="Criterio" class="LabelConsulta     col-sm-3      col-md-2">Criterio: </label>
                         <InputText @bind-Value="@Criterio" class="form-control     col-sm-8     col-md-9" placeholder="Criterio" />
-                        
+
                     </div>
 
                     <div class="col-sm-0     col-md-0     col-lg-1     col-xl-2" />
 
                     <br />
 
-+
+                    +
                     <div class="DivConsulta text-center     col-12">
                         <input class="ml-1" type="checkbox" @bind-value="BuscarPorFecha" style="margin-top:15px">&nbsp;&nbsp;Filtrar por Fecha
                     </div>
@@ -56,20 +56,20 @@
 
                     <div class="col-sm-0     col-md-0     col-lg-1     col-xl-2" />
 
-                   
+
                     <div class="form-inline DivConsulta col-sm-12     col-md-6     col-lg-5     col-xl-4">
                         <label for="Desde" class="LabelConsulta     col-sm-3     col-md-2">Desde: </label>
                         <InputDate @bind-Value="@Desde" class="form-control     col-sm-8     col-md-9" />
                     </div>
 
 
-                    
+
                     <div class="form-inline DivConsulta col-sm-12     col-md-6     col-lg-5     col-xl-4">
                         <label for="Hasta" class="LabelConsulta     col-sm-3     col-md-2">Hasta: </label>
                         <InputDate @bind-Value="@Hasta" class="form-control     col-sm-8     col-md-9" />
                     </div>
 
-                   
+
                     <div class="DivConsulta text-center     container     col-sm-12     col-md-12          col-lg-1     col-xl-1">
                         <button type="button" class="btn btn-primary" @onclick="Buscar">@*<span class="oi oi-magnifying-glass" />*@ Buscar</button>
                     </div>
@@ -112,7 +112,9 @@
                     </table>
 
                 </div>
-
+                <div class="card-footer text-center">
+                    <button class="btn btn-outline-success" data-toggle="modal" @onclick="PDF" data-target="#myModals"><i class="oi oi-print"></i> Generar Reporte</button>
+                </div>
                 <div class="form-inline justify-content-end">
                     <label>Total:&nbsp;</label>
                     <InputNumber @bind-Value="@Total" class="form-control" disabled />
@@ -151,6 +153,25 @@
     </div>
 </EditForm>
 
+<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content m-md-auto">
+            <div class="modal-header">
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <iframe src="@pdfContent" style="width:950px; height:600px;" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @code {
 
 
@@ -160,7 +181,7 @@
 
     string Filtro;
     string Criterio;
-   
+
     bool BuscarPorFecha;
     decimal Total = 0;
 
@@ -178,6 +199,8 @@
     Contexto db = new Contexto();
     Paginacion paginacion = new Paginacion();
 
+    public byte[] Data { get; set; }
+    public string pdfContent { get; set; }
 
     List<Pagos> listaTemp = new List<Pagos>();
 
@@ -192,7 +215,15 @@
     }
 
 
+    private void PDF()
+    {
+        AutosoftService.Pages.Reporte.ReportePago cobros = new Reporte.ReportePago();
 
+        Data = cobros.Reporte();
+
+        pdfContent = "data:application/pdf;base64,";
+        pdfContent += System.Convert.ToBase64String(Data);
+    }
 
     private void LlenarLista()
     {

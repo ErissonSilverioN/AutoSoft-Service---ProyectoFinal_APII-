@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace AutosoftService.Pages.Reporte
 {
-    public class ReporteArticulo
+    public class ReporteFactura
     {
-        int columnas = 7;
+        int columnas = 5;
         decimal Total = 0;
         Document document = new Document();
         PdfPTable pdfTable;
@@ -21,7 +21,7 @@ namespace AutosoftService.Pages.Reporte
 
         MemoryStream memoryStream = new MemoryStream();
 
-        List<Articulos> lista = ArticuloBLL.GetList(c => true);
+        List<Facturas> lista = FacturaBLL.GetList(c => true);
 
 
         public byte[] Reporte()
@@ -44,9 +44,7 @@ namespace AutosoftService.Pages.Reporte
             anchoColumnas[2] = 60;
             anchoColumnas[3] = 100;
             anchoColumnas[4] = 95;
-            anchoColumnas[5] = 95;
-            anchoColumnas[6] = 80;
-
+            
             pdfTable.SetWidths(anchoColumnas);
 
             this.ReportHeader();
@@ -85,7 +83,7 @@ namespace AutosoftService.Pages.Reporte
 
             pdfTable.CompleteRow();
 
-            pdfCell = new PdfPCell(new Phrase("Reporte de Articulos", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Reporte de Factura", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.Colspan = 2;
             pdfCell.Border = 0;
@@ -136,46 +134,36 @@ namespace AutosoftService.Pages.Reporte
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Descripcion", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Servicios", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Proveedor", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Cliente", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Existencia", fontStyle));
+
+            pdfCell = new PdfPCell(new Phrase("Total", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Costo", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            pdfCell.BackgroundColor = BaseColor.LightGray;
-            pdfTable.AddCell(pdfCell);
-
-            pdfCell = new PdfPCell(new Phrase("Valor Inventario", fontStyle));
-            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-            pdfCell.BackgroundColor = BaseColor.LightGray;
-            pdfTable.AddCell(pdfCell);
 
             pdfTable.CompleteRow();
             #endregion
 
             #region Table Body
             int num = 0;
-            decimal Total = 0;
+
             foreach (var item in lista)
             {
                 num++;
-                pdfCell = new PdfPCell(new Phrase(item.ArticuloId.ToString(), _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.ClienteId.ToString(), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 pdfCell.BackgroundColor = BaseColor.White;
@@ -187,42 +175,29 @@ namespace AutosoftService.Pages.Reporte
                 pdfCell.BackgroundColor = BaseColor.White;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(item.Descripcion, _fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.Servicios, _fontStyle));
+                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                pdfCell.BackgroundColor = BaseColor.White;
+                pdfTable.AddCell(pdfCell);
+                pdfCell = new PdfPCell(new Phrase( GetNombre(item.ClienteId), _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 pdfCell.BackgroundColor = BaseColor.White;
                 pdfTable.AddCell(pdfCell);
 
-                pdfCell = new PdfPCell(new Phrase(GetNombreProveedor( item.ProveedorId), fontStyle));
+                pdfCell = new PdfPCell(new Phrase(item.Total.ToString(), _fontStyle));
+                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                pdfCell.BackgroundColor = BaseColor.White;
+                pdfTable.AddCell(pdfCell);
+
                 
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
-                pdfTable.AddCell(pdfCell);
-
-                pdfCell = new PdfPCell(new Phrase(item.Existencia.ToString(), _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
-                pdfTable.AddCell(pdfCell);
-                pdfCell = new PdfPCell(new Phrase(item.Costo.ToString(), _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
-                pdfTable.AddCell(pdfCell);
-
-                pdfCell = new PdfPCell(new Phrase((item.Existencia * item.Costo).ToString(), _fontStyle));
-                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-                pdfCell.BackgroundColor = BaseColor.White;
-                pdfTable.AddCell(pdfCell);
-
-                Total += (item.Existencia * item.Costo);
 
                 pdfTable.CompleteRow();
             }
-           
-            pdfCell = new PdfPCell(new Phrase("Total de Articulos", fontStyle));
+            calcular();
+            pdfCell = new PdfPCell(new Phrase("Total de Facturas", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
@@ -236,7 +211,7 @@ namespace AutosoftService.Pages.Reporte
             pdfCell.Border = 0;
             pdfTable.AddCell(pdfCell);
 
-            pdfCell = new PdfPCell(new Phrase("Total Inverntario", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Total Facturado", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.White;
@@ -257,24 +232,33 @@ namespace AutosoftService.Pages.Reporte
             pdfCell.Border = 0;
             pdfTable.AddCell(pdfCell);
 
-           
 
-
+            
 
             pdfTable.CompleteRow();
 
             #endregion
         }
-       
-        public string GetNombreProveedor(int id)
+        private void calcular()
         {
-            Proveedores proveedores = ProveedorBLL.Buscar(id);
-            if (proveedores != null)
+            foreach (var item in lista)
             {
-                return proveedores.Nombre;
+                Total += item.Total;
+
+            }
+        }
+        public string GetNombre(int id)
+        {
+            Clientes clientes = ClienteBLL.Buscar(id);
+            if (clientes != null)
+            {
+                return clientes.Nombre;
             }
             id = 0;
             return "Error...";
         }
     }
+
 }
+
+

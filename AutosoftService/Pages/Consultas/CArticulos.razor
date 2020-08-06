@@ -125,9 +125,9 @@
                             }
                         </tbody>
                     </table>
-                    <div class="card-footer text-center">
-                        <button class="btn btn-outline-success" data-toggle="modal" @onclick="PDF" data-target="#myModals"><i class="oi oi-print"></i> Generar Reporte</button>
-                    </div>
+                    @*<div class="card-footer text-center">
+            <button class="btn btn-outline-success" data-toggle="modal" @onclick="PDF" data-target="#myModals"><i class="oi oi-print"></i> Generar Reporte</button>
+        </div>*@
 
                 </div>
 
@@ -175,6 +175,7 @@
     </div>
 
 </EditForm>
+
 <div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalsLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content m-md-auto">
@@ -265,9 +266,9 @@
     }
     private void PDF()
     {
-        AutosoftService.Pages.Reporte.ReporteArticulo co = new Reporte.ReporteArticulo();
+        AutosoftService.Pages.Reporte.ReporteArticulo cobro = new Reporte.ReporteArticulo();
 
-        Data = co.Reporte();
+        Data = cobro.Reporte();
 
         pdfContent = "data:application/pdf;base64,";
         pdfContent += System.Convert.ToBase64String(Data);
