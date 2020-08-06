@@ -13,7 +13,7 @@ namespace AutosoftService.Pages.Reporte
 {
     public class ReporteCliente
     {
-         int columnas = 6;
+         int columnas = 7;
 
         Document document = new Document();
         PdfPTable pdfTable;
@@ -44,8 +44,9 @@ namespace AutosoftService.Pages.Reporte
             anchoColumnas[1] = 60; 
             anchoColumnas[2] = 60; 
             anchoColumnas[3] = 100;
-            anchoColumnas[4] = 95; 
-            anchoColumnas[5] = 80; 
+            anchoColumnas[4] = 95;
+            anchoColumnas[5] = 95; 
+            anchoColumnas[6] = 80; 
 
             pdfTable.SetWidths(anchoColumnas);
 
@@ -154,6 +155,12 @@ namespace AutosoftService.Pages.Reporte
             pdfCell.BackgroundColor = BaseColor.LightGray;
             pdfTable.AddCell(pdfCell);
 
+            pdfCell = new PdfPCell(new Phrase("Direccion", fontStyle));
+            pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            pdfCell.BackgroundColor = BaseColor.LightGray;
+            pdfTable.AddCell(pdfCell);
+
             pdfCell = new PdfPCell(new Phrase("Telefono", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
@@ -194,6 +201,11 @@ namespace AutosoftService.Pages.Reporte
                 pdfTable.AddCell(pdfCell);
 
                 pdfCell = new PdfPCell(new Phrase(item.Email, _fontStyle));
+                pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
+                pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                pdfCell.BackgroundColor = BaseColor.White;
+                pdfTable.AddCell(pdfCell);
+                pdfCell = new PdfPCell(new Phrase(item.Direccion, _fontStyle));
                 pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfCell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 pdfCell.BackgroundColor = BaseColor.White;
