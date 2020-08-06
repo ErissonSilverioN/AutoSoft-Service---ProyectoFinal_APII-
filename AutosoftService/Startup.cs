@@ -14,6 +14,7 @@ using Blazored.Toast;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Blazored.Modal;
 
 namespace AutosoftService
 {
@@ -54,6 +55,7 @@ namespace AutosoftService
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddBlazoredModal();
             services.AddSingleton<WeatherForecastService>();
             services.AddBlazoredToast();
 

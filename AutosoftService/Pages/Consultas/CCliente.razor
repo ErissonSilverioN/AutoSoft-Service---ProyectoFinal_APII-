@@ -4,99 +4,120 @@
 @using Model
 
 @inject IToastService toast
+@*@inject IModalService Modal*@
 <EditForm Model="listapaginada">
     <DataAnnotationsValidator />
-<div class="card">
-    <div class="card-header"style="        background-color: #6378F0
+    <div class="card">
+        <div class="card-header" style="        background-color: #6378F0
 ">
-        <h3>Consultas De Clientes</h3>
-    </div>
+            <h3>Consultas De Clientes</h3>
+        </div>
 
-    <div class="card-body">
-        <div class="input-group mb-4">
-            <div class="input-group">
+        <div class="card-body">
+            <div class="input-group mb-4">
+                <div class="input-group">
 
-                <label for="filtro">Filtro: </label>
-                <select class="form-control ml-3 mr-3" @bind="Filtro">
-                    <option value="" disabled selected>Seleccione un filtro</option>
-                    <option value="Todo">Todo</option>
-                    <option value="ID">ID</option>
-                    <option value="Nombre">Nombre</option>
-                    <option value="Cedula">cedula</option>
-                </select>
+                    <label for="filtro">Filtro: </label>
+                    <select class="form-control ml-3 mr-3" @bind="Filtro">
+                        <option value="" disabled selected>Seleccione un filtro</option>
+                        <option value="Todo">Todo</option>
+                        <option value="ID">ID</option>
+                        <option value="Nombre">Nombre</option>
+                        <option value="Cedula">cedula</option>
+                    </select>
 
-                <label for="criterio ml-3 mr-3"> Criterio: </label>
-                <input type="search" class="form-control ml-3 mr-3" @bind-value="Criterio" />
+                    <label for="criterio ml-3 mr-3"> Criterio: </label>
+                    <input type="search" class="form-control ml-3 mr-3" @bind-value="Criterio" />
 
-                <button type="button" class="btn btn-primary" @onclick="Buscar">Buscar </button>
+                    <button type="button" class="btn btn-primary" @onclick="Buscar">Buscar </button>
+                </div>
+            </div>
+
+            <table class=" table mb-3 mt-3" id="example">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Cedula</th>
+                        <th>Telefono</th>
+                        <th>Direccion</th>
+                        <th>Email</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (listapaginada.Count == 0)
+                    {
+                        toast.ShowWarning("No hay datos");
+                    }
+                    else
+                    {
+
+                        @foreach (var item in listapaginada)
+                        {
+                            <tr class="table-striped">
+                                <td>@item.ClienteId</td>
+                                <td>@item.Nombre</td>
+                                <td>@item.Cedula</td>
+                                <td>@item.Telefono</td>
+                                <td>@item.Direccion</td>
+                                <td>@item.Email</td>
+                                <td>@item.Fecha</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <div class="card-footer text-center">
+                <button class="btn btn-outline-success" data-toggle="modal" @onclick="PDF" data-target="#myModals"><i class="oi oi-print"></i> Generar Reporte</button>
+            </div>
+            <div class="form-row col-12 justify-content-center">
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item bt">
+                            <a class="page-link" @onclick="PaginaAnterior">
+                                <span class="oi oi-media-skip-backward "></span>
+                            </a>
+                        </li>
+
+                        @for (int i = 1; i <= Paginas; i++)
+                        {
+                            <li class=" @(PaginaActual == i ? "text-danger" : "page-item")" @onclick="Mover"> <a class="page-link disabled">@i</a></li>
+
+                        }
+
+                        <li class="page-item">
+                            <a class="page-link" @onclick="PaginaSiguiente">
+                                <span class="oi oi-media-skip-forward "></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
 
-        <table class=" table mb-3 mt-3" id="example">
-            <thead class="thead-light">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Cedula</th>
-                    <th>Telefono</th>
-                    <th>Direccion</th>
-                    <th>Email</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (listapaginada.Count == 0)
-                {
-                    toast.ShowWarning("No hay datos");
-                }
-                else
-                {
-
-                    @foreach (var item in listapaginada)
-                    {
-                        <tr class="table-striped">
-                            <td>@item.ClienteId</td>
-                            <td>@item.Nombre</td>
-                            <td>@item.Cedula</td>
-                            <td>@item.Telefono</td>
-                            <td>@item.Direccion</td>
-                            <td>@item.Email</td>
-                            <td>@item.Fecha</td>
-                        </tr>
-                    }
-                }
-
-            </tbody>
-        </table>
-        <div class="form-row col-12 justify-content-center">
-            <nav>
-                <ul class="pagination">
-                    <li class="page-item bt">
-                        <a class="page-link" @onclick="PaginaAnterior">
-                            <span class="oi oi-media-skip-backward "></span>
-                        </a>
-                    </li>
-
-                    @for (int i = 1; i <= Paginas; i++)
-                    {
-                        <li class=" @(PaginaActual == i ? "text-danger" : "page-item")" @onclick="Mover"> <a class="page-link disabled">@i</a></li>
-
-                    }
-
-                    <li class="page-item">
-                        <a class="page-link" @onclick="PaginaSiguiente">
-                            <span class="oi oi-media-skip-forward "></span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
     </div>
-
-</div>
 </EditForm>
 
-
+<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content m-md-auto">
+            <div class="modal-header">
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <iframe src="@pdfContent" style="width:950px; height:600px;" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @code {
 
     private List<Clientes> lista { get; set; }
@@ -109,7 +130,8 @@
     double Elementos = 0;
     int PaginaActual = 0;
 
-
+    public byte[] Data { get; set; }
+    public string pdfContent { get; set; }
 
 
 
@@ -142,6 +164,18 @@
                 .ToList();
         }
     }
+    private void PDF()
+    {
+        AutosoftService.Pages.Reporte.ReporteCliente cobros = new Reporte.ReporteCliente();
+
+        Data = cobros.Reporte();
+
+        pdfContent = "data:application/pdf;base64,";
+        pdfContent += System.Convert.ToBase64String(Data);
+    }
+
+
+
     private void Mover()
     {
         if (PaginaActual < Paginas)
@@ -194,7 +228,7 @@
                     switch (Filtro)
                     {
                         case "Todo":
-                            lista= ClienteBLL.GetList(e => true);
+                            lista = ClienteBLL.GetList(e => true);
 
                             break;
                         case "Id":
