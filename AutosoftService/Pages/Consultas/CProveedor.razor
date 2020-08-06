@@ -73,6 +73,11 @@
 
                 </tbody>
             </table>
+
+            <div class="card-footer text-center">
+                <button class="btn btn-outline-success" data-toggle="modal" @onclick="PDF" data-target="#myModals"><i class="oi oi-print"></i> Generar Reporte</button>
+            </div>
+
             <div class="form-row col-12 justify-content-center">
                 <nav>
                     <ul class="pagination">
@@ -103,6 +108,26 @@
 </EditForm>
 
 
+<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content m-md-auto">
+            <div class="modal-header">
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <iframe src="@pdfContent" style="width:950px; height:600px;" frameborder="0"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @code {
 
     private List<Proveedores> lista { get; set; }
@@ -116,6 +141,9 @@
     double Elementos = 0;
     int PaginaActual = 0;
 
+    public byte[] Data { get; set; }
+    public string pdfContent { get; set; }
+
 
     ProveedorBLL proveedorBLL = new ProveedorBLL();
 
@@ -128,6 +156,17 @@
         IniciarPaginacion();
     }
 
+
+
+    private void PDF()
+    {
+        AutosoftService.Pages.Reporte.ReporteProveedores co = new Reporte.ReporteProveedores();
+
+        Data = co.Reporte();
+
+        pdfContent = "data:application/pdf;base64,";
+        pdfContent += System.Convert.ToBase64String(Data);
+    }
 
 
     public void IniciarPaginacion()
