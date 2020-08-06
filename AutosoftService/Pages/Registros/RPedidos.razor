@@ -215,7 +215,7 @@
 
     private int unidad = 0;
     private decimal precio = 0;
-    decimal importe = 0;
+    //decimal importe = 0;
     private int existencia = 0;
 
 
@@ -322,7 +322,7 @@
 
     private void Agregar()
     {
-        
+
         var articuloTemp = ArticuloBLL.Buscar(Convert.ToInt32(ArticuloSelect));
         var proveedorTemp = ProveedorBLL.Buscar(Convert.ToInt32(ProveedorSelect));
 
