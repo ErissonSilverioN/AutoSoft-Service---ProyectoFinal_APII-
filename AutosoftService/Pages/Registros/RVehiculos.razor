@@ -13,80 +13,82 @@
     <DataAnnotationsValidator />
     <div class="card w-100">
         <div class="card-header">
-            <h1>Registro de Vehiculos</h1>
+            <div class="text-center">
+                <h3>Registro de Vehiculos</h3>
+            </div>
         </div>
 
         @*vehiculoID y boton buscar al lado*@
-    <div class="card-body">
-        <form />
-        <div class="form-row align-items-center">
-            <div class="col">
-                <div class="form-group">
-                    <label><b>ID</b></label>
-                    <div class="input-group">
-                        <InputNumber @bind-Value="vehiculos.VehiculoId" class="form-control col-4" />
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
+        <div class="card-body">
+            <form />
+            <div class="form-row align-items-center">
+                <div class="col">
+                    <div class="form-group">
+                        <label><b>ID</b></label>
+                        <div class="input-group">
+                            <InputNumber @bind-Value="vehiculos.VehiculoId" class="form-control col-4" />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" @onclick="Buscar"><i class="fa fa-search"></i> Buscar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @*Descripcion*@
-        <div class="form-group">
-            <label><b>Descripcion</b></label>
-            <InputText @bind-Value="vehiculos.Descripcion" class="form-control" />
-            <ValidationMessage For="@(() => vehiculos.Descripcion)" />
-        </div>
-        @*Cliente Id*@
-        <div class="form-group">
-            <label><b>Cliente</b></label>
-            <select class="form-control" @bind="vehiculos.ClienteId">
-                <option disabled="disabled" selected="selected">Elija una opción</option>
-                @foreach (var auxiliar in LlenarComboCliente())
-                {
-                    <option value="@auxiliar.ClienteId">@auxiliar.Nombre</option>
-                }
-            </select>
-            <ValidationMessage For="@(() => vehiculos.ClienteId)" />
-        </div>
-        @*Tipo de Vehiculos*@
-    <div class="form-group">
-        <label><b>Tipo de Vehiculos</b></label>
-        <InputSelect @bind-Value="@vehiculos.TipoVehiculo" class="form-control">
-            <option value="" disabled selected>Seleccione un Tipo</option>
-            <option value="Carro">Carro</option>
-            <option value="Camionetas">Camionetas</option>
-            <option value="Jeepetas">Jeepetas</option>
-            <option value="Motores">Motores</option>
-            <option value="Camiones">Camiones</option>
-        </InputSelect>
-        <ValidationMessage For="@(() => vehiculos.TipoVehiculo)" />
-    </div>
+            @*Descripcion*@
+            <div class="form-group">
+                <label><b>Descripcion</b></label>
+                <InputText @bind-Value="vehiculos.Descripcion" class="form-control" />
+                <ValidationMessage For="@(() => vehiculos.Descripcion)" />
+            </div>
+            @*Cliente Id*@
+            <div class="form-group">
+                <label><b>Cliente</b></label>
+                <select class="form-control" @bind="vehiculos.ClienteId">
+                    <option disabled="disabled" selected="selected">Elija una opción</option>
+                    @foreach (var auxiliar in LlenarComboCliente())
+                    {
+                        <option value="@auxiliar.ClienteId">@auxiliar.Nombre</option>
+                    }
+                </select>
+                <ValidationMessage For="@(() => vehiculos.ClienteId)" />
+            </div>
+            @*Tipo de Vehiculos*@
+            <div class="form-group">
+                <label><b>Tipo de Vehiculos</b></label>
+                <InputSelect @bind-Value="@vehiculos.TipoVehiculo" class="form-control">
+                    <option value="" disabled selected>Seleccione un Tipo</option>
+                    <option value="Carro">Carro</option>
+                    <option value="Camionetas">Camionetas</option>
+                    <option value="Jeepetas">Jeepetas</option>
+                    <option value="Motores">Motores</option>
+                    <option value="Camiones">Camiones</option>
+                </InputSelect>
+                <ValidationMessage For="@(() => vehiculos.TipoVehiculo)" />
+            </div>
 
-        @*Placa*@
-        <div class="form-group">
-            <label><b>Placa </b></label>
-            <InputText @bind-Value="vehiculos.Placa" class="form-control" />
-            <ValidationMessage For="@(() =>vehiculos.Placa)" />
-        </div>
+            @*Placa*@
+            <div class="form-group">
+                <label><b>Placa </b></label>
+                <InputText @bind-Value="vehiculos.Placa" class="form-control" />
+                <ValidationMessage For="@(() =>vehiculos.Placa)" />
+            </div>
 
-        @*Año*@
-        <div class="form-group">
-            <label><b>Año</b></label>
-            <InputNumber @bind-Value="vehiculos.Año" class="form-control" />
-            <ValidationMessage For="@(() => vehiculos.Año)" />
-        </div>
+            @*Año*@
+            <div class="form-group">
+                <label><b>Año</b></label>
+                <InputNumber @bind-Value="vehiculos.Año" class="form-control" />
+                <ValidationMessage For="@(() => vehiculos.Año)" />
+            </div>
 
-        @*Fecha*@
-        <div class="form-group">
-            <label><b>Fecha</b></label>
-            <InputDate @bind-Value="vehiculos.Fecha" class="form-control" />
-            <ValidationMessage For="@(() => vehiculos.Fecha)" />
-        </div>
+            @*Fecha*@
+            <div class="form-group">
+                <label><b>Fecha</b></label>
+                <InputDate @bind-Value="vehiculos.Fecha" class="form-control" />
+                <ValidationMessage For="@(() => vehiculos.Fecha)" />
+            </div>
 
-    </div>
+        </div>
 
         @*Botones*@
         <div class="card-footer">
