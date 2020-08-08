@@ -10,13 +10,26 @@ namespace AutosoftService.Model
     public class Pedidos
     {
         [Key]
-
+        [Required(ErrorMessage = "El campo ID no puede estar vació.")]
+        [Range(0, 1000000, ErrorMessage = "El campo ID no puede ser menor que 1 o mayor que 1000000.")]
         public int PedidoId { get; set; }
+        [Required(ErrorMessage = "El campo  no puede estar vació.")]
+      
         public int ArticuloId { get; set; }
+        [Required(ErrorMessage = "El campo  no puede estar vació.")]
         public int ProveedorId { get; set; }
+        [Required(ErrorMessage = "El campo  no puede estar vació.")]
         public string Nota { get; set; }
+        [Range(0, 100000000, ErrorMessage = "El campo Subtotal no puede ser menor que cero")]
+        [Required(ErrorMessage = "El campo Subtotal no debe estar vació")]
         public decimal Subtotal { get; set; }
+        [DataType(DataType.DateTime)]
+        [Required(ErrorMessage = "El campo fecha no puede estar vacío.")]
+        [DisplayFormat(DataFormatString = "{0:dd,mm,yyyy}")]
         public DateTime Fecha { get; set; }
+        [DataType(DataType.DateTime)]
+        [Required(ErrorMessage = "El campo fecha no puede estar vacío.")]
+        [DisplayFormat(DataFormatString = "{0:dd,mm,yyyy}")]
         public DateTime FechaEntrega { get; set; }
 
 

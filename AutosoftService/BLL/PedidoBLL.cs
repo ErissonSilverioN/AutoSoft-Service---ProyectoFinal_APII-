@@ -162,25 +162,25 @@ namespace AutosoftService.BLL
         }
 
 
-        public static List<Pedidos> GetList(Expression<Func<Pedidos, bool>> expression)
+        public static List<Pedidos> GetList(Expression<Func<Pedidos, bool>> Criterio)
         {
-            List<Pedidos> Lista = new List<Pedidos>();
-            Contexto db = new Contexto();
+            List<Pedidos> lista = new List<Pedidos>();
+            Contexto contexto = new Contexto();
+
             try
             {
-                Lista = db.pedidos.Where(expression).ToList();
+                lista = contexto.pedidos.Where(Criterio).ToList();
             }
-
             catch (Exception)
             {
                 throw;
             }
             finally
             {
-                db.Dispose();
+                contexto.Dispose();
             }
-            return Lista;
 
+            return lista;
         }
 
     }

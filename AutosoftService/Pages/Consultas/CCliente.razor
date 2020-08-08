@@ -20,10 +20,10 @@
                     <label for="filtro">Filtro: </label>
                     <select class="form-control ml-3 mr-3" @bind="Filtro">
                         <option value="" disabled selected>Seleccione un filtro</option>
-                        <option value="Todo">Todo</option>
-                        <option value="ID">ID</option>
-                        <option value="Nombre">Nombre</option>
-                        <option value="Cedula">cedula</option>
+                        <option value="0">Todo</option>
+                        <option value="1">Id</option>
+                        <option value="2">Nombre</option>
+                        <option value="3">Cedula</option>
                     </select>
 
                     <label for="criterio ml-3 mr-3"> Criterio: </label>
@@ -227,18 +227,18 @@
 
                     switch (Filtro)
                     {
-                        case "Todo":
-                            lista = ClienteBLL.GetList(e => true);
+                        case "0":
+                            listapaginada = ClienteBLL.GetList(e => true);
 
                             break;
-                        case "Id":
-                            lista = ClienteBLL.GetList(e => e.ClienteId == Convert.ToInt32(Criterio));
+                        case "1":
+                          listapaginada = ClienteBLL.GetList(e => e.ClienteId == Convert.ToInt32(Criterio));
                             break;
-                        case "Nombre":
-                            lista = ClienteBLL.GetList(e => e.Nombre == Criterio);
+                        case "2":
+                            listapaginada = ClienteBLL.GetList(e => e.Nombre == Criterio);
                             break;
-                        case "Cedula":
-                            lista = ClienteBLL.GetList(e => e.Cedula == Criterio);
+                        case "3":
+                            listapaginada = ClienteBLL.GetList(e => e.Cedula == Criterio);
                             break;
 
                     }

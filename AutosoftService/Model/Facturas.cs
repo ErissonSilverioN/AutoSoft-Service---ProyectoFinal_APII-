@@ -11,18 +11,30 @@ namespace AutosoftService.Model
     {
 
         [Key]
-
+        [Required(ErrorMessage = "El campo Id debe ser un numero")]
+        [Range(0, 100000000, ErrorMessage = "El campo Id no puede ser menor que cero")]
         public int FacturaId { get; set; }
+        [Required(ErrorMessage = "El campo no puede estar vacio")]
         public int VehiculoId { get; set; }
+        [Required(ErrorMessage = "El campo no puede estar vacio")]
         public int ClienteId { get; set; }
+        [Required(ErrorMessage = "El campo no puede estar vacio")]
         public int ArticuloId { get; set; }
-        [Required(ErrorMessage = "El campo nombre no puede estar vació.")]
+        [Required(ErrorMessage = "El campo no puede estar vació.")]
         public string Servicios { get; set; }
         public bool FacturaCredito { get; set; }
+        [Range(0, 100000000, ErrorMessage = "El campo Subtotal no puede ser menor que cero")]
+        [Required(ErrorMessage = "El campo Subtotal no debe estar vació")]
         public decimal SubTotal { get; set; }
+        [Required(ErrorMessage = "El campo no puede estar vació.")]
         public decimal Itbis { get; set; }
+        [Range(0, 100000000, ErrorMessage = "El campo Subtotal no puede ser menor que cero")]
+        [Required(ErrorMessage = "El campo Subtotal no debe estar vació")]
         public decimal Total { get; set; }
         public DateTime ProximoMantemiento { get; set; }
+        [DataType(DataType.DateTime)]
+        [Required(ErrorMessage = "El campo fecha no puede estar vacío.")]
+        [DisplayFormat(DataFormatString = "{0:dd,mm,yyyy}")]
         public DateTime Fecha { get; set; }
 
 

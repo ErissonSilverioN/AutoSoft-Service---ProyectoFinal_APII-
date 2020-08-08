@@ -20,7 +20,7 @@
                     <select class="form-control ml-3 mr-3" @bind="Filtro">
                         <option value="" disabled selected>Seleccione un filtro</option>
                         <option value="Todo">Todo</option>
-                        <option value="ID">ID</option>
+                        <option value="Id">ID</option>
                         <option value="Nombre">Nombre</option>
                         <option value="RNC">Rnc</option>
                     </select>
@@ -241,17 +241,17 @@
                     switch (Filtro)
                     {
                         case "Todo":
-                            lista = ProveedorBLL.GetList(e => true);
+                            listapaginada = ProveedorBLL.GetList(e => true);
 
                             break;
                         case "Id":
-                            lista = ProveedorBLL.GetList(e => e.ProveedorId == Convert.ToInt32(Criterio));
+                            listapaginada= ProveedorBLL.GetList(e => e.ProveedorId == Convert.ToInt32(Criterio));
                             break;
                         case "Nombre":
-                            lista = ProveedorBLL.GetList(e => e.Nombre == Criterio);
+                            listapaginada = ProveedorBLL.GetList(e => e.Nombre == Criterio);
                             break;
                         case "Rnc":
-                            lista = ProveedorBLL.GetList(e => e.RNC == Criterio);
+                            listapaginada = ProveedorBLL.GetList(e => e.RNC == Criterio);
                             break;
 
                     }

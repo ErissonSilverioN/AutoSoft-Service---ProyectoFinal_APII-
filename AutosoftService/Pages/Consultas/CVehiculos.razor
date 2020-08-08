@@ -25,7 +25,7 @@
                     <select class="form-control ml-3 mr-3" @bind="Filtro">
                         <option value="" disabled selected>Seleccione un filtro</option>
                         <option value="Todo">Todo</option>
-                        <option value="ID">ID</option>
+                        <option value="Id">ID</option>
                         <option value="Descripcion">Descripcion</option>
                         <option value="Año">Año</option>
                     </select>
@@ -238,17 +238,17 @@
                     switch (Filtro)
                     {
                         case "Todo":
-                            lista = VehiculoBLL.GetList(e => true);
+                          listapaginada = VehiculoBLL.GetList(e => true);
 
                             break;
                         case "Id":
-                            lista = VehiculoBLL.GetList(e => e.VehiculoId == Convert.ToInt32(Criterio));
+                            listapaginada = VehiculoBLL.GetList(e => e.VehiculoId == Convert.ToInt32(Criterio));
                             break;
                         case "Nombre":
-                            lista = VehiculoBLL.GetList(e => e.Descripcion == Criterio);
+                            listapaginada = VehiculoBLL.GetList(e => e.Descripcion == Criterio);
                             break;
                         case "Año":
-                            lista = VehiculoBLL.GetList(e => e.Año == Convert.ToInt32(Criterio));
+                            listapaginada = VehiculoBLL.GetList(e => e.Año == Convert.ToInt32(Criterio));
                             break;
 
                     }
