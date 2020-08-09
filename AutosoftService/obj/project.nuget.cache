@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+7WQMaGwsBmrNcAT5BZg/P/mEPFapOiO6OqnMzA7Ab3w0ezxjv6EJsqXzxmrWAiJ77K/FK1Hm+FuAjnuliHEww==",
+  "dgSpecHash": "hfjuL3yKHUmcaTjEVcn9C+Dy5lcfyEtJgpjWs4fsyin5z8vE9aChTtmmAGldQaZs9vlwPofxghtOWIPC2S4r6Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal14\\AutosoftService\\AutosoftService.csproj",
+  "projectFilePath": "C:\\Users\\PANDA\\Source\\Repos\\AutosoftService-ProyectoFinal15\\AutosoftService\\AutosoftService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PANDA\\.nuget\\packages\\blazored.modal\\5.0.3\\blazored.modal.5.0.3.nupkg.sha512",
     "C:\\Users\\PANDA\\.nuget\\packages\\blazored.toast\\3.1.2\\blazored.toast.3.1.2.nupkg.sha512",

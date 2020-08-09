@@ -1,22 +1,20 @@
 ﻿@page "/CPedidos"
 
 @using AutosoftService.Model;
-@using AutosoftService.Model.Consultas
-@using AutosoftService.BLL;
+@using AutosoftService.Model.Consultas;
 @using AutosoftService.DAL;
+@using AutosoftService.BLL;
 
 @inject IToastService toast
 
-
-<EditForm Model="ListaPedidos">
+<EditForm Model="listaPedidos">
 
     <div class="card">
 
-
         <div class="card-header">
-            <div class="text-center">
-                <h3>Consulta de Pedidos</h3>
-            </div>
+            <center>
+                <h1>Consulta de Pedidos</h1>
+            </center>
         </div>
 
 
@@ -24,23 +22,19 @@
 
             <form>
 
-                <br />
-
-
                 <div class="form-row">
 
                     <div class="col-sm-0     col-md-0     col-lg-1     col-xl-2" />
+
 
                     <div class="form-inline DivConsulta col-sm-12     col-md-6     col-lg-5     col-xl-4">
                         <label for="Filtro" class="LabelConsulta     col-sm-3     col-md-2">Filtro: </label>
                         <select class="form-control     col-sm-8     col-md-9" @bind="Filtro">
                             <option value="0">Todo</option>
-                            <option value="1">Codigo</option>
-                            <option value="2">Articulo</option>
-                            <option value="3">Proveedor</option>
+                            <option value="1">ID</option>
+                            <option value="3">Articulo</option>
                         </select>
                     </div>
-
 
 
                     <div class="form-inline DivConsulta col-sm-12     col-md-6     col-lg-5     col-xl-4">
@@ -51,11 +45,11 @@
                     <div class="col-sm-0     col-md-0     col-lg-1     col-xl-2" />
 
                     <br />
-                    <br />
 
                     <div class="DivConsulta text-center     col-12">
                         <input class="ml-1" type="checkbox" @bind-value="FiltrarFecha" style="margin-top:15px">&nbsp;&nbsp;Filtrar por Fecha
                     </div>
+
 
                     <div class="col-sm-0     col-md-0     col-lg-1     col-xl-2" />
 
@@ -72,32 +66,30 @@
                         <InputDate @bind-Value="@Hasta" class="form-control     col-sm-8     col-md-9" />
                     </div>
 
-
                     <div class="DivConsulta text-center     container     col-sm-12     col-md-12          col-lg-1     col-xl-1">
-                        <button type="button" class="btn btn-primary" @onclick="Buscar">Buscar</button>
+                        <button type="button" class="btn btn-primary" @onclick="Buscar">@*<span class="oi oi-magnifying-glass" />*@ Buscar</button>
                     </div>
 
+
                     <div class="col-sm-0     col-md-0     col-lg-1     col-xl-2" />
-
-
 
 
                     <table class="table" style="margin-top: 20px">
                         <thead class="thead-light">
                             <tr>
                                 <th>Codigo</th>
-                                <th>Articulo</th>
-                                <th>Proveedor</th>
-                                <th>Subtotal</th>
                                 <th>Fecha</th>
-                                <th>Fecha Entrega</th>
 
+                                <th>Articulo</th>
+
+
+                                <th>Subtotal</th>
 
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (ListadoPaginado.Count == 0)
+                            @if (Listado.Count == 0)
                             {
                                 <tr>
                                     <th colspan="12" style="color:black; text-align: center">"No hay datos que mostrar"</th>
@@ -110,33 +102,29 @@
                                 {
                                     <tr>
                                         <th>@item.PedidoId</th>
-                                        <th>@item.Articulo</th>
-                                        <th>@item.Proveedor</th>
-                                        <th>@item.Subtotal.ToString("N2")</th>
                                         <th>@item.Fecha.ToString("dd/MM/yyyy")</th>
-                                        <th>@item.FechaEntrega.ToString("dd/MM/yyyy")</th>
+                                        <th>@item.Articulo</th>
+                                        <th>@item.Subtotal.ToString("N2")</th>
 
-
-
-
+                                        <th><a class="btn btn-light" href="RPedidos/@item.PedidoId">Ver</a></th>
                                     </tr>
                                 }
                             }
                         </tbody>
                     </table>
 
-
-
                 </div>
 
-                
+                <br />
+
+
+                <div class="form-inline justify-content-end">
+                    <label>Total:&nbsp;</label>
+                    <input type="number" step="1.0" @bind-value="@Total" disabled />
+                    @*<InputNumber @bind-Value="@Total"class="form-control" disabled />*@
+                </div>
 
             </form>
-
-            <div class="card-footer text-center">
-                <button class="btn btn-outline-success" data-toggle="modal" @onclick="PDF" data-target="#myModals"><i class="oi oi-print"></i> Generar Reporte</button>
-            </div>
-
 
         </div>
 
@@ -166,29 +154,13 @@
             </div>
         </div>
 
+
+
     </div>
 
 </EditForm>
 
 
-<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalsLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content m-md-auto">
-            <div class="modal-header">
-                <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <div style="text-align: center;">
-                    <iframe src="@pdfContent" style="width:950px; height:600px;" frameborder="0"></iframe>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @code {
 
@@ -200,32 +172,30 @@
     string Criterio;
 
     bool FiltrarFecha;
+    decimal Total = 0;
 
-
-    Proveedores proveedorTemp = new Proveedores();
     Articulos articuloTemp = new Articulos();
-    Pedidos pedidoTemp = new Pedidos();
+    Proveedores proveedorTemp = new Proveedores();
+    Pedidos pedidosTemp = new Pedidos();
 
-    public List<Pedidos> listadoPedidos = new List<Pedidos>();
+    public List<Pedidos> listaPedidos = new List<Pedidos>();
 
-    List<PedidosConsult> ListaPedidos { get; set; }
+    List<PedidosConsult> Listado { get; set; }
     List<PedidosConsult> ListadoPaginado { get; set; }
 
     double Paginas = 0;
     double Elementos = 0;
     int PaginaActual = 0;
 
-    public byte[] Data { get; set; }
-    public string pdfContent { get; set; }
-
-    Contexto db = new Contexto();
+    Contexto contexto = new Contexto();
     Paginacion paginacion = new Paginacion();
 
-    List<PedidosConsult> listadoTemp = new List<PedidosConsult>();
+    List<PedidosConsult> listaTemp = new List<PedidosConsult>();
 
     protected override void OnInitialized()
     {
         Filtro = "0";
+
         Criterio = string.Empty;
         Desde = DateTime.Now;
         Hasta = DateTime.Now;
@@ -235,70 +205,64 @@
         LlenarLista();
     }
 
-
-
     private void LlenarLista()
     {
-        listadoPedidos = PedidoBLL.GetList(e => true);
-        ListaPedidos = new List<PedidosConsult>();
-
-        foreach (var item in listadoPedidos)
+        listaPedidos = PedidoBLL.GetList(e => true);
+        Listado = new List<PedidosConsult>();
+        foreach (var item in listaPedidos)
         {
             PedidosConsult pedidos = new PedidosConsult();
             pedidos.PedidoId = item.PedidoId;
-            articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
-            pedidos.Articulo = (articuloTemp == null) ? "Articulo Eliminado" : articuloTemp.Descripcion;
-            proveedorTemp = ProveedorBLL.Buscar(item.ProveedorId);
-            pedidos.Proveedor = (proveedorTemp == null) ? "Proveedor Eliminado" : proveedorTemp.Nombre;
-            pedidoTemp = PedidoBLL.Buscar(item.PedidoId);
-            pedidos.Subtotal = pedidoTemp.Subtotal;
-            pedidos.Fecha = item.Fecha;
-            pedidos.FechaEntrega = item.FechaEntrega;
+            pedidosTemp = PedidoBLL.Buscar(item.PedidoId);
 
-            ListaPedidos.Add(pedidos);
+            articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
+            pedidos.Articulo = (articuloTemp == null) ? "Articulo elimindo" : articuloTemp.Descripcion;
+
+
+
+            pedidos.Subtotal = item.Subtotal;
+            pedidos.Fecha = item.Fecha;
+
+            Listado.Add(pedidos);
         }
+
 
         IniciarPaginacion();
     }
 
 
 
-    private void PDF()
-    {
-        AutosoftService.Pages.Reporte.ReportePedidos co = new Reporte.ReportePedidos();
-
-        Data = co.Reporte();
-
-        pdfContent = "data:application/pdf;base64,";
-        pdfContent += System.Convert.ToBase64String(Data);
-    }
-
     public void IniciarPaginacion()
     {
         PaginaActual = 1;
-        Elementos = ListaPedidos.Count();
+        Elementos = Listado.Count();
         Paginas = Math.Ceiling(Elementos / paginacion.Mostrar);
-        ListadoPaginado = ListaPedidos.Take(paginacion.Mostrar).ToList();
+        ListadoPaginado = Listado.Take(paginacion.Mostrar).ToList();
     }
+
+
 
     private void PaginaSiguiente()
     {
         if (PaginaActual < Paginas)
         {
             PaginaActual++;
-            ListadoPaginado = ListaPedidos
+            ListadoPaginado = Listado
                 .Skip((PaginaActual - 1) * paginacion.Mostrar)
                 .Take(paginacion.Mostrar)
                 .ToList();
         }
     }
+
+
+
 
     private void PaginaAnterior()
     {
         if (PaginaActual > 1)
         {
             PaginaActual--;
-            ListadoPaginado = ListaPedidos
+            ListadoPaginado = Listado
                 .Skip((PaginaActual - 1) * paginacion.Mostrar)
                 .Take(paginacion.Mostrar)
                 .ToList();
@@ -307,33 +271,34 @@
 
 
 
+
     public void FiltrarFechas()
     {
         if (Filtro == "0")
-            listadoTemp = ListaPedidos;
+            listaTemp = Listado;
 
-        if (FiltrarFecha == true && listadoTemp.Count > 0)
+        if (FiltrarFecha == true && listaTemp.Count > 0)
         {
-            ListaPedidos = new List<PedidosConsult>();
+            Listado = new List<PedidosConsult>();
 
-            foreach (var item in listadoTemp)
+            foreach (var item in listaTemp)
             {
                 if (item.Fecha.Date >= Desde.Date && item.Fecha.Date <= Hasta.Date)
                 {
-                    ListaPedidos.Add(item);
+                    Listado.Add(item);
                 }
             }
-
             FiltrarFecha = false;
         }
         else
         {
-            ListaPedidos = new List<PedidosConsult>();
-            ListaPedidos = listadoTemp;
+            Listado = new List<PedidosConsult>();
+            Listado = listaTemp;
         }
 
         IniciarPaginacion();
     }
+
 
 
 
@@ -354,108 +319,65 @@
             else
             {
                 LlenarLista();
-                List<PedidosConsult> listadoTemp = ListaPedidos;
-
+                listaTemp = Listado;
                 switch (Filtro)
                 {
                     case "0":
-                        listadoPedidos = PedidoBLL.GetList(e => true);
+                        listaPedidos = PedidoBLL.GetList(e => true);
                         break;
 
                     case "1":
-                        listadoTemp = new List<PedidosConsult>();
-
-                        foreach (var item in listadoPedidos)
+                        listaTemp = new List<PedidosConsult>();
+                        foreach (var item in listaPedidos)
                         {
                             if (Convert.ToString(item.PedidoId).Contains(Criterio))
                             {
                                 PedidosConsult pedidos = new PedidosConsult();
                                 pedidos.PedidoId = item.PedidoId;
-                                articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
-                                pedidos.Articulo = (articuloTemp == null) ? "Articulo Eliminado" : articuloTemp.Descripcion;
-                                proveedorTemp = ProveedorBLL.Buscar(item.ProveedorId);
-                                pedidos.Proveedor = (proveedorTemp == null) ? "Proveedor Eliminado" : proveedorTemp.Nombre;
-                                pedidoTemp = PedidoBLL.Buscar(item.PedidoId);
-                                pedidos.Subtotal = pedidoTemp.Subtotal;
-                                pedidos.Fecha = item.Fecha;
-                                pedidos.FechaEntrega = item.FechaEntrega;
+                                pedidosTemp = PedidoBLL.Buscar(item.PedidoId);
 
-                                listadoTemp.Add(pedidos);
+                                articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
+                                pedidos.Articulo = (articuloTemp == null) ? "Articulo elimindo" : articuloTemp.Descripcion;
+
+
+
+
+                                pedidos.Subtotal = item.Subtotal;
+                                pedidos.Fecha = item.Fecha;
+
+                                listaTemp.Add(pedidos);
                             }
                         }
                         break;
 
                     case "2":
-                        listadoTemp = new List<PedidosConsult>();
-
-                        foreach (var item in listadoPedidos)
+                        listaTemp = new List<PedidosConsult>();
+                        foreach (var item in listaPedidos)
                         {
                             articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
                             if (articuloTemp.Descripcion.Contains(Criterio))
                             {
                                 PedidosConsult pedidos = new PedidosConsult();
                                 pedidos.PedidoId = item.PedidoId;
+                                pedidosTemp = PedidoBLL.Buscar(item.PedidoId);
                                 articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
-                                pedidos.Articulo = (articuloTemp == null) ? "Articulo Eliminado" : articuloTemp.Descripcion;
-                                proveedorTemp = ProveedorBLL.Buscar(item.ProveedorId);
-                                pedidos.Proveedor = (proveedorTemp == null) ? "Proveedor Eliminado" : proveedorTemp.Nombre;
-                                pedidoTemp = PedidoBLL.Buscar(item.PedidoId);
-                                pedidos.Subtotal = pedidoTemp.Subtotal;
+                                pedidos.Articulo = (articuloTemp == null) ? "Articulo elimindo" : articuloTemp.Descripcion;
+
+                                pedidos.Subtotal = item.Subtotal;
                                 pedidos.Fecha = item.Fecha;
-                                pedidos.FechaEntrega = item.FechaEntrega;
 
-                                listadoTemp.Add(pedidos);
-                            }
-                        }
-                        break;
-
-                    case "3":
-                        listadoTemp = new List<PedidosConsult>();
-
-                        foreach (var item in listadoPedidos)
-                        {
-                            proveedorTemp = ProveedorBLL.Buscar(item.ProveedorId);
-                            if (proveedorTemp.Nombre.Contains(Criterio))
-                            {
-                                PedidosConsult pedidos = new PedidosConsult();
-                                pedidos.PedidoId = item.PedidoId;
-                                articuloTemp = ArticuloBLL.Buscar(item.ArticuloId);
-                                pedidos.Articulo = (articuloTemp == null) ? "Articulo Eliminado" : articuloTemp.Descripcion;
-                                proveedorTemp = ProveedorBLL.Buscar(item.ProveedorId);
-                                pedidos.Proveedor = (proveedorTemp == null) ? "Proveedor Eliminado" : proveedorTemp.Nombre;
-                                pedidoTemp = PedidoBLL.Buscar(item.PedidoId);
-                                pedidos.Subtotal =  pedidoTemp.Subtotal;
-                                pedidos.Fecha = item.Fecha;
-                                pedidos.FechaEntrega = item.FechaEntrega;
-
-                                listadoTemp.Add(pedidos);
+                                listaTemp.Add(pedidos);
                             }
                         }
                         break;
 
 
+                }
 
-                }
-                if (FiltrarFecha == true)
-                {
-                    ListaPedidos = new List<PedidosConsult>();
-
-                    foreach (var item in listadoTemp)
-                    {
-                        if (item.Fecha.Date >= Desde.Date && item.Fecha.Date <= Hasta.Date)
-                        {
-                            ListaPedidos.Add(item);
-                        }
-                    }
-                    FiltrarFecha = false;
-                }
-                else
-                {
-                    ListaPedidos = new List<PedidosConsult>();
-                    ListaPedidos = listadoTemp;
-                }
+                FiltrarFechas();
             }
         }
     }
+
 
 }
